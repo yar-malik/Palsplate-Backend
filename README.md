@@ -1,6 +1,6 @@
 ***PalsPlat Backend*** 
-- - - -
-*Technologies:*
+
+**Technologies:**
 
 *Java 8: primary language
 *Maven 3: package manager
@@ -10,11 +10,14 @@
 *PostgreSQL: Main Production Database
 
 - - - -
-To test, populate palsplate-demo database with some dummy data. Use the following queries: 
+**Populate**, 
+populate palsplate-demo database with some dummy data. Use the following queries: 
 INSERT INTO member VALUES(1, 'Asfandyar', 'Malik', 'malikasfandyarashraf@gmail.com')
 INSERT INTO product VALUES (1, 'Cheese', 'euro', 14, 12, 1);
 
 - - - -
+**Run**
+
 mvn clean package && mvn spring-boot:run
 
 mvn clean package && java -jar target/palsplate-backend-1.0-SNAPSHOT.jar

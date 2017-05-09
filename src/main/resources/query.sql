@@ -20,3 +20,26 @@ CREATE TABLE product
       REFERENCES member (id) MATCH SIMPLE
       ON UPDATE CASCADE ON DELETE CASCADE
 )
+
+CREATE TABLE application
+(
+  id serial NOT NULL,
+  first_name character varying NOT NULL,
+  last_name character varying NOT NULL,
+  email character varying NOT NULL,
+  phone_number character NOT NULL,
+  password character varying NOT NULL,
+  CONSTRAINT pk_application_id PRIMARY KEY (id),
+  CONSTRAINT fk_product__member FOREIGN KEY (member_id)
+    REFERENCES member (id) MATCH SIMPLE
+    ON UPDATE CASCADE ON DELETE CASCADE
+)
+
+CREATE TABLE orders
+(
+  id serial NOT NULL,
+  first_name character varying NOT NULL,
+  last_name character varying NOT NULL,
+  email character varying NOT NULL,
+  CONSTRAINT pk_order_id PRIMARY KEY (id)
+)

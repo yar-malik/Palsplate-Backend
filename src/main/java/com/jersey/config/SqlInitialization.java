@@ -24,21 +24,14 @@ import org.apache.log4j.Logger;
 public class SqlInitialization{
 
     private static final Logger log = LogManager.getLogger(SqlInitialization.class);
-    @Bean
-    public DataSource dataSource() throws URISyntaxException {
 
-        URI dbUri = new URI(System.getenv("PALSPLATE_DB_URL"));
+    @Bean
+    public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
-
-        String username = dbUri.getUserInfo().split(":")[0];
-        String password = dbUri.getUserInfo().split(":")[1];
-        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
-        log.info(dbUrl);
-        dataSource.setUrl(dbUrl);
-        dataSource.setUsername(username);
-        dataSource.setPassword(password);
-        log.info("fuck: " + dataSource);
+        dataSource.setUrl("jdbc:postgresql://ec2-79-125-2-69.eu-west-1.compute.amazonaws.com:5432/dbnane6c19acb5?sslmode=require");
+        dataSource.setUsername("vrwuksarnhwksl"); //jasenko
+        dataSource.setPassword("94a6d7413fcd44094beab4b6b2d4ef0ee2dfe4b5caecf9a3d35e17b6bf6eab5b");
         return dataSource;
     }
 
@@ -51,7 +44,6 @@ public class SqlInitialization{
 //        dataSource.setPassword("jasenko");
 //        return dataSource;
 //    }
-
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws URISyntaxException {

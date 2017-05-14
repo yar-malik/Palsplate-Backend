@@ -20,6 +20,15 @@ Use the following queries:
 
 `INSERT INTO product VALUES (1, 'Cheese', 'euro', 14, 12, 1);`
 
+
+- - - -
+## ENVIRONMENT VARIABLES
+
+Use the following environment variables.
+PALSPLATE_DB_URL=
+
+
+
 - - - -
 ## Run Complete System
 

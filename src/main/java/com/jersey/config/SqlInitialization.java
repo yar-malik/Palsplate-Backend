@@ -16,10 +16,14 @@ import javax.sql.DataSource;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Properties;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 @Configuration
 @EnableJpaRepositories(basePackages = "com.jersey.persistence")
 public class SqlInitialization{
 
+    private static final Logger log = LogManager.getLogger(SqlInitialization.class);
     @Bean
     public DataSource dataSource() throws URISyntaxException {
 
@@ -30,10 +34,11 @@ public class SqlInitialization{
         String username = dbUri.getUserInfo().split(":")[0];
         String password = dbUri.getUserInfo().split(":")[1];
         String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
-
+        log.info(dbUrl);
         dataSource.setUrl(dbUrl);
         dataSource.setUsername(username);
         dataSource.setPassword(password);
+        log.info("fuck: " + dataSource);
         return dataSource;
     }
 

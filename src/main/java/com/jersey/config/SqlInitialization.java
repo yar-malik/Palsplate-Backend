@@ -20,23 +20,34 @@ import java.util.Properties;
 @EnableJpaRepositories(basePackages = "com.jersey.persistence")
 public class SqlInitialization{
 
-    @Bean
-    public DataSource dataSource() throws URISyntaxException {
+//    @Bean
+//    public DataSource dataSource() throws URISyntaxException {
+//
+//        URI dbUri = new URI(System.getenv("PALSPLATE_DB_URL"));
+//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+//        dataSource.setDriverClassName("org.postgresql.Driver");
+//
+//        String username = dbUri.getUserInfo().split(":")[0];
+//        String password = dbUri.getUserInfo().split(":")[1];
+//        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
+//
+//
+//        dataSource.setUrl(dbUrl);
+//        dataSource.setUsername(username);
+//        dataSource.setPassword(password);
+//        return dataSource;
+//    }
 
-        URI dbUri = new URI(System.getenv("PALSPLATE_DB_URL"));
+    @Bean
+    public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
-
-        String username = dbUri.getUserInfo().split(":")[0];
-        String password = dbUri.getUserInfo().split(":")[1];
-        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
-
-
-        dataSource.setUrl(dbUrl);
-        dataSource.setUsername(username);
-        dataSource.setPassword(password);
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/jersey-demo");
+        dataSource.setUsername("jasenko"); //jasenko
+        dataSource.setPassword("jasenko");
         return dataSource;
     }
+
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws URISyntaxException {

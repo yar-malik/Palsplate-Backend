@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* com.jersey.Application
+web: java -jar target/palsplate-backend-1.0-SNAPSHOT.jar

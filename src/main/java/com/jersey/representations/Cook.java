@@ -1,11 +1,10 @@
 package com.jersey.representations;
 
 import javax.persistence.*;
-import javax.persistence.GeneratedValue;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Product {
+public class Cook {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,13 +12,14 @@ public class Product {
 
     @NotNull
     private String name;
+
     private String currency;
 
-    @Column(name = "regularPrice")
+    @Column(name = "regular_price")
     @NotNull
     private Double regularPrice;
 
-    @Column(name = "discountPrice")
+    @Column(name = "discount_price")
     @NotNull
     private Double discountPrice;
 
@@ -27,10 +27,10 @@ public class Product {
     @NotNull
     private Long member_id;
 
-    public Product() {
+    public Cook() {
     }
 
-    public Product(Long id, String name, String currency, Double regularPrice, Double discountPrice) {
+    public Cook(Long id, String name, String currency, Double regularPrice, Double discountPrice) {
         this.id = id;
         this.name = name;
         this.currency = currency;

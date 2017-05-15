@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("/login")
+@Path("/logins")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Component
@@ -31,7 +31,7 @@ public class LoginResource {
     }
 
     @GET
-    @Path("{id}/login")
+    @Path("{id}/logins")
     public Login getAllProductsForMember(@PathParam("id")long id) {
         Login login = loginDao.findOne(id);
         if (login == null) {

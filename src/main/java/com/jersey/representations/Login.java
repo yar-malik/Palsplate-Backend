@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 public class Login {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -2,6 +2,7 @@ package com.jersey.representations;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Entity
 public class Cook {
@@ -13,6 +14,10 @@ public class Cook {
     @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="user_id")
     private Long user_id;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "food_id")
+    private Set<Food> foods;
 
     public Cook() {
     }

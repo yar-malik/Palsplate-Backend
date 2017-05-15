@@ -12,7 +12,7 @@ public class Customer {
 
     @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="user_id")
-    private Long user_id;
+    private User user;
 
     public Customer() {
     }
@@ -28,11 +28,11 @@ public class Customer {
         this.id = id;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public User getUser() {
+        return user;
     }
 
-    public void setUser_id(Long member_id) {
-        this.user_id = member_id;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

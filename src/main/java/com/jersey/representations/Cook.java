@@ -10,32 +10,15 @@ public class Cook {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    private String name;
-
-    private String currency;
-
-    @Column(name = "regular_price")
-    @NotNull
-    private Double regularPrice;
-
-    @Column(name = "discount_price")
-    @NotNull
-    private Double discountPrice;
-
-    @JoinColumn(name = "member_id")
-    @NotNull
-    private Long member_id;
+    @OneToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="user_id")
+    private Long user_id;
 
     public Cook() {
     }
 
-    public Cook(Long id, String name, String currency, Double regularPrice, Double discountPrice) {
+    public Cook(Long id) {
         this.id = id;
-        this.name = name;
-        this.currency = currency;
-        this.regularPrice = regularPrice;
-        this.discountPrice = discountPrice;
     }
     public Long getId() {
         return id;
@@ -45,43 +28,12 @@ public class Cook {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+
+    public Long getUser_id() {
+        return user_id;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Double getRegularPrice() {
-        return regularPrice;
-    }
-
-    public void setRegularPrice(Double regularPrice) {
-        this.regularPrice = regularPrice;
-    }
-
-    public Double getDiscountPrice() {
-        return discountPrice;
-    }
-
-    public void setDiscountPrice(Double discountPrice) {
-        this.discountPrice = discountPrice;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
-    public Long getMember_id() {
-        return member_id;
-    }
-
-    public void setMember_id(Long member_id) {
-        this.member_id = member_id;
+    public void setUser_id(Long member_id) {
+        this.user_id = user_id;
     }
 }

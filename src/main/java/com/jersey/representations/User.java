@@ -11,30 +11,53 @@ public class User {
     private Long id;
 
     @NotNull
-    private String name;
-    private String currency;
+    @Column(name = "email")
+    private String email;
 
-    @Column(name = "regular_price")
+    @Column(name = "first_name")
     @NotNull
-    private Double regularPrice;
+    private String firstName;
 
-    @Column(name = "discount_price")
+    @Column(name = "last_name")
     @NotNull
-    private Double discountPrice;
+    private String lastName;
 
-    @JoinColumn(name = "member_id")
+    @Column(name = "phone_number")
     @NotNull
-    private Long member_id;
+    private String phoneNumber;
+
+    @Column(name = "address")
+    @NotNull
+    private String address;
+
+    @Column(name = "photo_path")
+    @NotNull
+    private String photoPath;
+
+    @Column(name = "description")
+    @NotNull
+    private String description;
+
+    @Column(name = "is_photo_public")
+    @NotNull
+    private String isPhotoPublic;
 
     public User() {
     }
 
-    public User(Long id, String name, String currency, Double regularPrice, Double discountPrice) {
+    public User(Long id, String email, String firstName, String lastName,
+                String phoneNumber, String address, String photoPath, String description,
+                String isPhotoPublic) {
         this.id = id;
-        this.name = name;
-        this.currency = currency;
-        this.regularPrice = regularPrice;
-        this.discountPrice = discountPrice;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.photoPath = photoPath;
+        this.description = description;
+        this.isPhotoPublic = isPhotoPublic;
+
     }
     public Long getId() {
         return id;
@@ -44,43 +67,71 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getEmail() {
+        return email;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public Double getRegularPrice() {
-        return regularPrice;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setRegularPrice(Double regularPrice) {
-        this.regularPrice = regularPrice;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public Double getDiscountPrice() {
-        return discountPrice;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setDiscountPrice(Double discountPrice) {
-        this.discountPrice = discountPrice;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getCurrency() {
-        return currency;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public Long getMember_id() {
-        return member_id;
+    public String getAddress() {
+        return address;
     }
 
-    public void setMember_id(Long member_id) {
-        this.member_id = member_id;
+    public void setAddress(String address) {
+        this.address = address;
     }
+
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getIsPhotoPublic() {
+        return isPhotoPublic;
+    }
+
+    public void setIsPhotoPublic(String isPhotoPublic) {
+        this.isPhotoPublic = isPhotoPublic;
+    }
+
+
+
+
 }

@@ -19,6 +19,10 @@ public class Login {
     @NotNull
     private String password;
 
+    @OneToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="user_id")
+    private Long user_id;
+
     public Login() {
     }
 

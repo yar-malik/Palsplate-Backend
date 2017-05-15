@@ -11,8 +11,8 @@ public class Customer {
     private Long id;
 
     @OneToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="user_id")
-    private User user;
+    @JoinColumn(name="person_id")
+    private Person person;
 
     public Customer() {
     }
@@ -28,11 +28,11 @@ public class Customer {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 }

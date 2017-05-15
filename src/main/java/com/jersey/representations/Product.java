@@ -15,11 +15,11 @@ public class Product {
     private String name;
     private String currency;
 
-    @Column(name = "regularPrice")
+    @Column(name = "regular_price")
     @NotNull
     private Double regularPrice;
 
-    @Column(name = "discountPrice")
+    @Column(name = "discount_price")
     @NotNull
     private Double discountPrice;
 

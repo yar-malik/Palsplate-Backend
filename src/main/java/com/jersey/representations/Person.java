@@ -4,7 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class User {
+public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,10 +42,10 @@ public class User {
     @NotNull
     private String isPhotoPublic;
 
-    public User() {
+    public Person() {
     }
 
-    public User(Long id, String email, String firstName, String lastName,
+    public Person(Long id, String email, String firstName, String lastName,
                 String phoneNumber, String address, String photoPath, String description,
                 String isPhotoPublic) {
         this.id = id;

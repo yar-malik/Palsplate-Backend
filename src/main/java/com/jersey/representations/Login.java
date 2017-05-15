@@ -21,7 +21,7 @@ public class Login {
 
     @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="user_id")
-    private Long user_id;
+    private Person person;
 
     public Login() {
     }

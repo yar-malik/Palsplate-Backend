@@ -12,8 +12,8 @@ public class Cook {
     private Long id;
 
     @OneToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="user_id")
-    private Long user_id;
+    @JoinColumn(name="person_id")
+    private Person person;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "food_id")
@@ -34,11 +34,11 @@ public class Cook {
     }
 
 
-    public Long getUser_id() {
-        return user_id;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setUser_id(Long member_id) {
-        this.user_id = user_id;
+    public void setUser_id(Person person) {
+        this.person = person;
     }
 }

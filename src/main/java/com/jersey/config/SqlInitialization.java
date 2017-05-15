@@ -12,6 +12,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
 import javax.sql.DataSource;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Properties;
 import org.apache.log4j.LogManager;
@@ -25,11 +26,26 @@ public class SqlInitialization{
 
     @Bean
     public DataSource dataSource() {
+
+        URI dbUri = null;
+        try {
+            dbUri = new URI(System.getenv("PALSPLATE_DB_URL"));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            log.debug("PALSPLATE_DB_URL environment variable does not exist");
+        }
+        log.info(dbUri);
+        String username = dbUri.getUserInfo().split(":")[0];
+        String password = dbUri.getUserInfo().split(":")[1];
+        log.info(username);
+        log.info(password);
+
+        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://ec2-79-125-2-69.eu-west-1.compute.amazonaws.com:5432/dbnane6c19acb5?sslmode=require");
-        dataSource.setUsername("vrwuksarnhwksl"); //jasenko
-        dataSource.setPassword("94a6d7413fcd44094beab4b6b2d4ef0ee2dfe4b5caecf9a3d35e17b6bf6eab5b");
+        dataSource.setUrl(dbUrl);
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
         return dataSource;
     }
 

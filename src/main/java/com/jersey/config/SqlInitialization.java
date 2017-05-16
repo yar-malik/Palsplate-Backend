@@ -24,40 +24,40 @@ public class SqlInitialization{
 
     private static final Logger log = LogManager.getLogger(SqlInitialization.class);
 
-//    @Bean
-//    public DataSource dataSource() {
-//
-//        URI dbUri = null;
-//        try {
-//            dbUri = new URI(System.getenv("PALSPLATE_DB_URL"));
-//        } catch (URISyntaxException e) {
-//            e.printStackTrace();
-//            log.debug("PALSPLATE_DB_URL environment variable does not exist");
-//        }
-//        log.info("fuck" + dbUri);
-//        String username = dbUri.getUserInfo().split(":")[0];
-//        String password = dbUri.getUserInfo().split(":")[1];
-//        log.info(username);
-//        log.info(password);
-//
-//        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
-//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//        dataSource.setDriverClassName("org.postgresql.Driver");
-//        dataSource.setUrl(dbUrl);
-//        dataSource.setUsername(username);
-//        dataSource.setPassword(password);
-//        return dataSource;
-//    }
-
     @Bean
     public DataSource dataSource() {
+
+        URI dbUri = null;
+        try {
+            dbUri = new URI(System.getenv("PALSPLATE_DB_URL"));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            log.debug("PALSPLATE_DB_URL environment variable does not exist");
+        }
+        log.info("fuck" + dbUri);
+        String username = dbUri.getUserInfo().split(":")[0];
+        String password = dbUri.getUserInfo().split(":")[1];
+        log.info(username);
+        log.info(password);
+
+        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/jersey-demo");
-        dataSource.setUsername("jasenko"); //jasenko
-        dataSource.setPassword("jasenko");
+        dataSource.setUrl(dbUrl);
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
         return dataSource;
     }
+
+//    @Bean
+//    public DataSource dataSource() {
+//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+//        dataSource.setDriverClassName("org.postgresql.Driver");
+//        dataSource.setUrl("jdbc:postgresql://localhost:5432/jersey-demo");
+//        dataSource.setUsername("jasenko"); //jasenko
+//        dataSource.setPassword("jasenko");
+//        return dataSource;
+//    }
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws URISyntaxException {

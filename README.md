@@ -59,7 +59,11 @@ limit 10;
 The code only uses the following environment variables.
 PALSPLATE_DB_URL
 
-This value is equal to the db url from Heroku. (Remember that Heroku url is different from posgres url)
+This value is equal to the db url from Heroku. 
+(Remember that Heroku url is different from posgres url)
+Heroku Postgres url: `postgres://<username>:<password>@<host>:<port>/<dbname>`
+Java Posgres url: `jdbc:postgresql://<host>:<port>/<dbname>?user=<username>&password=<password>`
+
 
 - - - -
 ## Run Complete System

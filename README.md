@@ -17,11 +17,6 @@ Populate palsplate-demo database with some dummy data.
 Use the following queries: 
 
 ```
-INSERT INTO member VALUES(1, 'Asfandyar', 'Malik', 'malikasfandyarashraf@gmail.com')
-
-INSERT INTO product VALUES (1, 'Cheese', 'euro', 14, 12, 1);`
-INSERT INTO product VALUES (3, 'Yogurt', 'euro', 2, 1, 1);
-
 INSERT INTO login VALUES (1, 'Asfandyar', 'mypass');
 INSERT INTO login VALUES (2, 'Giroud', 'giroud_pass');
 INSERT INTO login VALUES (3, 'ramsey', 'ramsey_mypass');

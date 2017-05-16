@@ -19,9 +19,9 @@ public class Login {
     @NotNull
     private String password;
 
-    @OneToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="user_id")
-    private Person person;
+//    @OneToOne(fetch=FetchType.LAZY)
+//    @JoinColumn(name="person_id")
+//    private Person person;
 
     public Login() {
     }

@@ -35,6 +35,7 @@ INSERT INTO Customer VALUES (1, 1)
 INSERT INTO Cook VALUES (1, 2)
 INSERT INTO Cook VALUES (2, 3)
 
+INSERT INTO FOOD VALUES(1, 'Biryani', '2011-05-16 15:36:38', '2011-06-16 15:36:38', 'Indian delight', 5, 3, 'vegetarian', 'Indian', 0.45, 0.56, true, 1)
 INSERT INTO FOOD VALUES(2, 'Omlette', '2011-05-16 15:36:38', '2011-06-16 15:36:38', 'French delight', 5, 3, 'vegetarian', 'French', 0.45, 0.56, true, 1)
 INSERT INTO FOOD VALUES(3, 'burger', '2011-05-16 15:36:38', '2011-06-16 15:36:38', 'fast food delight', 5, 3, 'meat', 'fast_food', 0.45, 0.56, true, 2)
 ```
@@ -49,7 +50,7 @@ select *
 from cook c
 inner join person p on c.person_id = p.id
 inner join food f on c.id = f.cook_id
-where f.is_active = 't';
+where f.is_active = 't'
 limit 10;
 ```
 

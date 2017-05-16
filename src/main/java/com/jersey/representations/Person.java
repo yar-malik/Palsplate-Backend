@@ -30,9 +30,9 @@ public class Person {
     @NotNull
     private String address;
 
-    @Column(name = "photo_path")
-    @NotNull
-    private String photoPath;
+//    @Column(name = "photo_path")
+//    @NotNull
+//    private String photoPath;
 
     @Column(name = "description")
     @NotNull
@@ -46,7 +46,7 @@ public class Person {
     }
 
     public Person(Long id, String email, String firstName, String lastName,
-                String phoneNumber, String address, String photoPath, String description,
+                String phoneNumber, String address, String description,
                 String isPhotoPublic) {
         this.id = id;
         this.email = email;
@@ -54,7 +54,7 @@ public class Person {
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.address = address;
-        this.photoPath = photoPath;
+//        this.photoPath = photoPath;
         this.description = description;
         this.isPhotoPublic = isPhotoPublic;
 
@@ -107,13 +107,13 @@ public class Person {
         this.address = address;
     }
 
-    public String getPhotoPath() {
-        return photoPath;
-    }
-
-    public void setPhotoPath(String photoPath) {
-        this.photoPath = photoPath;
-    }
+//    public String getPhotoPath() {
+//        return photoPath;
+//    }
+//
+//    public void setPhotoPath(String photoPath) {
+//        this.photoPath = photoPath;
+//    }
 
     public String getDescription() {
         return description;

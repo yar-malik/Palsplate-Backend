@@ -25,13 +25,13 @@ public class Food {
     @Temporal(TemporalType.TIMESTAMP)
     private Date offer_stop;
 
-    @Column(name = "desciption")
+    @Column(name = "description")
     @NotNull
     private String description;
 
-    @Column(name = "currency")
-    @NotNull
-    private Double currency;
+//    @Column(name = "currency")
+//    @NotNull
+//    private Double currency;
 
     @Column(name = "price")
     @NotNull
@@ -126,13 +126,13 @@ public class Food {
         this.description = description;
     }
 
-    public Double getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(Double currency) {
-        this.currency = currency;
-    }
+//    public Double getCurrency() {
+//        return currency;
+//    }
+//
+//    public void setCurrency(Double currency) {
+//        this.currency = currency;
+//    }
 
     public Double getPrice() {
         return price;

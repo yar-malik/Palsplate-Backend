@@ -16,7 +16,7 @@ public class Cook {
     private Person person;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "food_id")
+    @JoinColumn(name = "cook_id")
     private Set<Food> foods;
 
     public Cook() {
@@ -33,12 +33,12 @@ public class Cook {
         this.id = id;
     }
 
-
-    public Person getPerson() {
-        return person;
+    public Set<Food> getFoods() {
+        return foods;
     }
 
-    public void setUser_id(Person person) {
-        this.person = person;
+    public void setFoods(Set<Food> foods) {
+        this.foods = foods;
     }
+
 }

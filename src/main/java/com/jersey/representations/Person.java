@@ -40,14 +40,18 @@ public class Person {
 
     @Column(name = "is_photo_public")
     @NotNull
-    private String isPhotoPublic;
+    private boolean isPhotoPublic;
+
+    @JoinColumn(name = "login_id")
+    @NotNull
+    private Long login_id;
 
     public Person() {
     }
 
     public Person(Long id, String email, String firstName, String lastName,
                 String phoneNumber, String address, String description,
-                String isPhotoPublic) {
+                boolean isPhotoPublic) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
@@ -123,11 +127,11 @@ public class Person {
         this.description = description;
     }
 
-    public String getIsPhotoPublic() {
+    public boolean getIsPhotoPublic() {
         return isPhotoPublic;
     }
 
-    public void setIsPhotoPublic(String isPhotoPublic) {
+    public void setIsPhotoPublic(boolean isPhotoPublic) {
         this.isPhotoPublic = isPhotoPublic;
     }
 

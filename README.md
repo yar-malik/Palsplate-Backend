@@ -79,3 +79,50 @@ mvn clean package && java -jar target/palsplate-backend-1.0-SNAPSHOT.jar
 ```
 
 Go to: `localhost:8080/products`
+
+
+- - - -
+## REST REQUEST
+
+Following is a list of some examples of rest requests one can use:
+
+```
+GET: http://localhost:8080/cooks
+GET: http://localhost:8080/cooks/1
+GET: http://localhost:8080/foods
+GET: http://localhost:8080/cooks/1/foods
+GET: http://localhost:8080/logins
+GET: http://localhost:8080/customers/1
+```
+
+
+`POST http://localhost:8080/logins`
+
+```
+{
+"id":4,
+"password":"kredito",
+"userName":"pikachu"
+}
+```
+
+`POST http://localhost:8080/persons`
+```
+{
+"id": 4,
+"email": "wishere@gmail.com",
+"firstName": "Jack",
+"lastName": "wishere",
+"phoneNumber": "+157511743434",
+"address": "uk",
+"description": "foodie",
+"isPhotoPublic": "true",
+"login_id": 4
+}
+```
+
+
+
+
+
+

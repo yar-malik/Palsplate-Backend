@@ -1,4 +1,4 @@
-# PalsPlat Backend 
+# PalsPlate Backend 
 
 ## Technology Stack:
 
@@ -40,15 +40,13 @@ INSERT INTO FOOD VALUES(3, 'burger', '2011-05-16 15:36:38', '2011-06-16 15:36:38
 ```
 
 
-
-
 - - - -
 ## ENVIRONMENT VARIABLES
 
-Use the following environment variables.
-PALSPLATE_DB_URL=
+The code only uses the following environment variables.
+PALSPLATE_DB_URL
 
-
+This value is equal to the db url from Heroku. (Remember that Heroku url is different from posgres url)
 
 - - - -
 ## Run Complete System

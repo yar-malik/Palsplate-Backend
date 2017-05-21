@@ -90,7 +90,7 @@ GET: http://localhost:8080/logins
 GET: http://localhost:8080/customers/1
 ```
 
-##### Login
+### Login
 * Get one specific record from login table
 ``GET http://localhost:8080/logins/{id}``
 * Update a specific record
@@ -108,7 +108,7 @@ GET: http://localhost:8080/customers/1
 where {id} is the unique id identifying a customer
 
 
-##### Person
+### Person
 
 
 `POST http://localhost:8080/persons`

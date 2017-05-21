@@ -34,7 +34,6 @@ public class SqlInitialization{
             e.printStackTrace();
             log.debug("PALSPLATE_DB_URL environment variable does not exist");
         }
-        log.info("fuck" + dbUri);
         String username = dbUri.getUserInfo().split(":")[0];
         String password = dbUri.getUserInfo().split(":")[1];
         log.info(username);

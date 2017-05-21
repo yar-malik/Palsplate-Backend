@@ -222,3 +222,9 @@ where curlJsonCustomer.txt contains:
  ````
 
 
+### Useful Rest Requests
+
+* Get all foods for a specific cook
+`` GET http://localhost:8080/cooks/1/foods ``
+
+

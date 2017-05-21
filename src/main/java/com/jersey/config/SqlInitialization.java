@@ -24,12 +24,14 @@ public class SqlInitialization{
 
     private static final Logger log = LogManager.getLogger(SqlInitialization.class);
 
+    String PALSPLATE_DB_URL = "postgres://username:password@ec2-79-125-2-69.eu-west-1.compute.amazonaws.com:5432/dbnane6c19acb5";
+
     @Bean
     public DataSource dataSource() {
 
         URI dbUri = null;
         try {
-            dbUri = new URI(System.getenv("PALSPLATE_DB_URL"));
+            dbUri = new URI(PALSPLATE_DB_URL);
         } catch (URISyntaxException e) {
             e.printStackTrace();
             log.debug("PALSPLATE_DB_URL environment variable does not exist");

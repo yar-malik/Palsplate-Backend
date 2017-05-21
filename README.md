@@ -90,16 +90,26 @@ GET: http://localhost:8080/logins
 GET: http://localhost:8080/customers/1
 ```
 
-
-`POST http://localhost:8080/logins`
-
+#####Login
+* Get one specific record from login table
+``GET http://localhost:8080/logins/{id}``
+* Update a specific record
+``PUT http://localhost:8080/logins/{id}``
+* Delete a specific record
+``DELETE http://localhost:8080/logins/{id}``
+* Create a new record with following payload
+``POST http://localhost:8080/logins``
 ```
 {
-"id":4,
-"password":"kredito",
-"userName":"pikachu"
+  "userName":"Ronaldo",
+  "password":"mypass"
 }
 ```
+where {id} is the unique id identifying a customer
+
+
+#####Person
+
 
 `POST http://localhost:8080/persons`
 ```

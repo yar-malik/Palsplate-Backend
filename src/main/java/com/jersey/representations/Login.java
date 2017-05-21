@@ -3,6 +3,7 @@ package com.jersey.representations;
 import javax.persistence.*;
 import javax.persistence.GeneratedValue;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Entity
 public class Login {
@@ -19,10 +20,9 @@ public class Login {
     @NotNull
     private String password;
 
-
-//    @OneToOne(fetch=FetchType.LAZY)
-//    @JoinColumn(name="person_id")
-//    private Person person;
+    @OneToMany(fetch=FetchType.LAZY)
+    @JoinColumn(name="login_id")
+    private Set<Person> persons;
 
     public Login() {
     }
@@ -56,5 +56,12 @@ public class Login {
         this.password = password;
     }
 
+    public Set<Person> getPersons() {
+        return persons;
+    }
+
+    public void setPersons(Set<Person> products) {
+        this.persons = persons;
+    }
 
 }

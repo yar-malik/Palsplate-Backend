@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -23,6 +24,8 @@ public class CookResource {
     public CookResource(CookDao cookDao) {
         this.cookDao = cookDao;
     }
+
+
     @GET
     public List<Cook> getAll(){
         return this.cookDao.findAll();
@@ -48,5 +51,47 @@ public class CookResource {
             throw new WebApplicationException((Response.Status.NOT_FOUND));
         }
         return cook;
+    }
+
+    /**
+     * Create new Cook
+     * @param cook
+     * @return new cook
+     */
+    @POST
+    public Cook save(@Valid Cook cook) {
+        return cookDao.save(cook);
+    }
+
+    /**
+     * Update existing Cook
+     * @param id
+     * @param cook
+     * @return updated cook
+     */
+    @PUT
+    @Path("{id}")
+    public Cook update(@PathParam("id")long id, @Valid Cook cook) {
+        if(cookDao.findOne(id) == null){
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }else {
+            cook.setId(id);
+            return cookDao.save(cook);
+        }
+    }
+
+    /**
+     * Delete cook
+     * @param id
+     */
+    @DELETE
+    @Path("{id}")
+    public void delete(@PathParam("id")long id) {
+        Cook cook = cookDao.findOne(id);
+        if(cook == null){
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }else {
+            cookDao.delete(cook);
+        }
     }
 }

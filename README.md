@@ -132,8 +132,25 @@ where {id} is the unique id identifying a customer
 }
 ```
 
+#### CURL REQUEST
 
+Sample post request with CURL example
 
+`curl -X POST -d @curlJson.txt http://localhost:8080/persons --header "Content-Type:application/json"`
 
+where curlJson.txt contains:
+```
+{
+"email": "Saad@gmail.com",
+"firstName": "Saad",
+"lastName": "Saeed",
+"phoneNumber": "+157511743434",
+"address": "Germany",
+"description": "foodie",
+"isPhotoPublic": "true",
+"login_id": 2
+}
+
+```
 
 

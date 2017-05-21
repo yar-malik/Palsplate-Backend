@@ -202,6 +202,23 @@ where curlJsonCustomer.txt contains:
  ``DELETE http://localhost:8080/foods/{id}``
  * Create a new record with a curl example
  
- 
+ `curl -X POST -d @curlJsonFood.txt http://localhost:8080/foods --header "Content-Type:application/json"`
+
+ ````
+ {
+ "name": "Veggie special",
+ "offer_start": 1305552998000,
+ "offer_stop": 1308231398000,
+ "description": "vegetarian delight",
+ "price": 5,
+ "portion": 2,
+ "food_type": "veggie",
+ "cuisine_type": "fast_food",
+ "lat": 0.45,
+ "lon": 0.56,
+ "is_active": true,
+ "cook_id": 3
+ }
+ ````
 
 

@@ -65,6 +65,7 @@ public class Food {
     @NotNull
     private Long cook_id;
 
+
     public Food() {
     }
 

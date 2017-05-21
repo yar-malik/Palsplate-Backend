@@ -2,6 +2,7 @@ package com.jersey.representations;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Entity
 public class Customer {
@@ -10,9 +11,12 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="person_id")
-    private Person person;
+    @JoinColumn(name = "person_id")
+    private Long person_id;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cook_id")
+    private Set<Person> persons;
 
     public Customer() {
     }
@@ -28,11 +32,11 @@ public class Customer {
         this.id = id;
     }
 
-    public Person getPerson() {
-        return person;
+    public Long getPerson_id() {
+        return person_id;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPerson_id(Long person_id) {
+        this.person_id = person_id;
     }
 }

@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@Table(name = "person")
 public class Person {
 
     @Id
@@ -45,6 +46,12 @@ public class Person {
     @JoinColumn(name = "login_id")
     @NotNull
     private Long login_id;
+
+    @JoinColumn(name = "cook_id")
+    private Long cook_id;
+
+    @JoinColumn(name = "customer_id")
+    private Long customer_id;
 
     public Person() {
     }
@@ -141,5 +148,29 @@ public class Person {
 
     public void setLogin_id(Long login_id) {
         this.login_id = login_id;
+    }
+
+    public Long getCook_id() {
+        return cook_id;
+    }
+
+    public void setCook_id(Long cook_id) {
+        this.cook_id = cook_id;
+    }
+
+    public boolean isPhotoPublic() {
+        return isPhotoPublic;
+    }
+
+    public void setPhotoPublic(boolean photoPublic) {
+        isPhotoPublic = photoPublic;
+    }
+
+    public Long getCustomer_id() {
+        return customer_id;
+    }
+
+    public void setCustomer_id(Long customer_id) {
+        this.customer_id = customer_id;
     }
 }

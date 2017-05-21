@@ -91,7 +91,7 @@ GET: http://localhost:8080/customers/1
 ```
 
 ### Login
-* Get one specific record from login table
+* Get one specific record
 ``GET http://localhost:8080/logins/{id}``
 * Update a specific record
 ``PUT http://localhost:8080/logins/{id}``
@@ -110,7 +110,7 @@ where {id} is the unique id identifying a customer
 
 ### Person
 
- * Get one specific record from Person table
+ * Get one specific record 
  ``GET http://localhost:8080/persons/{id}``
  * Update a specific record
  ``PUT http://localhost:8080/logins/{id}``
@@ -132,10 +132,6 @@ where {id} is the unique id identifying a customer
 }
 ```
 
-#### CURL REQUEST
-
-Sample post request with CURL example
-
 `curl -X POST -d @curlJson.txt http://localhost:8080/persons --header "Content-Type:application/json"`
 
 where curlJson.txt contains:
@@ -152,5 +148,60 @@ where curlJson.txt contains:
 }
 
 ```
+
+
+### Cook
+
+ * Get one specific record 
+ ``GET http://localhost:8080/cooks/{id}``
+ * Update a specific record
+ ``PUT http://localhost:8080/cooks/{id}``
+ * Delete a specific record
+ ``DELETE http://localhost:8080/cooks/{id}``
+ * Create a new record with a curl example
+
+
+`curl -X POST -d @curlJsonCook.txt http://localhost:8080/cooks --header "Content-Type:application/json"`
+
+where curlJsonCook.txt contains:
+```
+{
+  "person_id": 7
+}
+```
+
+
+
+### Customers
+
+ * Get one specific record 
+ ``GET http://localhost:8080/customers/{id}``
+ * Update a specific record
+ ``PUT http://localhost:8080/customers/{id}``
+ * Delete a specific record
+ ``DELETE http://localhost:8080/customers/{id}``
+ * Create a new record with a curl example
+
+
+`curl -X POST -d @curlJsonCustomer.txt http://localhost:8080/customers --header "Content-Type:application/json"`
+
+where curlJsonCustomer.txt contains:
+```
+{
+  "person_id": 7
+}
+```
+
+### Foods
+
+ * Get one specific record 
+ ``GET http://localhost:8080/foods/{id}``
+ * Update a specific record
+ ``PUT http://localhost:8080/foods/{id}``
+ * Delete a specific record
+ ``DELETE http://localhost:8080/foods/{id}``
+ * Create a new record with a curl example
+ 
+ 
 
 

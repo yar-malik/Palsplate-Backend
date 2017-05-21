@@ -24,7 +24,7 @@ public class SqlInitialization{
 
     private static final Logger log = LogManager.getLogger(SqlInitialization.class);
 
-    String PALSPLATE_DB_URL = "postgres://username:password@ec2-79-125-2-69.eu-west-1.compute.amazonaws.com:5432/dbnane6c19acb5";
+    String PALSPLATE_DB_URL = "postgres://vrwuksarnhwksl:94a6d7413fcd44094beab4b6b2d4ef0ee2dfe4b5caecf9a3d35e17b6bf6eab5b@ec2-79-125-2-69.eu-west-1.compute.amazonaws.com:5432/dbnane6c19acb5";
 
     @Bean
     public DataSource dataSource() {
@@ -50,15 +50,6 @@ public class SqlInitialization{
         return dataSource;
     }
 
-//    @Bean
-//    public DataSource dataSource() {
-//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//        dataSource.setDriverClassName("org.postgresql.Driver");
-//        dataSource.setUrl("jdbc:postgresql://localhost:5432/jersey-demo");
-//        dataSource.setUsername("jasenko"); //jasenko
-//        dataSource.setPassword("jasenko");
-//        return dataSource;
-//    }
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws URISyntaxException {

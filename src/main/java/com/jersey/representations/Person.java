@@ -135,7 +135,11 @@ public class Person {
         this.isPhotoPublic = isPhotoPublic;
     }
 
+    public Long getLogin_id() {
+        return login_id;
+    }
 
-
-
+    public void setLogin_id(Long login_id) {
+        this.login_id = login_id;
+    }
 }

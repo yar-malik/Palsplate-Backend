@@ -110,11 +110,17 @@ where {id} is the unique id identifying a customer
 
 ### Person
 
+ * Get one specific record from Person table
+ ``GET http://localhost:8080/persons/{id}``
+ * Update a specific record
+ ``PUT http://localhost:8080/logins/{id}``
+ * Delete a specific record
+ ``DELETE http://localhost:8080/logins/{id}``
+ * Create a new record with following payload
 
 `POST http://localhost:8080/persons`
 ```
 {
-"id": 4,
 "email": "wishere@gmail.com",
 "firstName": "Jack",
 "lastName": "wishere",

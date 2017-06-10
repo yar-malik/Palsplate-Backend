@@ -228,3 +228,9 @@ where curlJsonCustomer.txt contains:
 `` GET http://localhost:8080/cooks/1/foods ``
 
 
+
+
+### Note
+
+We implemented Jersey with Spring for REST support using JAX-RS API
+Although, Spring has pretty good REST support.

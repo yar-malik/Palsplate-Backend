@@ -232,5 +232,5 @@ where curlJsonCustomer.txt contains:
 
 ### Note
 
-We implemented Jersey with Spring for REST support using JAX-RS API
-Although, Spring has pretty good REST support.
+We implemented Jersey with Spring for REST support using JAX-RS API. Although, Spring has pretty good REST support.
+Hence you will see difference in Annotations like @PATH rather than @RequestMapping

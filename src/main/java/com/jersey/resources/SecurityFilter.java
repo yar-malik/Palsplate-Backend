@@ -1,5 +1,7 @@
 package com.jersey.resources;
 
+import com.jersey.persistence.LoginDao;
+import com.jersey.representations.Login;
 import org.glassfish.jersey.internal.util.Base64;
 
 import javax.ws.rs.container.ContainerRequestContext;
@@ -12,7 +14,8 @@ import java.util.StringTokenizer;
 
 @Provider
 public class SecurityFilter implements ContainerRequestFilter {
-	
+
+	private LoginDao loginDao;
 	private static final String AUTHORIZATION_HEADER_KEY = "Authorization"; 
 	private static final String AUTHORIZATION_HEADER_PREFIX = "Basic "; 
 	private static final String SECURED_URL_PREFIX = "secured"; 
@@ -28,12 +31,21 @@ public class SecurityFilter implements ContainerRequestFilter {
 				StringTokenizer tokenizer = new StringTokenizer(decodedString, ":");
 				String username = tokenizer.nextToken();
 				String password = tokenizer.nextToken();
-				
+
+//				List<Login> logins = this.loginDao.findAll();
+//				System.out.println("all Logins: " + logins);
+//
+//				for(Login thisLogin: logins){
+//					if(thisLogin.getUserName().equals(username) && thisLogin.getPassword().equals(password)){
+//						return;
+//					}
+//				}
+
 				if ("user".equals(username) && "password".equals(password)) {
 					return;
 				}
-				
 			}
+
 			Response unauthorizedStatus = Response
 								            .status(Response.Status.UNAUTHORIZED)
 								            .entity("User cannot access the resource. Please pass in Basic Authentication header")

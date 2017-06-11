@@ -228,13 +228,14 @@ where curlJsonCustomer.txt contains:
 `` GET http://localhost:8080/cooks/1/foods ``
 
 
+- - - -
 ### @Annotations
 
 We implemented Jersey with Spring for REST support using JAX-RS API. Although, Spring has pretty good REST support.
 
 Hence you will see difference in Annotations like @PATH being used rather than @RequestMapping
 
-
+- - - -
 ### Security
 
 Basic Authentication has been set up. In order to make api calls, Base64 encode your username and password and send it

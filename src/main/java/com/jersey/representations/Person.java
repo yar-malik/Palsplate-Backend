@@ -11,6 +11,14 @@ public class Person {
     private Long id;
 
     @NotNull
+    @Column(name="username")
+    private String username;
+
+    @NotNull
+    @Column(name="passowrd")
+    private String password;
+
+    @NotNull
     @Column(name = "email")
     private String email;
 
@@ -135,7 +143,8 @@ public class Person {
         this.isPhotoPublic = isPhotoPublic;
     }
 
+    public String getUsername(){return this.username;}
 
-
+    public String getPassword(){return this.password;}
 
 }

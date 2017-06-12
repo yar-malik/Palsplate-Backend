@@ -1,8 +1,10 @@
 package com.jersey;
 
+import com.jersey.Authorization.Authorization;
 import com.jersey.config.JerseyInitialization;
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.glassfish.jersey.servlet.ServletProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
@@ -18,10 +20,10 @@ public class Application {
         new SpringApplicationBuilder(Application.class).run(args);
     }
 
-    @Bean
+ /*   @Bean
     public ServletRegistrationBean jerseyServlet() {
         ServletRegistrationBean registration = new ServletRegistrationBean(new ServletContainer(), "/*");
         registration.addInitParameter(ServletProperties.JAXRS_APPLICATION_CLASS, JerseyInitialization.class.getName());
         return registration;
-    }
+    }*/
 }

@@ -10,43 +10,45 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 
 /**
  * Created by muhammad on 6/11/17.
  */
-@Service("accountdetailsservice")
+@Component
 public class AccountUserDetailsService implements UserDetailsService {
 
 
     @Autowired
-    LoginDao accountRepository;
+    private LoginDao accountRepository;
 
-    public AccountUserDetailsService(){
-        accountRepository = null;
-    }
-    public AccountUserDetailsService(LoginDao accountRepository){
-        this.accountRepository = accountRepository;
-    }
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
+        System.out.println("Username: " + username);
+
        // Login person = accountRepository.findByUsername(username);
         Login person = new Login(new Long(1234),"username", "password");
+
+        String password = String.format("%040x", new BigInteger(1, new String("password").getBytes()));
+
         Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        GrantedAuthority g = new SimpleGrantedAuthority("password");
+        GrantedAuthority g = new SimpleGrantedAuthority("ROLE_USER");
         grantedAuthorities.add(g);
 
-        return new User(person.getUserName(), person.getPassword(), grantedAuthorities);
+        return new User("html5", password, grantedAuthorities);
 
     }
 }

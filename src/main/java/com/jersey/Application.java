@@ -1,6 +1,5 @@
 package com.jersey;
 
-import com.jersey.Authorization.Authorization;
 import com.jersey.config.JerseyInitialization;
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.glassfish.jersey.servlet.ServletProperties;

@@ -15,6 +15,8 @@ import javax.sql.DataSource;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Properties;
+import java.util.Scanner;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -42,6 +44,7 @@ public class SqlInitialization{
         log.info(password);
 
         String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
+
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
         dataSource.setUrl(dbUrl);

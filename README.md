@@ -90,21 +90,37 @@ GET: http://localhost:8080/logins
 GET: http://localhost:8080/customers/1
 ```
 
-
-`POST http://localhost:8080/logins`
-
+### Login
+* Get one specific record
+``GET http://localhost:8080/logins/{id}``
+* Update a specific record
+``PUT http://localhost:8080/logins/{id}``
+* Delete a specific record
+``DELETE http://localhost:8080/logins/{id}``
+* Create a new record with following payload
+``POST http://localhost:8080/logins``
 ```
 {
-"id":4,
-"password":"kredito",
-"userName":"pikachu"
+  "userName":"Ronaldo",
+  "password":"mypass"
 }
 ```
+where {id} is the unique id identifying a customer
+
+
+### Person
+
+ * Get one specific record 
+ ``GET http://localhost:8080/persons/{id}``
+ * Update a specific record
+ ``PUT http://localhost:8080/logins/{id}``
+ * Delete a specific record
+ ``DELETE http://localhost:8080/logins/{id}``
+ * Create a new record with following payload
 
 `POST http://localhost:8080/persons`
 ```
 {
-"id": 4,
 "email": "wishere@gmail.com",
 "firstName": "Jack",
 "lastName": "wishere",
@@ -116,8 +132,111 @@ GET: http://localhost:8080/customers/1
 }
 ```
 
+`curl -X POST -d @curlJson.txt http://localhost:8080/persons --header "Content-Type:application/json"`
+
+where curlJson.txt contains:
+```
+{
+"email": "Saad@gmail.com",
+"firstName": "Saad",
+"lastName": "Saeed",
+"phoneNumber": "+157511743434",
+"address": "Germany",
+"description": "foodie",
+"isPhotoPublic": "true",
+"login_id": 2
+}
+
+```
+
+
+### Cook
+
+ * Get one specific record 
+ ``GET http://localhost:8080/cooks/{id}``
+ * Update a specific record
+ ``PUT http://localhost:8080/cooks/{id}``
+ * Delete a specific record
+ ``DELETE http://localhost:8080/cooks/{id}``
+ * Create a new record with a curl example
+
+
+`curl -X POST -d @curlJsonCook.txt http://localhost:8080/cooks --header "Content-Type:application/json"`
+
+where curlJsonCook.txt contains:
+```
+{
+  "person_id": 7
+}
+```
 
 
 
+### Customers
+
+ * Get one specific record 
+ ``GET http://localhost:8080/customers/{id}``
+ * Update a specific record
+ ``PUT http://localhost:8080/customers/{id}``
+ * Delete a specific record
+ ``DELETE http://localhost:8080/customers/{id}``
+ * Create a new record with a curl example
 
 
+`curl -X POST -d @curlJsonCustomer.txt http://localhost:8080/customers --header "Content-Type:application/json"`
+
+where curlJsonCustomer.txt contains:
+```
+{
+  "person_id": 7
+}
+```
+
+### Foods
+
+ * Get one specific record 
+ ``GET http://localhost:8080/foods/{id}``
+ * Update a specific record
+ ``PUT http://localhost:8080/foods/{id}``
+ * Delete a specific record
+ ``DELETE http://localhost:8080/foods/{id}``
+ * Create a new record with a curl example
+ 
+ `curl -X POST -d @curlJsonFood.txt http://localhost:8080/foods --header "Content-Type:application/json"`
+
+ ````
+ {
+ "name": "Veggie special",
+ "offer_start": 1305552998000,
+ "offer_stop": 1308231398000,
+ "description": "vegetarian delight",
+ "price": 5,
+ "portion": 2,
+ "food_type": "veggie",
+ "cuisine_type": "fast_food",
+ "lat": 0.45,
+ "lon": 0.56,
+ "is_active": true,
+ "cook_id": 3
+ }
+ ````
+
+
+### Useful Rest Requests
+
+* Get all foods for a specific cook
+`` GET http://localhost:8080/cooks/1/foods ``
+
+
+- - - -
+### @Annotations
+
+We implemented Jersey with Spring for REST support using JAX-RS API. Although, Spring has pretty good REST support.
+
+Hence you will see difference in Annotations like @PATH being used rather than @RequestMapping
+
+- - - -
+### Security
+
+Basic Authentication has been set up. In order to make api calls, Base64 encode your username and password and send it
+in header. Roles are assigned to user with varying priviledges. 

@@ -15,13 +15,11 @@ public class Food {
     @NotNull
     private String name;
 
-    @Basic(optional = false)
-    @Column(name = "offer_start", insertable = false, updatable = false)
+    @Column(name = "offer_start", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date offer_start;
 
-    @Basic(optional = false)
-    @Column(name = "offer_stop", insertable = false, updatable = false)
+    @Column(name = "offer_stop", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date offer_stop;
 
@@ -64,6 +62,7 @@ public class Food {
     @JoinColumn(name = "cook_id")
     @NotNull
     private Long cook_id;
+
 
     public Food() {
     }

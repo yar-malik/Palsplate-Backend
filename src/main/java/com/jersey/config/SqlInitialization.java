@@ -15,6 +15,8 @@ import javax.sql.DataSource;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Properties;
+import java.util.Scanner;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -30,6 +32,7 @@ public class SqlInitialization{
     public DataSource dataSource() {
 
         URI dbUri = null;
+        String PALSPLATE_DB_URL = "postgres://vrwuksarnhwksl:94a6d7413fcd44094beab4b6b2d4ef0ee2dfe4b5caecf9a3d35e17b6bf6eab5b@ec2-79-125-2-69.eu-west-1.compute.amazonaws.com:5432/dbnane6c19acb5";
         try {
             dbUri = new URI(PALSPLATE_DB_URL);
         } catch (URISyntaxException e) {
@@ -42,14 +45,20 @@ public class SqlInitialization{
         log.info(password);
 
         String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
+
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
         dataSource.setUrl(dbUrl);
         dataSource.setUsername(username);
         dataSource.setPassword(password);
+
+        try {
+            System.out.println(dataSource.getConnection().getCatalog());
+        } catch(Exception e){
+            System.out.println(e.getMessage());
+        }
         return dataSource;
     }
-
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws URISyntaxException {

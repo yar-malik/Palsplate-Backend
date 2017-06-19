@@ -238,7 +238,7 @@ Hence you will see difference in Annotations like @PATH being used rather than @
 - - - -
 ### Security and Authorization
 
-Authorization is provided by via spring security using the **oauth2.0** protocol. By design all the resources matching ``/api/secure`` are secured and require a login to retrieve.
+Authorization is provided by via spring security using the **oauth2.0** protocol. By design all the resources matching ``/api/secure/*`` are secured and require a login to retrieve.
 
 The authorization protocol follows the following mechanism.
 

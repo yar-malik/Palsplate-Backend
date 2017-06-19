@@ -73,7 +73,7 @@ mvn clean package && mvn spring-boot:run
 mvn clean package && java -jar target/palsplate-backend-1.0-SNAPSHOT.jar
 ```
 
-Go to: `localhost:8080/products`
+Go to: `localhost:8080/api/secure/products`
 
 
 - - - -
@@ -82,23 +82,23 @@ Go to: `localhost:8080/products`
 Following is a list of some examples of rest requests one can use:
 
 ```
-GET: http://localhost:8080/cooks
-GET: http://localhost:8080/cooks/1
-GET: http://localhost:8080/foods
-GET: http://localhost:8080/cooks/1/foods
-GET: http://localhost:8080/logins
-GET: http://localhost:8080/customers/1
+GET: http://localhost:8080/api/secure/cooks
+GET: http://localhost:8080/api/secure/cooks/1
+GET: http://localhost:8080/api/secure/foods
+GET: http://localhost:8080/api/secure/cooks/1/foods
+GET: http://localhost:8080/api/secure/logins
+GET: http://localhost:8080/api/secure/customers/1
 ```
 
 ### Login
 * Get one specific record
-``GET http://localhost:8080/logins/{id}``
+``GET http://localhost:8080/api/secure/logins/{id}``
 * Update a specific record
-``PUT http://localhost:8080/logins/{id}``
+``PUT http://localhost:8080/api/secure/logins/{id}``
 * Delete a specific record
-``DELETE http://localhost:8080/logins/{id}``
+``DELETE http://localhost:8080/api/secure/logins/{id}``
 * Create a new record with following payload
-``POST http://localhost:8080/logins``
+``POST http://localhost:8080/api/secure/logins``
 ```
 {
   "userName":"Ronaldo",
@@ -110,12 +110,12 @@ where {id} is the unique id identifying a customer
 
 ### Person
 
- * Get one specific record 
- ``GET http://localhost:8080/persons/{id}``
+ * Get one specific record
+ ``GET http://localhost:8080/api/secure/persons/{id}``
  * Update a specific record
- ``PUT http://localhost:8080/logins/{id}``
+ ``PUT http://localhost:8080/api/secure/logins/{id}``
  * Delete a specific record
- ``DELETE http://localhost:8080/logins/{id}``
+ ``DELETE http://localhost:8080/api/secure/logins/{id}``
  * Create a new record with following payload
 
 `POST http://localhost:8080/persons`
@@ -132,7 +132,7 @@ where {id} is the unique id identifying a customer
 }
 ```
 
-`curl -X POST -d @curlJson.txt http://localhost:8080/persons --header "Content-Type:application/json"`
+`curl -X POST -d @curlJson.txt http://localhost:8080/api/secure/persons --header "Content-Type:application/json"`
 
 where curlJson.txt contains:
 ```
@@ -152,12 +152,12 @@ where curlJson.txt contains:
 
 ### Cook
 
- * Get one specific record 
- ``GET http://localhost:8080/cooks/{id}``
+ * Get one specific record
+ ``GET http://localhost:8080/api/secure/cooks/{id}``
  * Update a specific record
- ``PUT http://localhost:8080/cooks/{id}``
+ ``PUT http://localhost:8080/api/secure/cooks/{id}``
  * Delete a specific record
- ``DELETE http://localhost:8080/cooks/{id}``
+ ``DELETE http://localhost:8080/api/secure/cooks/{id}``
  * Create a new record with a curl example
 
 
@@ -174,12 +174,12 @@ where curlJsonCook.txt contains:
 
 ### Customers
 
- * Get one specific record 
- ``GET http://localhost:8080/customers/{id}``
+ * Get one specific record
+ ``GET http://localhost:8080/api/secure/customers/{id}``
  * Update a specific record
- ``PUT http://localhost:8080/customers/{id}``
+ ``PUT http://localhost:8080/api/secure/customers/{id}``
  * Delete a specific record
- ``DELETE http://localhost:8080/customers/{id}``
+ ``DELETE http://localhost:8080/api/secure/customers/{id}``
  * Create a new record with a curl example
 
 
@@ -194,14 +194,14 @@ where curlJsonCustomer.txt contains:
 
 ### Foods
 
- * Get one specific record 
+ * Get one specific record
  ``GET http://localhost:8080/foods/{id}``
  * Update a specific record
  ``PUT http://localhost:8080/foods/{id}``
  * Delete a specific record
  ``DELETE http://localhost:8080/foods/{id}``
  * Create a new record with a curl example
- 
+
  `curl -X POST -d @curlJsonFood.txt http://localhost:8080/foods --header "Content-Type:application/json"`
 
  ````
@@ -236,7 +236,26 @@ We implemented Jersey with Spring for REST support using JAX-RS API. Although, S
 Hence you will see difference in Annotations like @PATH being used rather than @RequestMapping
 
 - - - -
-### Security
+### Security and Authorization
 
-Basic Authentication has been set up. In order to make api calls, Base64 encode your username and password and send it
-in header. Roles are assigned to user with varying priviledges. 
+Authorization is provided by via spring security using the **oauth2.0** protocol. By design all the resources matching ``/api/secure`` are secured and require a login to retrieve.
+
+The authorization protocol follows the following mechanism.
+
+1. Provide the username and password to retrieve the refresh token
+``curl -vu webclient:secret 'http://localhost:8080/api/oauth/token?username=admin&password=admin&grant_type=password'``
+
+**Example result**
+``{"access_token":"8789eae9-0863-4266-bff0-79e7799c910f","token_type":"bearer","refresh_token":"73f29da8-57c5-4ae3-ac4d-59a061d6c05b","expires_in":1799,"scope":"read write"}``
+
+2. Provide the refresh token to the server to retrieve the access token
+``curl -vu webclient:secret 'http://localhost:8080/api/oauth/token?grant_type=refresh_token&refresh_token=<refresh-token>'``
+Where <refresh-token> is recieved in the previous command
+
+**Example result**
+``{"access_token":"ef981a33-b431-44a9-86f3-ce4df31c6d5f","token_type":"bearer","refresh_token":"73f29da8-57c5-4ae3-ac4d-59a061d6c05b","expires_in":1799,"scope":"read write"}``
+
+3. Use the access token to retrieve the desired resource
+``curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/persons``
+
+Where access token is recieved in the previous command.

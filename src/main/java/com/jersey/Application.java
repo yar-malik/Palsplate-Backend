@@ -16,13 +16,15 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan
 public class Application {
     public static void main(String[] args) {
+
         new SpringApplicationBuilder(Application.class).run(args);
+
     }
 
- /*   @Bean
+    @Bean
     public ServletRegistrationBean jerseyServlet() {
         ServletRegistrationBean registration = new ServletRegistrationBean(new ServletContainer(), "/*");
         registration.addInitParameter(ServletProperties.JAXRS_APPLICATION_CLASS, JerseyInitialization.class.getName());
         return registration;
-    }*/
+    }
 }

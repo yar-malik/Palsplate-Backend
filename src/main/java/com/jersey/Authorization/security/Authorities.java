@@ -1,4 +1,4 @@
-package com.jersey.Authorization;
+package com.jersey.Authorization.security;
 
 /**
  * Created by muhammad on 6/13/17.

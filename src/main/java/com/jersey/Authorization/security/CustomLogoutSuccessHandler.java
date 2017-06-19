@@ -1,4 +1,4 @@
-package com.jersey.Authorization;
+package com.jersey.Authorization.security;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

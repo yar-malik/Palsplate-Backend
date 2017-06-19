@@ -1,5 +1,7 @@
-package com.jersey.Authorization;
+package com.jersey.Authorization.security;
 
+import com.jersey.persistence.LoginDao;
+import com.jersey.representations.Login;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -25,27 +27,26 @@ import java.util.Collection;
 public class AccountUserDetailsService implements UserDetailsService {
 
 
-//    @Autowired
- //   private LoginDao accountRepository;
+    @Autowired
+    private LoginDao accountRepository;
 
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        System.out.println("Username: " + username);
+        Login person = accountRepository.findByUsername(username);
 
-       // Login person = accountRepository.findByUsername(username);
-        //Login person = new Login(new Long(1234),"username", "password");
-
-        String password = String.format("%040x", new BigInteger(1, new String("password").getBytes()));
+        if (person == null) {
+            throw new UsernameNotFoundException("User " + username + " was not found in the database");
+        }
 
         Collection<GrantedAuthority> grantedAuthorities = new ArrayList();
         GrantedAuthority g = new SimpleGrantedAuthority("ROLE_USER");
         grantedAuthorities.add(g);
         grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 
-        return new User("admin", "b8f57d6d6ec0a60dfe2e20182d4615b12e321cad9e2979e0b9f81e0d6eda78ad9b6dcfe53e4e22d1", grantedAuthorities);
+        return new User(person.getUserName(), person.getPassword(), grantedAuthorities);
 
     }
 }

@@ -1,4 +1,4 @@
-package com.jersey.Authorization;
+package com.jersey.Authorization.security;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.web.AuthenticationEntryPoint;

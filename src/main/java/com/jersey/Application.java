@@ -23,7 +23,7 @@ public class Application {
 
     @Bean
     public ServletRegistrationBean jerseyServlet() {
-        ServletRegistrationBean registration = new ServletRegistrationBean(new ServletContainer(), "/*");
+        ServletRegistrationBean registration = new ServletRegistrationBean(new ServletContainer(), "/resources");
         registration.addInitParameter(ServletProperties.JAXRS_APPLICATION_CLASS, JerseyInitialization.class.getName());
         return registration;
     }

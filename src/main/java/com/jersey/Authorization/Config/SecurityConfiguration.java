@@ -1,8 +1,5 @@
 package com.jersey.Authorization.Config;
 
-/**
- * Created by muhammad on 6/13/17.
- */
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,8 +34,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
         auth
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
+            .userDetailsService(userDetailsService)
+            .passwordEncoder(passwordEncoder());
 
     }
 
@@ -46,13 +43,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
 
         web
-                .ignoring()
-                .antMatchers("/h2console/**")
-                .antMatchers("/api/register")
-                .antMatchers("/api/activate")
-                .antMatchers("/api/lostpassword")
-                .antMatchers("/api/resetpassword")
-                .antMatchers("/api/hello");
+            .ignoring()
+            .antMatchers("/h2console/**")
+            .antMatchers("/api/register")
+            .antMatchers("/api/activate")
+            .antMatchers("/api/lostpassword")
+            .antMatchers("/api/resetpassword")
+            .antMatchers("/api/hello");
 
     }
 

@@ -25,9 +25,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
-/**
- * Created by muhammad on 5/27/17.
- */
 @Configuration
 public class OAuth2Configuration {
 
@@ -44,24 +41,23 @@ public class OAuth2Configuration {
         @Override
         public void configure(HttpSecurity http) throws Exception {
 
-
             http
-                    .exceptionHandling()
-                    .authenticationEntryPoint(customAuthenticationEntryPoint)
-                    .and()
-                    .logout()
-                    .logoutUrl("/oauth/logout")
-                    .logoutSuccessHandler(customLogoutSuccessHandler)
-                    .and()
-                    .csrf()
-                    .requireCsrfProtectionMatcher(new AntPathRequestMatcher("/oauth/authorize"))
-                    .disable()
-                    .headers()
-                    .frameOptions().disable()
-                    .and()
-                    .authorizeRequests()
-                    .antMatchers("/hello/").permitAll()
-                    .antMatchers("/secure/**").authenticated();
+                .exceptionHandling()
+                .authenticationEntryPoint(customAuthenticationEntryPoint)
+                .and()
+                .logout()
+                .logoutUrl("/oauth/logout")
+                .logoutSuccessHandler(customLogoutSuccessHandler)
+                .and()
+                .csrf()
+                .requireCsrfProtectionMatcher(new AntPathRequestMatcher("/oauth/authorize"))
+                .disable()
+                .headers()
+                .frameOptions().disable()
+                .and()
+                .authorizeRequests()
+                .antMatchers("/hello/").permitAll()
+                .antMatchers("/secure/**").authenticated();
 
         }
 
@@ -87,7 +83,6 @@ public class OAuth2Configuration {
 
         @Bean
         public TokenStore tokenStore() {
-            //return new JdbcTokenStore(dataSource);
             return new InMemoryTokenStore();
         }
 

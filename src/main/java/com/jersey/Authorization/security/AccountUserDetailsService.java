@@ -8,36 +8,27 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.transaction.annotation.Transactional;
-
-//import javax.inject.Inject;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 
-/**
- * Created by muhammad on 6/11/17.
- */
-@Component("userDetailsService")
+@Component
 public class AccountUserDetailsService implements UserDetailsService {
 
-
     @Autowired
-    private LoginDao accountRepository;
+    private LoginDao loginDaoRepository;
 
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Login person = accountRepository.findByUsername(username);
+        Login person = loginDaoRepository.findByUsername(username);
 
-        if (person == null) {
+        if (person == null)
+        {
             throw new UsernameNotFoundException("User " + username + " was not found in the database");
         }
 

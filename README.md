@@ -248,8 +248,6 @@ The authorization protocol follows the following mechanism.
 
 `curl -u webclient:secret 'http://localhost:8080/api/oauth/token?username=admin&password=admin&grant_type=password'`
 
-**Example result**
-
 ````{"access_token":"8789eae9-0863-4266-bff0-79e7799c910f","token_type":"bearer","refresh_token":"73f29da8-57c5-4ae3-ac4d-59a061d6c05b","expires_in":1799,"scope":"read write"}````
 
 
@@ -262,9 +260,7 @@ The authorization protocol follows the following mechanism.
 
 `curl -u webclient:secret 'http://localhost:8080/api/oauth/token?grant_type=refresh_token&refresh_token=<refresh-token>'  `
 
-Where <refresh-token> is recieved in the previous command
-
-**Example result**
+where <refresh-token> is recieved in the previous command
 
  ````{"access_token":"ef981a33-b431-44a9-86f3-ce4df31c6d5f","token_type":"bearer","refresh_token":"73f29da8-57c5-4ae3-ac4d-59a061d6c05b","expires_in":1799,"scope":"read write"} ````
 

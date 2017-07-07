@@ -1,8 +1,5 @@
 package com.jersey.Authorization.security;
 
-/**
- * Created by muhammad on 6/13/17.
- */
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;

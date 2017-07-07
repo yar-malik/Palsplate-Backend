@@ -240,25 +240,31 @@ Hence you will see difference in Annotations like @PATH being used rather than @
 
 Authorization is provided by via spring security using the **oauth2.0** protocol. By design all the resources matching ``/api/secure/*`` are secured and require a login to retrieve.
 
-There are 5 different grants to get access_token in oauth2, and in this project, resource owner credentials grant is being used. 
+There are 5 different grants to get access_token in oauth2, and in this project, `resource owner credentials grant` is being used. 
 
 The authorization protocol follows the following mechanism.
 
 1. Provide the username and password to retrieve the refresh token
-``curl -u webclient:secret 'http://localhost:8080/api/oauth/token?username=admin&password=admin&grant_type=password'``
+
+`curl -u webclient:secret 'http://localhost:8080/api/oauth/token?username=admin&password=admin&grant_type=password'`
 
 **Example result**
-``{"access_token":"8789eae9-0863-4266-bff0-79e7799c910f","token_type":"bearer","refresh_token":"73f29da8-57c5-4ae3-ac4d-59a061d6c05b","expires_in":1799,"scope":"read write"}``
+
+````{"access_token":"8789eae9-0863-4266-bff0-79e7799c910f","token_type":"bearer","refresh_token":"73f29da8-57c5-4ae3-ac4d-59a061d6c05b","expires_in":1799,"scope":"read write"}````
 
 
 2. Use the access token to retrieve the desired resource
-``curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/persons``
+
+ `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/persons `
 
 
 3. Provide the refresh token to the server to again retrieve the access token, if it gets expired
-``curl -u webclient:secret 'http://localhost:8080/api/oauth/token?grant_type=refresh_token&refresh_token=<refresh-token>'``
+
+`curl -u webclient:secret 'http://localhost:8080/api/oauth/token?grant_type=refresh_token&refresh_token=<refresh-token>'  `
+
 Where <refresh-token> is recieved in the previous command
 
 **Example result**
-``{"access_token":"ef981a33-b431-44a9-86f3-ce4df31c6d5f","token_type":"bearer","refresh_token":"73f29da8-57c5-4ae3-ac4d-59a061d6c05b","expires_in":1799,"scope":"read write"}``
+
+ ````{"access_token":"ef981a33-b431-44a9-86f3-ce4df31c6d5f","token_type":"bearer","refresh_token":"73f29da8-57c5-4ae3-ac4d-59a061d6c05b","expires_in":1799,"scope":"read write"} ````
 

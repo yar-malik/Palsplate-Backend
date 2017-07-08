@@ -17,7 +17,6 @@ import java.io.*;
 import java.util.List;
 
 @Path("/images")
-@Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Component
 @Transactional

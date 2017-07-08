@@ -132,7 +132,8 @@ where {id} is the unique id identifying a customer
 }
 ```
 
-`curl -X POST -d @curlJson.txt http://localhost:8080/api/secure/persons --header "Content-Type:application/json"`
+`curl -X POST -d @curlJson.txt -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/persons --header "Content-Type:application/json"`
+
 
 where curlJson.txt contains:
 ```
@@ -161,7 +162,7 @@ where curlJson.txt contains:
  * Create a new record with a curl example
 
 
-`curl -X POST -d @curlJsonCook.txt http://localhost:8080/cooks --header "Content-Type:application/json"`
+`curl -X POST -d @curlJsonCook.txt -H "Authorization: Bearer <access-token>" http://localhost:8080/cooks --header "Content-Type:application/json"`
 
 where curlJsonCook.txt contains:
 ```
@@ -183,7 +184,7 @@ where curlJsonCook.txt contains:
  * Create a new record with a curl example
 
 
-`curl -X POST -d @curlJsonCustomer.txt http://localhost:8080/customers --header "Content-Type:application/json"`
+`curl -X POST -d @curlJsonCustomer.txt -H "Authorization: Bearer <access-token>" http://localhost:8080/customers --header "Content-Type:application/json"`
 
 where curlJsonCustomer.txt contains:
 ```
@@ -202,7 +203,8 @@ where curlJsonCustomer.txt contains:
  ``DELETE http://localhost:8080/foods/{id}``
  * Create a new record with a curl example
 
- `curl -X POST -d @curlJsonFood.txt http://localhost:8080/foods --header "Content-Type:application/json"`
+ `curl -X POST -d @curlJsonFood.txt -H "Authorization: Bearer <access-token>" http://localhost:8080/foods --header "Content-Type:application/json"`
+
 
  ````
  {
@@ -260,7 +262,7 @@ The authorization protocol follows the following mechanism.
 
 `curl -u webclient:secret 'http://localhost:8080/api/oauth/token?grant_type=refresh_token&refresh_token=<refresh-token>'  `
 
-where <refresh-token> is recieved in the previous command
+where <refresh-token> is received in the previous command
 
  ````{"access_token":"ef981a33-b431-44a9-86f3-ce4df31c6d5f","token_type":"bearer","refresh_token":"73f29da8-57c5-4ae3-ac4d-59a061d6c05b","expires_in":1799,"scope":"read write"} ````
 

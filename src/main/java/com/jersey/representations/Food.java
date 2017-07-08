@@ -3,6 +3,7 @@ package com.jersey.representations;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 public class Food {
@@ -62,6 +63,10 @@ public class Food {
     @JoinColumn(name = "cook_id")
     @NotNull
     private Long cook_id;
+
+    @OneToMany(fetch=FetchType.LAZY)
+    @JoinColumn(name="food_id")
+    private Set<Image> images;
 
 
     public Food() {

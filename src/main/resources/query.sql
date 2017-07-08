@@ -63,3 +63,17 @@ CREATE TABLE food
     REFERENCES cook (id) MATCH SIMPLE
     ON UPDATE CASCADE ON DELETE CASCADE
 )
+
+
+CREATE TABLE image
+(
+  id serial NOT NULL,
+  data bytea NOT NULL,
+  filename character varying NOT NULL,
+  food_id serial NOT NULL,
+  CONSTRAINT pk_image_id PRIMARY KEY (id),
+  CONSTRAINT fk_image__food FOREIGN KEY (food_id)
+    REFERENCES food (id) MATCH SIMPLE
+    ON UPDATE CASCADE ON DELETE CASCADE
+)
+

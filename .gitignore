@@ -3,3 +3,5 @@ target/*
 *.iml
 1
 .DS_Store
+src/main/resources/image*
+src/main/resources/template*

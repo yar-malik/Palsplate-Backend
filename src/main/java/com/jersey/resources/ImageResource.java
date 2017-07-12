@@ -111,29 +111,22 @@ public class ImageResource {
             @FormDataParam("file") FormDataContentDisposition fileDetail) throws IOException {
 
         Image image = new Image();
-        System.out.println("image.getID " + image.getId());
-        log.info("image.getID " + image.getId());
-        System.out.println("uploadedInputStream: " + uploadedInputStream);
-        System.out.println("fileDetail: " + fileDetail);
-        System.out.println("fileDetail.getName: " + fileDetail.getName());
-        System.out.println("fileDetail.getFileName: " + fileDetail.getFileName());
-        System.out.println("fileDetail.getSize: " + fileDetail.getSize());
-        System.out.println("fileDetail.getType: " + fileDetail.getType());
+        log.info("uploadedInputStream: " + uploadedInputStream);
+        log.info("fileDetail: " + fileDetail);
+        log.info("fileDetail.getName: " + fileDetail.getName());
+        log.info("fileDetail.getFileName: " + fileDetail.getFileName());
+        log.info("fileDetail.getSize: " + fileDetail.getSize());
+        log.info("fileDetail.getType: " + fileDetail.getType());
 
         String uploadedFileLocation = "src/main/resources/images/" + fileDetail.getFileName();
-
-        System.out.println("File Path: " + uploadedFileLocation + " \n");
-        log.info("File Path: " + uploadedFileLocation);
-
         writeToFile(uploadedInputStream, uploadedFileLocation);
         String output = "File uploaded to : " + uploadedFileLocation + " \n";
 
         image.setFilename(fileDetail.getFileName());
-        image.setFileLocation(image.getId() + "_" + uploadedFileLocation);
+        image.setFileLocation(uploadedFileLocation);
         image.setFood_id(Long.valueOf(1));
 
         byte[] bytes = IOUtils.toByteArray(uploadedInputStream);
-        OutputStream out = new FileOutputStream(new File(uploadedFileLocation));
         image.setData(bytes);
 
         imageDao.save(image);

@@ -297,8 +297,3 @@ The authorization protocol follows the following mechanism.
 where <refresh-token> is received in the previous command
 
  ````{"access_token":"ef981a33-b431-44a9-86f3-ce4df31c6d5f","token_type":"bearer","refresh_token":"73f29da8-57c5-4ae3-ac4d-59a061d6c05b","expires_in":1799,"scope":"read write"} ````
-
-
-### Curl request to test Images Upload
-
-` curl -X POST -H "Content-Type: multipart/form-data" -H "Authorization: Bearer 5e23440f-72e1-444b-b0db-4bc82677fb4c" -F "image=@kreditech.jpg" -F "name=kreditech.jpg" localhost:8080/api/secure/images/upload `

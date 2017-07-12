@@ -19,7 +19,6 @@ import javax.ws.rs.core.Response;
 import java.io.*;
 import java.util.List;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Path("/images")
 @Component
@@ -111,6 +110,9 @@ public class ImageResource {
             @FormDataParam("file") InputStream uploadedInputStream,
             @FormDataParam("file") FormDataContentDisposition fileDetail) throws IOException {
 
+        Image image = new Image();
+        System.out.println("image.getID " + image.getId());
+        log.info("image.getID " + image.getId());
         System.out.println("uploadedInputStream: " + uploadedInputStream);
         System.out.println("fileDetail: " + fileDetail);
         System.out.println("fileDetail.getName: " + fileDetail.getName());
@@ -126,9 +128,8 @@ public class ImageResource {
         writeToFile(uploadedInputStream, uploadedFileLocation);
         String output = "File uploaded to : " + uploadedFileLocation + " \n";
 
-        Image image = new Image();
         image.setFilename(fileDetail.getFileName());
-        image.setFileLocation(uploadedFileLocation);
+        image.setFileLocation(image.getId() + "_" + uploadedFileLocation);
         image.setFood_id(Long.valueOf(1));
 
         byte[] bytes = IOUtils.toByteArray(uploadedInputStream);
@@ -136,8 +137,8 @@ public class ImageResource {
         image.setData(bytes);
 
         imageDao.save(image);
-        long imageEntiryId = imageDao.save(image).getId();
-        log.info("Image id: " + imageEntiryId);
+//        long imageEntiryId = imageDao.save(image).getId();
+//        log.info("Image id: " + imageEntiryId);
 
         return Response.status(200).entity(output).build();
 

@@ -261,9 +261,8 @@ where curlJsonCustomer.txt contains:
 
 ### Upload Images
 
-<<<<<<< HEAD
 `curl -H "Authorization: Bearer <access-token>" -F "file=@khaled.jpg"  -F "thumbnail=@khaled.jpg" -F metadata='{"file_size":879394}' http://localhost:8080/api/secure/images/upload`
-=======
+
 ### Useful Rest Requests
 
 * Get all foods for a specific cook

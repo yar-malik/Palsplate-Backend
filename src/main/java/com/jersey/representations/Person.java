@@ -31,10 +31,6 @@ public class Person {
     @NotNull
     private String address;
 
-//    @Column(name = "photo_path")
-//    @NotNull
-//    private String photoPath;
-
     @Column(name = "description")
     @NotNull
     private String description;

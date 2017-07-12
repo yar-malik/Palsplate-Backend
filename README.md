@@ -267,33 +267,3 @@ where curlJsonCustomer.txt contains:
 
 * Get all foods for a specific cook
 `` GET http://localhost:8080/cooks/1/foods ``
-
-
-- - - -
-### Security and Authorization
-
-Authorization is provided by via spring security using the **oauth2.0** protocol. By design all the resources matching ``/api/secure/*`` are secured and require a login to retrieve.
-
-There are 5 different grants to get access_token in oauth2, and in this project, `resource owner credentials grant` is being used. 
-
-The authorization protocol follows the following mechanism.
-
-1. Provide the username and password to retrieve the refresh token
-
-`curl -u webclient:secret 'http://localhost:8080/api/oauth/token?username=admin&password=admin&grant_type=password'`
-
-````{"access_token":"8789eae9-0863-4266-bff0-79e7799c910f","token_type":"bearer","refresh_token":"73f29da8-57c5-4ae3-ac4d-59a061d6c05b","expires_in":1799,"scope":"read write"}````
-
-
-2. Use the access token to retrieve the desired resource
-
- `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/persons `
-
-
-3. Provide the refresh token to the server to again retrieve the access token, if it gets expired
-
-`curl -u webclient:secret 'http://localhost:8080/api/oauth/token?grant_type=refresh_token&refresh_token=<refresh-token>'  `
-
-where <refresh-token> is received in the previous command
-
- ````{"access_token":"ef981a33-b431-44a9-86f3-ce4df31c6d5f","token_type":"bearer","refresh_token":"73f29da8-57c5-4ae3-ac4d-59a061d6c05b","expires_in":1799,"scope":"read write"} ````

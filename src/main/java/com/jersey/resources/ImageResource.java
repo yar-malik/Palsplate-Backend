@@ -1,5 +1,7 @@
 package com.jersey.resources;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.jersey.config.SqlInitialization;
 import com.jersey.persistence.ImageDao;
 import com.jersey.representations.Image;
@@ -18,6 +20,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.*;
 import java.util.List;
+import java.util.Map;
 
 
 @Path("/images")
@@ -106,7 +109,7 @@ public class ImageResource {
     
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response uploadFile(
+    public Image uploadFile(
             @FormDataParam("file") InputStream uploadedInputStream,
             @FormDataParam("file") FormDataContentDisposition fileDetail) throws IOException {
 
@@ -117,67 +120,37 @@ public class ImageResource {
         log.info("fileDetail.getSize: " + fileDetail.getSize());
         log.info("fileDetail.getType: " + fileDetail.getType());
 
-        String uploadedFileLocation = "src/main/resources/images/" + fileDetail.getFileName();
-        writeToFile(uploadedInputStream, uploadedFileLocation);
-        String output = "File uploaded to : " + uploadedFileLocation + " \n";
+        File myfile = inputStream2file(uploadedInputStream, fileDetail.getFileName(), fileDetail.getType());
+
+        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+                "cloud_name", "palsplate",
+                "api_key", "816138784777145",
+                "api_secret", "tA4kTPJ029PlpmCb7drT-_7RHUM"));
+
+        Map uploadResult = cloudinary.uploader().upload(myfile, ObjectUtils.emptyMap());
+
+        log.info("cloudinary result: " + uploadResult);
+        log.info("cloudinary secure_url: " + uploadResult.get("secure_url"));
+        log.info("cloudinary public_id: " + uploadResult.get("public_id"));
+        log.info("cloudinary original_filename: " + uploadResult.get("original_filename"));
 
         Image image = new Image();
         image.setFilename(fileDetail.getFileName());
-        image.setFileLocation(uploadedFileLocation);
         image.setFood_id(Long.valueOf(1));
+        image.setCloudinary_public_id(uploadResult.get("public_id").toString());
 
-        byte[] bytes = IOUtils.toByteArray(uploadedInputStream);
-        image.setData(bytes);
-
-        imageDao.save(image);
 //        long imageEntiryId = imageDao.save(image).getId();
 //        log.info("Image id: " + imageEntiryId);
 
-        return Response.status(200).entity(output).build();
-
+        return imageDao.save(image);
     }
 
-    // save uploaded file to new location
-    private void writeToFile(InputStream uploadedInputStream,
-                             String uploadedFileLocation) {
-
-        try {
-            OutputStream out = new FileOutputStream(new File(
-                    uploadedFileLocation));
-            int read = 0;
-            byte[] bytes = new byte[1024];
-
-            out = new FileOutputStream(new File(uploadedFileLocation));
-            while ((read = uploadedInputStream.read(bytes)) != -1) {
-                out.write(bytes, 0, read);
+    public static File inputStream2file (InputStream in, String filename, String suffix) throws IOException {
+            final File tempFile = File.createTempFile(filename, suffix);
+            tempFile.deleteOnExit();
+            try (FileOutputStream out = new FileOutputStream(tempFile)) {
+                IOUtils.copy(in, out);
             }
-
-            out.flush();
-            out.close();
-        } catch (IOException e) {
-
-            e.printStackTrace();
-        }
-    }
-
-    private void writeToDB(InputStream uploadedInputStream,
-                             String uploadedFileLocation) {
-
-        try {
-            OutputStream out = new FileOutputStream(new File(
-                    uploadedFileLocation));
-            int read = 0;
-            byte[] bytes = new byte[1024];
-
-            out = new FileOutputStream(new File(uploadedFileLocation));
-            while ((read = uploadedInputStream.read(bytes)) != -1) {
-                out.write(bytes, 0, read);
-            }
-            out.flush();
-            out.close();
-        } catch (IOException e) {
-
-            e.printStackTrace();
-        }
+            return tempFile;
     }
 }

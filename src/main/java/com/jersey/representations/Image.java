@@ -15,11 +15,8 @@ public class Image {
     @Column(name="fileName")
     private String filename;
 
-    @Column(name="fileLocation")
-    private String fileLocation;
-
-    @Column(name="data")
-    private byte[] data;
+    @Column(name="cloudinary_public_id")
+    private String cloudinary_public_id;
 
     @JoinColumn(name = "food_id")
     @NotNull
@@ -39,14 +36,6 @@ public class Image {
         this.id = id;
     }
 
-    public byte[] getData() {
-        return data;
-    }
-
-    public void setData(byte[] data) {
-        this.data = data;
-    }
-
     public String getFilename() {
         return filename;
     }
@@ -54,10 +43,6 @@ public class Image {
     public void setFilename(String filename) {
         this.filename = filename;
     }
-
-    public String getFileLocation() { return fileLocation; }
-
-    public void setFileLocation(String fileLocation) { this.fileLocation = fileLocation; }
 
     public Long getFood_id() {
         return food_id;
@@ -67,6 +52,11 @@ public class Image {
         this.food_id = food_id;
     }
 
+    public String getCloudinary_public_id() {
+        return cloudinary_public_id;
+    }
 
-
+    public void setCloudinary_public_id(String cloudinary_public_id) {
+        this.cloudinary_public_id = cloudinary_public_id;
+    }
 }

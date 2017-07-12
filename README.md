@@ -259,11 +259,11 @@ where curlJsonCustomer.txt contains:
  }
  ````
 
+* Get all foods for a specific cook
+`` GET http://localhost:8080/cooks/1/foods
+
+
 ### Upload Images
 
 `curl -H "Authorization: Bearer <access-token>" -F "file=@khaled.jpg"  -F "thumbnail=@khaled.jpg" -F metadata='{"file_size":879394}' http://localhost:8080/api/secure/images/upload`
 
-### Useful Rest Requests
-
-* Get all foods for a specific cook
-`` GET http://localhost:8080/cooks/1/foods ``

@@ -1,11 +1,8 @@
 package com.jersey.representations;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Set;
-
 
 @JsonIgnoreProperties
 @Entity(name = "cook")

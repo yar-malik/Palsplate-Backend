@@ -81,6 +81,17 @@
             <artifactId>mimepull</artifactId>
             <version>1.9.3</version>
         </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/org.jvnet/mimepull -->
+        <dependency>
+            <groupId>org.jvnet</groupId>
+            <artifactId>mimepull</artifactId>
+            <version>1.6</version>
+        </dependency>
+
+
+
         <!-- End Jersey -->
 
         <!-- Jackson -->

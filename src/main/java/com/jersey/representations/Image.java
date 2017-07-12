@@ -1,9 +1,11 @@
 package com.jersey.representations;
 
 import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.validation.constraints.NotNull;
 
-@Entity
+@JsonIgnoreProperties
+@Entity(name = "image")
 public class Image {
 
     @Id
@@ -19,8 +21,7 @@ public class Image {
     @NotNull
     private Long food_id;
 
-    public Image() {
-    }
+    public Image() {}
 
     public Image(Long id) {
         this.id = id;

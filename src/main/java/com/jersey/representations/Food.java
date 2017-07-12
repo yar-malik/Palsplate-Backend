@@ -28,10 +28,6 @@ public class Food {
     @NotNull
     private String description;
 
-//    @Column(name = "currency")
-//    @NotNull
-//    private Double currency;
-
     @Column(name = "price")
     @NotNull
     private Double price;
@@ -67,7 +63,6 @@ public class Food {
     @OneToMany(fetch=FetchType.LAZY)
     @JoinColumn(name="food_id")
     private Set<Image> images;
-
 
     public Food() {
     }

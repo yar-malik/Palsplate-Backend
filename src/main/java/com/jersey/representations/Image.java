@@ -12,7 +12,11 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name="fileName")
     private String filename;
+
+    @Column(name="fileLocation")
+    private String fileLocation;
 
     @Column(name="data")
     private byte[] data;
@@ -50,5 +54,19 @@ public class Image {
     public void setFilename(String filename) {
         this.filename = filename;
     }
+
+    public String getFileLocation() { return fileLocation; }
+
+    public void setFileLocation(String fileLocation) { this.fileLocation = fileLocation; }
+
+    public Long getFood_id() {
+        return food_id;
+    }
+
+    public void setFood_id(Long food_id) {
+        this.food_id = food_id;
+    }
+
+
 
 }

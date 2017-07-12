@@ -110,7 +110,6 @@ public class ImageResource {
             @FormDataParam("file") InputStream uploadedInputStream,
             @FormDataParam("file") FormDataContentDisposition fileDetail) throws IOException {
 
-        Image image = new Image();
         log.info("uploadedInputStream: " + uploadedInputStream);
         log.info("fileDetail: " + fileDetail);
         log.info("fileDetail.getName: " + fileDetail.getName());
@@ -122,6 +121,7 @@ public class ImageResource {
         writeToFile(uploadedInputStream, uploadedFileLocation);
         String output = "File uploaded to : " + uploadedFileLocation + " \n";
 
+        Image image = new Image();
         image.setFilename(fileDetail.getFileName());
         image.setFileLocation(uploadedFileLocation);
         image.setFood_id(Long.valueOf(1));

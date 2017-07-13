@@ -53,9 +53,9 @@ public class SqlInitialization{
         dataSource.setPassword(password);
 
         try {
-            System.out.println(dataSource.getConnection().getCatalog());
+            log.info(dataSource.getConnection().getCatalog());
         } catch(Exception e){
-            System.out.println(e.getMessage());
+            log.info(e.getMessage());
         }
         return dataSource;
     }

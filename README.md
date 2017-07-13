@@ -266,4 +266,3 @@ where curlJsonCustomer.txt contains:
 ### Upload Images
 
 `curl -H "Authorization: Bearer <access-token>" -F "file=@biryani.jpg" http://localhost:8080/api/secure/foods/{food_id}/images`
-

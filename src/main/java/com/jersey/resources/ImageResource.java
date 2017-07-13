@@ -4,6 +4,8 @@ import com.jersey.persistence.ImageDao;
 import com.jersey.representations.Image;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +13,7 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.io.InputStream;
 import java.util.List;
 
 
@@ -27,7 +30,6 @@ public class ImageResource {
     public ImageResource(ImageDao imageDao) {
         this.imageDao = imageDao;
     }
-
 
     @GET
     public List<Image> getAll(){
@@ -52,7 +54,9 @@ public class ImageResource {
      */
     @PUT
     @Path("{id}")
-    public Image update(@PathParam("id")long id, @Valid Image image) {
+    public Image update(@FormDataParam("file") InputStream uploadedInputStream,
+                        @FormDataParam("file") FormDataContentDisposition fileDetail,
+                        @PathParam("id")long id, @Valid Image image) {
         if(imageDao.findOne(id) == null){
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }else {

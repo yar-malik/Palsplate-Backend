@@ -37,6 +37,7 @@ public class FoodResource {
     private static final Logger log = LogManager.getLogger(FoodResource.class);
 
     private FoodDao foodDao;
+
     @Inject
     public FoodResource(FoodDao foodDao){
         this.foodDao = foodDao;
@@ -115,6 +116,13 @@ public class FoodResource {
     }
 
 
+    /**
+     * Create new Image
+     * @param uploadedInputStream
+     * @param fileDetail
+     * @param food_id
+     * @return new Image for a specific food_id
+     */
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Path("{food_id}/images")
@@ -123,23 +131,20 @@ public class FoodResource {
             @FormDataParam("file") FormDataContentDisposition fileDetail,
             @PathParam("food_id")long food_id) throws IOException {
 
-        log.info("uploadedInputStream: " + uploadedInputStream);
         log.info("fileDetail: " + fileDetail);
         log.info("fileDetail.getName: " + fileDetail.getName());
         log.info("fileDetail.getFileName: " + fileDetail.getFileName());
-        log.info("fileDetail.getSize: " + fileDetail.getSize());
-        log.info("fileDetail.getType: " + fileDetail.getType());
 
         File myfile = inputStream2file(uploadedInputStream, fileDetail.getFileName(), fileDetail.getType());
 
         Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
                 "cloud_name", "palsplate",
                 "api_key", "816138784777145",
-                "api_secret", "tA4kTPJ029PlpmCb7drT-_7RHUM"));
+                "api_secret", "tA4kTPJ029PlpmCb7drT-_7RHUM",
+                "secure", true));
 
         Map uploadResult = cloudinary.uploader().upload(myfile, ObjectUtils.emptyMap());
 
-        log.info("cloudinary result: " + uploadResult);
         log.info("cloudinary secure_url: " + uploadResult.get("secure_url"));
         log.info("cloudinary public_id: " + uploadResult.get("public_id"));
         log.info("cloudinary original_filename: " + uploadResult.get("original_filename"));
@@ -148,9 +153,6 @@ public class FoodResource {
         image.setFilename(fileDetail.getFileName());
         image.setFood_id(Long.valueOf(food_id));
         image.setCloudinary_public_id(uploadResult.get("public_id").toString());
-
-//        long imageEntiryId = imageDao.save(image).getId();
-//        log.info("Image id: " + imageEntiryId);
 
         return imageDao.save(image);
     }

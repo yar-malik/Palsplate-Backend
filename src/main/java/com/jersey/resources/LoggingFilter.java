@@ -17,13 +17,21 @@ public class LoggingFilter implements ContainerRequestFilter, ContainerResponseF
 
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
-		log.info("Request filter");
+		log.info("Request Filter");
+		log.info("Request Acceptable MediaType: " +  requestContext.getAcceptableMediaTypes());
+		log.info("Request MediaType: " + requestContext.getMediaType());
 		log.info("Headers: " + requestContext.getHeaders());
+		log.info("Request Absolute Path: " + requestContext.getUriInfo().getAbsolutePath());
+        log.info("Request Base URI: " + requestContext.getUriInfo().getBaseUri());
+        log.info("Request Security Context: " + requestContext.getSecurityContext().getAuthenticationScheme());
+
 	}
 
 	@Override
 	public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
-		log.info("Response filter");
-		log.info("Headers: " + responseContext.getHeaders());
+		log.info("Response Filter");
+        log.info("Response Allowed Methods: " +  responseContext.getAllowedMethods());
+        log.info("Response MediaType: " + responseContext.getMediaType());
+        log.info("Headers: " + responseContext.getHeaders());
 	}
 }

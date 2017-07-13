@@ -2,6 +2,7 @@ package com.jersey.representations;
 
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.validation.constraints.NotNull;
 
 @JsonIgnoreProperties

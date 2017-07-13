@@ -19,8 +19,6 @@ public class LoggingFilter implements ContainerRequestFilter, ContainerResponseF
 	public void filter(ContainerRequestContext requestContext) throws IOException {
 		log.info("Request filter");
 		log.info("Headers: " + requestContext.getHeaders());
-		
-
 	}
 
 	@Override

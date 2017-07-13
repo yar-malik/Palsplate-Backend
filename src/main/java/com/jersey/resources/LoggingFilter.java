@@ -1,5 +1,8 @@
 package com.jersey.resources;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ContainerResponseContext;
@@ -10,21 +13,19 @@ import java.io.IOException;
 @Provider
 public class LoggingFilter implements ContainerRequestFilter, ContainerResponseFilter {
 
+	private static final Logger log = LogManager.getLogger(ImageResource.class);
+
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
-		System.out.println("Request filter");
-		System.out.println("Headers: " + requestContext.getHeaders());
+		log.info("Request filter");
+		log.info("Headers: " + requestContext.getHeaders());
 		
 
 	}
 
 	@Override
 	public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
-		
-		System.out.println("Response filter");
-		System.out.println("Headers: " + responseContext.getHeaders());
-		
-		
+		log.info("Response filter");
+		log.info("Headers: " + responseContext.getHeaders());
 	}
-
 }

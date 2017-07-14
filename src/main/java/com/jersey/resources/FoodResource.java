@@ -139,14 +139,6 @@ public class FoodResource {
         log.info("fileDetail.getFileName: " + fileDetail.getFileName());
 
         File myfile = inputStream2file(uploadedInputStream, fileDetail.getFileName(), fileDetail.getType());
-
-//        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-//                "cloud_name", "palsplate",
-//                "api_key", "816138784777145",
-//                "api_secret", "tA4kTPJ029PlpmCb7drT-_7RHUM",
-//                "secure", true));
-
-
         Map uploadResult = cloudinary.uploader().upload(myfile, ObjectUtils.emptyMap());
 
         log.info("cloudinary secure_url: " + uploadResult.get("secure_url"));

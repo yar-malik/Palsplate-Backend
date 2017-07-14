@@ -11,6 +11,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +37,9 @@ public class FoodResource {
 
     private static final Logger log = LogManager.getLogger(FoodResource.class);
 
+    @Autowired
+    private Cloudinary cloudinary;
+
     private FoodDao foodDao;
 
     @Inject
@@ -45,7 +49,6 @@ public class FoodResource {
 
     @Inject
     private ImageDao imageDao;
-
 
     /**
      * Get all Foods
@@ -71,6 +74,39 @@ public class FoodResource {
         }else {
             return food;
         }
+    }
+
+    /**
+     * Get all images for specific food
+     * @param id
+     * @return food
+     */
+    @GET
+    @Path("{id}/images")
+    public Food getAllImagesForFood(@PathParam("id")long id) {
+        Food food = foodDao.findOne(id);
+        if (food == null) {
+            throw new WebApplicationException((Response.Status.NOT_FOUND));
+        }
+
+        food.getImages().size();
+        return food;
+    }
+
+    /**
+     * Get all reviews for specific food
+     * @param id
+     * @return food
+     */
+    @GET
+    @Path("{id}/reviews")
+    public Food getAllReviewsForFood(@PathParam("id")long id) {
+        Food food = foodDao.findOne(id);
+        if (food == null) {
+            throw new WebApplicationException((Response.Status.NOT_FOUND));
+        }
+        food.getReviews().size();
+        return food;
     }
 
     /**
@@ -115,7 +151,6 @@ public class FoodResource {
         }
     }
 
-
     /**
      * Create new Image
      * @param uploadedInputStream
@@ -136,13 +171,6 @@ public class FoodResource {
         log.info("fileDetail.getFileName: " + fileDetail.getFileName());
 
         File myfile = inputStream2file(uploadedInputStream, fileDetail.getFileName(), fileDetail.getType());
-
-        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-                "cloud_name", "palsplate",
-                "api_key", "816138784777145",
-                "api_secret", "tA4kTPJ029PlpmCb7drT-_7RHUM",
-                "secure", true));
-
         Map uploadResult = cloudinary.uploader().upload(myfile, ObjectUtils.emptyMap());
 
         log.info("cloudinary secure_url: " + uploadResult.get("secure_url"));

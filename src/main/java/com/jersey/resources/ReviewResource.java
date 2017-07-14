@@ -4,21 +4,20 @@ import com.jersey.persistence.ReviewDao;
 import com.jersey.representations.Review;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.InputStream;
 import java.util.List;
 
 @Path("/reviews")
 @Component
 @Transactional
+@Produces(MediaType.APPLICATION_JSON)
 public class ReviewResource {
 
     private static final Logger log = LogManager.getLogger(ReviewResource.class);
@@ -44,6 +43,17 @@ public class ReviewResource {
         }
         return review;
     }
+
+    /**
+     * Create new Review
+     * @param review
+     * @return new review
+     */
+    @POST
+    public Review save(@Valid Review review ) {
+        return reviewDao.save(review);
+    }
+
 
     /**
      * Update existing Review

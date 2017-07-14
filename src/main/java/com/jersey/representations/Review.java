@@ -53,7 +53,7 @@ public class Review {
         if (rating >= 1 && rating <= 5) {
             this.rating = rating;
         } else {
-            throw new IllegalArgumentException("rating can only be a number between 1 and 5");
+            throw new IllegalArgumentException("rating can only be a number between 1 and 5 ");
         }
 
         this.rating = rating;

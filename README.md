@@ -233,6 +233,8 @@ where curlJsonCustomer.txt contains:
 
  * Get one specific record
  ``GET http://localhost:8080/foods/{id}``
+ * Get all foods for a specific cook
+ ``GET http://localhost:8080/cooks/{id}/foods``
  * Update a specific record
  ``PUT http://localhost:8080/foods/{id}``
  * Delete a specific record
@@ -263,6 +265,41 @@ where curlJsonCustomer.txt contains:
 `` GET http://localhost:8080/cooks/1/foods
 
 
-### Upload Images
+### Images
 
+ * Get one specific record
+ ``GET http://localhost:8080/images/{id}``
+ * Get all images for a specific food
+ ``GET http://localhost:8080/foods/{id}/images``
+ * Update a specific record
+ ``PUT http://localhost:8080/images/{id}``
+ * Delete a specific record
+ ``DELETE http://localhost:8080/images/{id}`` 
+ * Create new record
+ ``POST http://localhost:8080/foods/{id}/images``
+
+Curl POST example of creating an image 
 `curl -H "Authorization: Bearer <access-token>" -F "file=@biryani.jpg" http://localhost:8080/api/secure/foods/{food_id}/images`
+
+Curl GET example to get images for a specific food
+`curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/foods/2/images`
+
+### Reviews
+
+ * Get one specific record
+ ``GET http://localhost:8080/reviews/{id}``
+ * Get all reviews for a specific food
+ ``GET http://localhost:8080/foods/{id}/reviews``
+ * Update a specific record
+ ``PUT http://localhost:8080/reviews/{id}``
+ * Delete a specific record
+ ``DELETE http://localhost:8080/reviews/{id}`` 
+ * Create new record
+ ``POST http://localhost:8080/foods/{id}/reviews``
+
+Curl POST example of creating an review 
+`curl -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/reviews`
+
+Curl GET example to get reviews for a specific food
+`curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/reviews`
+

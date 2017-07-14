@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import javax.swing.plaf.synth.SynthOptionPaneUI;
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -34,12 +35,16 @@ public class CookResource {
     @GET
     @Path("{id}/foods")
     public Cook getAllFoodsForCook(@PathParam("id")long id) {
+        System.out.println("id foods loop");
         Cook cook = cookDao.findOne(id);
         if (cook == null) {
             throw new WebApplicationException((Response.Status.NOT_FOUND));
         }
 
         cook.getFoods().size();
+        System.out.println("Size: " + cook.getFoods().size());
+        System.out.println("cookX: " + cook);
+        System.out.println();
         return cook;
     }
 

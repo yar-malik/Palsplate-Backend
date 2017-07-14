@@ -28,9 +28,12 @@ public class FilteringAPI {
 
         List<Food> foods = this.foodDao.findAll();
         List<Food> filterFoods = new ArrayList<>();
+        Double disDiff;
 
         for(Food f: foods){
-            if( distFrom(lon, lat, f.getLon(), f.getLat()) < maxDist){
+            disDiff = distFrom(lon, lat, f.getLon(), f.getLat())/1000;
+            System.out.println(disDiff);
+            if(disDiff < maxDist){
                 filterFoods.add(f);
             }
         }
@@ -96,7 +99,7 @@ public class FilteringAPI {
         List<Food> filterFoods = new ArrayList<>();
 
         for(Food f: foods){
-            if(f.getFood_type() .equalsIgnoreCase(type) ){
+            if(f.getCuisine_type() .equalsIgnoreCase(type) ){
                 filterFoods.add(f);
             }
         }

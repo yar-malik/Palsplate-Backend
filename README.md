@@ -318,5 +318,13 @@ Curl GET example to get reviews for a specific food
  ``GET http://localhost:8080/api/secure/filters/cuisinetype/type={type}``
 
  * Get all foods a certain distane away from customer
-  In the following API. lng and lat are coordiates of current location of customer and maxDist is what he inputted
  ``GET http://localhost:8080/api/secure/filters/distance/maxDist={maxDist}/lon={lon}/lat={lat}``
+   In the following API. lng and lat are coordiates of current location of customer and maxDist is what customer inputted. 
+   Also note that maxDist should be in kilometers. 
+   
+   Tested Examples Curl:
+   
+   curl -i -H "Authorization: Bearer dce32848-8c37-4ebc-8927-8de039d382ad" http://localhost:8080/api/secure/filters/distance/maxDist=20/lon=0.45/lat=0.56
+   curl -i -H "Authorization: Bearer caace48c-1f5d-4e49-ab86-55ccd523da41" http://localhost:8080/api/secure/filters/cuisinetype/type=fast_food
+   curl -i -H "Authorization: Bearer caace48c-1f5d-4e49-ab86-55ccd523da41" http://localhost:8080/api/secure/filters/foodtype/type=veggie
+   curl -i -H "Authorization: Bearer caace48c-1f5d-4e49-ab86-55ccd523da41" http://localhost:8080/api/secure/filters/price/max=5

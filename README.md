@@ -324,7 +324,7 @@ Curl GET example to get reviews for a specific food
    
    Tested Examples Curl:
    
-   * curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters/distance/maxDist=20/lon=0.45/lat=0.56
-   * curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters/cuisinetype/type=fast_food
-   * curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters/foodtype/type=veggie
-   * curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters/price/max=5
+   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters/distance/maxDist=20/lon=0.45/lat=0.56`
+   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters/cuisinetype/type=fast_food`
+   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters/foodtype/type=veggie`
+   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters/price/max=5`

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Filter;
 
-@Path("/filters")
+@Path("/xfilters")
 @Produces(MediaType.APPLICATION_JSON)
 public class FilteringAPI {
 

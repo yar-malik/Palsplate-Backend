@@ -60,9 +60,13 @@ public class Food {
     @NotNull
     private Long cook_id;
 
-    @OneToMany(fetch=FetchType.LAZY)
+    @OneToMany(fetch=FetchType.EAGER)
     @JoinColumn(name="food_id")
     private Set<Image> images;
+
+    @OneToMany(fetch=FetchType.EAGER)
+    @JoinColumn(name="food_id")
+    private Set<Review> reviews;
 
     public Food() {
     }
@@ -124,14 +128,6 @@ public class Food {
     public void setDescription(String description) {
         this.description = description;
     }
-
-//    public Double getCurrency() {
-//        return currency;
-//    }
-//
-//    public void setCurrency(Double currency) {
-//        this.currency = currency;
-//    }
 
     public Double getPrice() {
         return price;
@@ -195,5 +191,21 @@ public class Food {
 
     public void setCook_id(Long cook_id) {
         this.cook_id = cook_id;
+    }
+
+    public Set<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(Set<Image> images) {
+        this.images = images;
+    }
+
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = reviews;
     }
 }

@@ -77,6 +77,39 @@ public class FoodResource {
     }
 
     /**
+     * Get all images for specific food
+     * @param id
+     * @return food
+     */
+    @GET
+    @Path("{id}/images")
+    public Food getAllImagesForFood(@PathParam("id")long id) {
+        Food food = foodDao.findOne(id);
+        if (food == null) {
+            throw new WebApplicationException((Response.Status.NOT_FOUND));
+        }
+
+        food.getImages().size();
+        return food;
+    }
+
+    /**
+     * Get all reviews for specific food
+     * @param id
+     * @return food
+     */
+    @GET
+    @Path("{id}/reviews")
+    public Food getAllReviewsForFood(@PathParam("id")long id) {
+        Food food = foodDao.findOne(id);
+        if (food == null) {
+            throw new WebApplicationException((Response.Status.NOT_FOUND));
+        }
+        food.getReviews().size();
+        return food;
+    }
+
+    /**
      * Create new Food
      * @param food
      * @return new food
@@ -117,7 +150,6 @@ public class FoodResource {
             foodDao.delete(food);
         }
     }
-
 
     /**
      * Create new Image

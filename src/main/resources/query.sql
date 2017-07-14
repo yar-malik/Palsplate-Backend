@@ -64,16 +64,26 @@ CREATE TABLE food
     ON UPDATE CASCADE ON DELETE CASCADE
 )
 
-
 CREATE TABLE image
 (
   id serial NOT NULL,
-  data bytea NOT NULL,
-  filename character varying NOT NULL,
-  food_id serial NOT NULL,
+  filename character varying,
+  cloudinary_public_id character varying,
+  food_id serial,
   CONSTRAINT pk_image_id PRIMARY KEY (id),
   CONSTRAINT fk_image__food FOREIGN KEY (food_id)
     REFERENCES food (id) MATCH SIMPLE
     ON UPDATE CASCADE ON DELETE CASCADE
 )
 
+CREATE TABLE review
+(
+  id serial NOT NULL,
+  text character varying,
+  rating serial,
+  food_id serial,
+  CONSTRAINT pk_review_id PRIMARY KEY (id),
+  CONSTRAINT fk_review__food FOREIGN KEY (food_id)
+    REFERENCES food (id) MATCH SIMPLE
+    ON UPDATE CASCADE ON DELETE CASCADE
+)

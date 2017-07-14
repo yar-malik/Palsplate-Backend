@@ -220,7 +220,7 @@ where curlJsonCook.txt contains:
  * Create a new record with a curl example
 
 
-`curl -X POST -d @curlJsonCustomer.txt -H "Authorization: Bearer <access-token>" http://localhost:8080/customers --header "Content-Type:application/json"`
+`curl -X POST -d @curlJsonCustomer.txt -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/customers --header "Content-Type:application/json"`
 
 where curlJsonCustomer.txt contains:
 ```
@@ -232,16 +232,16 @@ where curlJsonCustomer.txt contains:
 ### Foods
 
  * Get one specific record
- ``GET http://localhost:8080/foods/{id}``
+ ``GET http://localhost:8080/api/secure/foods/{id}``
  * Get all foods for a specific cook
- ``GET http://localhost:8080/cooks/{id}/foods``
+ ``GET http://localhost:8080/api/secure/cooks/{id}/foods``
  * Update a specific record
- ``PUT http://localhost:8080/foods/{id}``
+ ``PUT http://localhost:8080/api/secure/foods/{id}``
  * Delete a specific record
- ``DELETE http://localhost:8080/foods/{id}``
+ ``DELETE http://localhost:8080/api/secure/foods/{id}``
  * Create a new record with a curl example
 
- `curl -X POST -d @curlJsonFood.txt -H "Authorization: Bearer <access-token>" http://localhost:8080/foods --header "Content-Type:application/json"`
+ `curl -X POST -d @curlJsonFood.txt -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/foods --header "Content-Type:application/json"`
 
 
  ````
@@ -262,21 +262,21 @@ where curlJsonCustomer.txt contains:
  ````
 
 * Get all foods for a specific cook
-`` GET http://localhost:8080/cooks/1/foods
+`` GET http://localhost:8080/api/secure/cooks/1/foods
 
 
 ### Images
 
  * Get one specific record
- ``GET http://localhost:8080/images/{id}``
+ ``GET http://localhost:8080/api/secure/images/{id}``
  * Get all images for a specific food
- ``GET http://localhost:8080/foods/{id}/images``
+ ``GET http://localhost:8080/api/secure/foods/{id}/images``
  * Update a specific record
- ``PUT http://localhost:8080/images/{id}``
+ ``PUT http://localhost:8080/api/secure/images/{id}``
  * Delete a specific record
- ``DELETE http://localhost:8080/images/{id}`` 
+ ``DELETE http://localhost:8080/api/secure/images/{id}`` 
  * Create new record
- ``POST http://localhost:8080/foods/{id}/images``
+ ``POST http://localhost:8080/api/secure/foods/{id}/images``
 
 Curl POST example of creating an image 
 `curl -H "Authorization: Bearer <access-token>" -F "file=@biryani.jpg" http://localhost:8080/api/secure/foods/{food_id}/images`
@@ -287,15 +287,15 @@ Curl GET example to get images for a specific food
 ### Reviews
 
  * Get one specific record
- ``GET http://localhost:8080/reviews/{id}``
+ ``GET http://localhost:8080/api/secure/reviews/{id}``
  * Get all reviews for a specific food
- ``GET http://localhost:8080/foods/{id}/reviews``
+ ``GET http://localhost:8080/api/secure/foods/{id}/reviews``
  * Update a specific record
- ``PUT http://localhost:8080/reviews/{id}``
+ ``PUT http://localhost:8080/api/secure/reviews/{id}``
  * Delete a specific record
- ``DELETE http://localhost:8080/reviews/{id}`` 
+ ``DELETE http://localhost:8080/api/secure/reviews/{id}`` 
  * Create new record
- ``POST http://localhost:8080/foods/{id}/reviews``
+ ``POST http://localhost:8080/api/secure/foods/{id}/reviews``
 
 Curl POST example of creating an review 
 `curl -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/reviews`
@@ -303,3 +303,28 @@ Curl POST example of creating an review
 Curl GET example to get reviews for a specific food
 `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/reviews`
 
+
+
+- - - -
+## Filtering API
+
+ * Get all foods below provided price
+ ``GET http://localhost:8080/api/secure/filters/price/max={max}``
+
+ * Get all foods of certain food type
+ ``GET http://localhost:8080/api/secure/filters/foodtype/type={type}``
+
+ * Get all foods of certain cuisine type
+ ``GET http://localhost:8080/api/secure/filters/cuisinetype/type={type}``
+
+ * Get all foods a certain distane away from customer
+ ``GET http://localhost:8080/api/secure/filters/distance/maxDist={maxDist}/lon={lon}/lat={lat}``
+   In the following API. lng and lat are coordiates of current location of customer and maxDist is what customer inputted. 
+   Also note that maxDist should be in kilometers. 
+   
+   Tested Examples Curl:
+   
+   curl -i -H "Authorization: Bearer dce32848-8c37-4ebc-8927-8de039d382ad" http://localhost:8080/api/secure/filters/distance/maxDist=20/lon=0.45/lat=0.56
+   curl -i -H "Authorization: Bearer caace48c-1f5d-4e49-ab86-55ccd523da41" http://localhost:8080/api/secure/filters/cuisinetype/type=fast_food
+   curl -i -H "Authorization: Bearer caace48c-1f5d-4e49-ab86-55ccd523da41" http://localhost:8080/api/secure/filters/foodtype/type=veggie
+   curl -i -H "Authorization: Bearer caace48c-1f5d-4e49-ab86-55ccd523da41" http://localhost:8080/api/secure/filters/price/max=5

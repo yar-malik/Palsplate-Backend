@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response;
 import java.io.InputStream;
 import java.util.List;
 
-@Path("/reviews")
+@Path("/")
 @Component
 @Transactional
 public class ReviewResource {

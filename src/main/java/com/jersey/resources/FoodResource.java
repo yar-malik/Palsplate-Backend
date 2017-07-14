@@ -11,6 +11,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +37,9 @@ public class FoodResource {
 
     private static final Logger log = LogManager.getLogger(FoodResource.class);
 
+    @Autowired
+    private Cloudinary cloudinary;
+
     private FoodDao foodDao;
 
     @Inject
@@ -45,7 +49,6 @@ public class FoodResource {
 
     @Inject
     private ImageDao imageDao;
-
 
     /**
      * Get all Foods
@@ -137,11 +140,12 @@ public class FoodResource {
 
         File myfile = inputStream2file(uploadedInputStream, fileDetail.getFileName(), fileDetail.getType());
 
-        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-                "cloud_name", "palsplate",
-                "api_key", "816138784777145",
-                "api_secret", "tA4kTPJ029PlpmCb7drT-_7RHUM",
-                "secure", true));
+//        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+//                "cloud_name", "palsplate",
+//                "api_key", "816138784777145",
+//                "api_secret", "tA4kTPJ029PlpmCb7drT-_7RHUM",
+//                "secure", true));
+
 
         Map uploadResult = cloudinary.uploader().upload(myfile, ObjectUtils.emptyMap());
 

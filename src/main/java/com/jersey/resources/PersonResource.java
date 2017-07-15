@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 
-@Path("/persons")
+@Path("")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Transactional
@@ -32,6 +32,7 @@ public class PersonResource {
      * @return persons
      */
     @GET
+    @Path("secure/persons")
     public List<Person> getAll() {
         List<Person> persons = this.personDao.findAll();
         return persons;
@@ -44,7 +45,7 @@ public class PersonResource {
      * @return person
      */
     @GET
-    @Path("{id}")
+    @Path("secure/persons/{id}")
     public Person getOne(@PathParam("id") long id) {
         Person person = personDao.findOne(id);
         if (person == null) {
@@ -61,6 +62,7 @@ public class PersonResource {
      * @return new person
      */
     @POST
+    @Path("secure/persons")
     public Person save(@Valid Person person) {
         return personDao.save(person);
     }
@@ -73,7 +75,7 @@ public class PersonResource {
      * @return updated person
      */
     @PUT
-    @Path("{id}")
+    @Path("secure/persons/{id}")
     public Person update(@PathParam("id") long id, @Valid Person person) {
         if (personDao.findOne(id) == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -89,7 +91,7 @@ public class PersonResource {
      * @param id
      */
     @DELETE
-    @Path("{id}")
+    @Path("secure/persons/{id}")
     public void delete(@PathParam("id") long id) {
         Person person = personDao.findOne(id);
         if (person == null) {

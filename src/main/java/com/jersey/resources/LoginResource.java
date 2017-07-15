@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 
-@Path("/logins")
+@Path("")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Transactional
@@ -32,6 +32,7 @@ public class LoginResource {
      * @return logins
      */
     @GET
+    @Path("secure/logins")
     public List<Login> getAll() {
         List<Login> logins = this.loginDao.findAll();
         return logins;
@@ -44,7 +45,7 @@ public class LoginResource {
      * @return login
      */
     @GET
-    @Path("{id}")
+    @Path("secure/logins/{id}")
     public Login getOne(@PathParam("id") long id) {
         Login login = loginDao.findOne(id);
         if (login == null) {
@@ -61,6 +62,7 @@ public class LoginResource {
      * @return new login
      */
     @POST
+    @Path("secure/logins")
     public Login save(@Valid Login login) {
         return loginDao.save(login);
     }
@@ -73,7 +75,7 @@ public class LoginResource {
      * @return updated login
      */
     @PUT
-    @Path("{id}")
+    @Path("secure/logins/{id}")
     public Login update(@PathParam("id") long id, @Valid Login login) {
         if (loginDao.findOne(id) == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -89,7 +91,7 @@ public class LoginResource {
      * @param id
      */
     @DELETE
-    @Path("{id}")
+    @Path("secure/logins/{id}")
     public void delete(@PathParam("id") long id) {
         Login login = loginDao.findOne(id);
         if (login == null) {

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import javax.ws.rs.ApplicationPath;
 
 @Component
-@ApplicationPath("/secure")
+@ApplicationPath("api")
 public class JerseyInitialization extends ResourceConfig {
     /**
      * Register JAX-RS application components.

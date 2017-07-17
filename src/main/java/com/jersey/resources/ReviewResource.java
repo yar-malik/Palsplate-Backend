@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("/reviews")
+@Path("")
 @Component
 @Transactional
 @Produces(MediaType.APPLICATION_JSON)
@@ -30,12 +30,13 @@ public class ReviewResource {
     }
 
     @GET
+    @Path("public/reviews")
     public List<Review> getAll(){
         return this.reviewDao.findAll();
     }
 
     @GET
-    @Path("{id}")
+    @Path("public/reviews/{id}")
     public Review getCook(@PathParam("id")long id) {
         Review review = reviewDao.findOne(id);
         if (review == null) {
@@ -50,6 +51,7 @@ public class ReviewResource {
      * @return new review
      */
     @POST
+    @Path("secure/reviews")
     public Review save(@Valid Review review ) {
         return reviewDao.save(review);
     }
@@ -62,7 +64,7 @@ public class ReviewResource {
      * @return updated review
      */
     @PUT
-    @Path("{id}")
+    @Path("secure/reviews/{id}")
     public Review update(@PathParam("id")long id, @Valid Review review) {
         if(reviewDao.findOne(id) == null){
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -77,7 +79,7 @@ public class ReviewResource {
      * @param id
      */
     @DELETE
-    @Path("{id}")
+    @Path("secure/reviews/{id}")
     public void delete(@PathParam("id")long id) {
         Review review = reviewDao.findOne(id);
         if(review == null){

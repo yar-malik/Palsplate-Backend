@@ -56,8 +56,8 @@ public class OAuth2Configuration {
                 .frameOptions().disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/hello/").permitAll()
-                .antMatchers("/secure/**").authenticated();
+                .antMatchers("/api/public/**").permitAll()
+                .antMatchers("/api/secure/**").authenticated();
 
         }
 

@@ -4,16 +4,16 @@ import com.jersey.persistence.CookDao;
 import com.jersey.representations.Cook;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.inject.Inject;
-import javax.swing.plaf.synth.SynthOptionPaneUI;
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("/cooks")
+@Path("")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Component
@@ -26,14 +26,14 @@ public class CookResource {
         this.cookDao = cookDao;
     }
 
-
+    @Path("public/cooks")
     @GET
     public List<Cook> getAll(){
         return this.cookDao.findAll();
     }
 
     @GET
-    @Path("{id}/foods")
+    @Path("public/cooks/{id}/foods")
     public Cook getAllFoodsForCook(@PathParam("id")long id) {
         System.out.println("id foods loop");
         Cook cook = cookDao.findOne(id);
@@ -49,7 +49,7 @@ public class CookResource {
     }
 
     @GET
-    @Path("{id}")
+    @Path("public/cooks/{id}")
     public Cook getCook(@PathParam("id")long id) {
         Cook cook = cookDao.findOne(id);
         if (cook == null) {
@@ -64,6 +64,7 @@ public class CookResource {
      * @return new cook
      */
     @POST
+    @Path("secure/cooks")
     public Cook save(@Valid Cook cook) {
         return cookDao.save(cook);
     }
@@ -75,7 +76,7 @@ public class CookResource {
      * @return updated cook
      */
     @PUT
-    @Path("{id}")
+    @Path("secure/cooks/{id}")
     public Cook update(@PathParam("id")long id, @Valid Cook cook) {
         if(cookDao.findOne(id) == null){
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -90,7 +91,7 @@ public class CookResource {
      * @param id
      */
     @DELETE
-    @Path("{id}")
+    @Path("secure/cooks/{id}")
     public void delete(@PathParam("id")long id) {
         Cook cook = cookDao.findOne(id);
         if(cook == null){

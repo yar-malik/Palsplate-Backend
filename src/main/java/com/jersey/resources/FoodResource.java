@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 
-@Path("/foods")
+@Path("")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Transactional
@@ -55,6 +55,7 @@ public class FoodResource {
      * @return foods
      */
     @GET
+    @Path("public/foods")
     public List<Food> getAll(){
         List<Food> foods = this.foodDao.findAll();
         return foods;
@@ -66,7 +67,7 @@ public class FoodResource {
      * @return food
      */
     @GET
-    @Path("{id}")
+    @Path("public/food/{id}")
     public Food getOne(@PathParam("id")long id) {
         Food food = foodDao.findOne(id);
         if(food == null){
@@ -82,7 +83,7 @@ public class FoodResource {
      * @return food
      */
     @GET
-    @Path("{id}/images")
+    @Path("public/foods/{id}/images")
     public Food getAllImagesForFood(@PathParam("id")long id) {
         Food food = foodDao.findOne(id);
         if (food == null) {
@@ -99,7 +100,7 @@ public class FoodResource {
      * @return food
      */
     @GET
-    @Path("{id}/reviews")
+    @Path("public/foods/{id}/reviews")
     public Food getAllReviewsForFood(@PathParam("id")long id) {
         Food food = foodDao.findOne(id);
         if (food == null) {
@@ -115,6 +116,7 @@ public class FoodResource {
      * @return new food
      */
     @POST
+    @Path("secure/foods")
     public Food save(@Valid Food food) {
         return foodDao.save(food);
     }
@@ -126,7 +128,7 @@ public class FoodResource {
      * @return updated food
      */
     @PUT
-    @Path("{id}")
+    @Path("secure/foods/{id}")
     public Food update(@PathParam("id")long id, @Valid Food food) {
         if(foodDao.findOne(id) == null){
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -141,7 +143,7 @@ public class FoodResource {
      * @param id
      */
     @DELETE
-    @Path("{id}")
+    @Path("secure/foods/{id}")
     public void delete(@PathParam("id")long id) {
         Food food = foodDao.findOne(id);
         if(food == null){
@@ -160,7 +162,7 @@ public class FoodResource {
      */
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Path("{food_id}/images")
+    @Path("secure/foods/{food_id}/images")
     public Image uploadFile(
             @FormDataParam("file") InputStream uploadedInputStream,
             @FormDataParam("file") FormDataContentDisposition fileDetail,

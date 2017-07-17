@@ -15,11 +15,11 @@ public class Cook {
     @JoinColumn(name = "person_id")
     private Long person_id;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "cook_id")
     private Set<Person> persons;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "cook_id")
     private Set<Food> foods;
 

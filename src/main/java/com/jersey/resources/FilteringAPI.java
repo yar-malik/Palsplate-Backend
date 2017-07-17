@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Filter;
 
-@Path("/filters")
+@Path("")
 @Produces(MediaType.APPLICATION_JSON)
 public class FilteringAPI {
 
@@ -23,7 +23,7 @@ public class FilteringAPI {
     private FoodDao foodDao;
 
     @GET
-    @Path("/distance/maxDist={maxDist}/lon={lon}/lat={lat}")
+    @Path("public/filters/distance/maxDist={maxDist}/lon={lon}/lat={lat}")
     public List<Food> getAllImagesForFood(@PathParam("maxDist")double maxDist, @PathParam("lon")double lon, @PathParam("lat")double lat) {
 
         List<Food> foods = this.foodDao.findAll();
@@ -59,7 +59,7 @@ public class FilteringAPI {
 
 
     @GET
-    @Path("/price/max={max}")
+    @Path("public/filters/price/max={max}")
     public List<Food> getAllFoodsWithPriceLowerThan(@PathParam("max")long max) {
         List<Food> foods = this.foodDao.findAll();
         List<Food> filterFoods = new ArrayList<>();
@@ -76,7 +76,7 @@ public class FilteringAPI {
     }
 
     @GET
-    @Path("/foodtype/type={type}")
+    @Path("public/filters/foodtype/type={type}")
     public List<Food> getAllFoodsWithFoodType(@PathParam("type")String type) {
         List<Food> foods = this.foodDao.findAll();
         List<Food> filterFoods = new ArrayList<>();
@@ -93,7 +93,7 @@ public class FilteringAPI {
     }
 
     @GET
-    @Path("/cuisinetype/type={type}")
+    @Path("public/filters/cuisinetype/type={type}")
     public List<Food> getAllFoodsWithCuisineType(@PathParam("type")String type) {
         List<Food> foods = this.foodDao.findAll();
         List<Food> filterFoods = new ArrayList<>();

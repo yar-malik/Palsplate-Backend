@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 
-@Path("/customers")
+@Path("")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Transactional
@@ -30,6 +30,7 @@ public class CustomerResource {
      * @return customers
      */
     @GET
+    @Path("secure/customers")
     public List<Customer> getAll(){
         List<Customer> customers = this.customerDao.findAll();
         return customers;
@@ -41,7 +42,7 @@ public class CustomerResource {
      * @return customer
      */
     @GET
-    @Path("{id}")
+    @Path("secure/customers/{id}")
     public Customer getOne(@PathParam("id")long id) {
         Customer customer = customerDao.findOne(id);
         if(customer == null){
@@ -57,6 +58,7 @@ public class CustomerResource {
      * @return new customer
      */
     @POST
+    @Path("secure/customers")
     public Customer save(@Valid Customer customer) {
         return customerDao.save(customer);
     }
@@ -68,7 +70,7 @@ public class CustomerResource {
      * @return updated customer
      */
     @PUT
-    @Path("{id}")
+    @Path("secure/customers/{id}")
     public Customer update(@PathParam("id")long id, @Valid Customer customer) {
         if(customerDao.findOne(id) == null){
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -83,7 +85,7 @@ public class CustomerResource {
      * @param id
      */
     @DELETE
-    @Path("{id}")
+    @Path("secure/customers/{id}")
     public void delete(@PathParam("id")long id) {
         Customer customer = customerDao.findOne(id);
         if(customer == null){

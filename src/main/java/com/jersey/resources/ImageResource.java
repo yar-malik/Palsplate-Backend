@@ -17,7 +17,7 @@ import java.io.InputStream;
 import java.util.List;
 
 
-@Path("/images")
+@Path("")
 @Component
 @Transactional
 public class ImageResource {
@@ -32,12 +32,13 @@ public class ImageResource {
     }
 
     @GET
+    @Path("public/images")
     public List<Image> getAll(){
         return this.imageDao.findAll();
     }
 
     @GET
-    @Path("{id}")
+    @Path("public/images/{id}")
     public Image getCook(@PathParam("id")long id) {
         Image image = imageDao.findOne(id);
         if (image == null) {
@@ -53,7 +54,7 @@ public class ImageResource {
      * @return updated image
      */
     @PUT
-    @Path("{id}")
+    @Path("secure/images/{id}")
     public Image update(@FormDataParam("file") InputStream uploadedInputStream,
                         @FormDataParam("file") FormDataContentDisposition fileDetail,
                         @PathParam("id")long id, @Valid Image image) {
@@ -70,7 +71,7 @@ public class ImageResource {
      * @param id
      */
     @DELETE
-    @Path("{id}")
+    @Path("secure/images/{id}")
     public void delete(@PathParam("id")long id) {
         Image image = imageDao.findOne(id);
         if(image == null){

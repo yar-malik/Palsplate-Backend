@@ -12,13 +12,17 @@ public class Login {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username")
+    @Column(name = "email")
     @NotNull
-    private String username;
+    private String email;
 
     @Column(name = "password")
     @NotNull
     private String password;
+
+    @Column(name = "granted_role")
+    @NotNull
+    private String roles;
 
     @OneToMany(fetch=FetchType.LAZY)
     @JoinColumn(name="login_id")
@@ -27,41 +31,60 @@ public class Login {
     public Login() {
     }
 
-    public Login(Long id, String username, String password) {
+    public Login(Long id, String email, String password, String roles) {
         this.id = id;
-        this.username = username;
+        this.email = email;
         this.password = password;
+        this.roles  = roles;
     }
-    public Long getId() {
+    public Long getId()
+    {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Long id)
+    {
         this.id = id;
     }
 
-    public String getUserName() {
-        return username;
+    public String getEmail()
+    {
+        return email;
     }
 
-    public void setUserName(String username) {
-        this.username = username;
+    public void setEmail(String email)
+    {
+        this.email = email;
     }
 
-    public String getPassword() {
+    public String getPassword()
+    {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(String password)
+    {
         this.password = password;
     }
 
-    public Set<Person> getPersons() {
+    public Set<Person> getPersons()
+    {
         return persons;
     }
 
-    public void setPersons(Set<Person> products) {
+    public void setPersons(Set<Person> products)
+    {
         this.persons = persons;
+    }
+
+    public void setRoles(String roles)
+    {
+        this.roles = roles;
+    }
+
+    public String getRoles()
+    {
+        return roles;
     }
 
 }

@@ -95,7 +95,7 @@ The authorization protocol follows the following mechanism.
 
 1. Provide the username and password to retrieve the refresh token
 
-`curl -u webclient:secret 'http://localhost:8080/api/oauth/token?username=admin&password=admin&grant_type=password'`
+`curl -u webclient:secret 'http://localhost:8080/oauth/token?username=admin&password=admin&grant_type=password'`
 
 ````{"access_token":"8789eae9-0863-4266-bff0-79e7799c910f","token_type":"bearer","refresh_token":"73f29da8-57c5-4ae3-ac4d-59a061d6c05b","expires_in":1799,"scope":"read write"}````
 
@@ -107,7 +107,7 @@ The authorization protocol follows the following mechanism.
 
 3. Provide the refresh token to the server to again retrieve the access token, if it gets expired
 
-`curl -u webclient:secret 'http://localhost:8080/api/oauth/token?grant_type=refresh_token&refresh_token=<refresh-token>'  `
+`curl -u webclient:secret 'http://localhost:8080/oauth/token?grant_type=refresh_token&refresh_token=<refresh-token>'  `
 
 where <refresh-token> is received in the previous command
 
@@ -122,7 +122,7 @@ Following is a list of some examples of rest requests one can use:
 ```
 GET: http://localhost:8080/api/secure/cooks
 GET: http://localhost:8080/api/secure/cooks/1
-GET: http://localhost:8080/api/secure/foods
+GET: http://localhost:8080/api/public/foods
 GET: http://localhost:8080/api/secure/cooks/1/foods
 GET: http://localhost:8080/api/secure/logins
 GET: http://localhost:8080/api/secure/customers/1
@@ -192,11 +192,11 @@ where curlJson.txt contains:
 ### Cook
 
  * Get one specific record
- ``GET http://localhost:8080/api/secure/cooks/{id}``
+ ``GET http://localhost:8080/api/public/cooks/{id}``
  * Update a specific record
- ``PUT http://localhost:8080/api/secure/cooks/{id}``
+ ``PUT http://localhost:8080/api/public/cooks/{id}``
  * Delete a specific record
- ``DELETE http://localhost:8080/api/secure/cooks/{id}``
+ ``DELETE http://localhost:8080/api/public/cooks/{id}``
  * Create a new record with a curl example
 
 
@@ -232,16 +232,16 @@ where curlJsonCustomer.txt contains:
 ### Foods
 
  * Get one specific record
- ``GET http://localhost:8080/api/secure/foods/{id}``
+ ``GET http://localhost:8080/api/public/foods/{id}``
  * Get all foods for a specific cook
- ``GET http://localhost:8080/api/secure/cooks/{id}/foods``
+ ``GET http://localhost:8080/api/public/cooks/{id}/foods``
  * Update a specific record
- ``PUT http://localhost:8080/api/secure/foods/{id}``
+ ``PUT http://localhost:8080/api/public/foods/{id}``
  * Delete a specific record
- ``DELETE http://localhost:8080/api/secure/foods/{id}``
+ ``DELETE http://localhost:8080/api/public/foods/{id}``
  * Create a new record with a curl example
 
- `curl -X POST -d @curlJsonFood.txt -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/foods --header "Content-Type:application/json"`
+ `curl -X POST -d @curlJsonFood.txt -H "Authorization: Bearer <access-token>" http://localhost:8080/api/public/foods --header "Content-Type:application/json"`
 
 
  ````
@@ -270,32 +270,32 @@ where curlJsonCustomer.txt contains:
  * Get one specific record
  ``GET http://localhost:8080/api/secure/images/{id}``
  * Get all images for a specific food
- ``GET http://localhost:8080/api/secure/foods/{id}/images``
+ ``GET http://localhost:8080/api/public/foods/{id}/images``
  * Update a specific record
  ``PUT http://localhost:8080/api/secure/images/{id}``
  * Delete a specific record
  ``DELETE http://localhost:8080/api/secure/images/{id}`` 
  * Create new record
- ``POST http://localhost:8080/api/secure/foods/{id}/images``
+ ``POST http://localhost:8080/api/public/foods/{id}/images``
 
 Curl POST example of creating an image 
-`curl -H "Authorization: Bearer <access-token>" -F "file=@biryani.jpg" http://localhost:8080/api/secure/foods/{food_id}/images`
+`curl -H "Authorization: Bearer <access-token>" -F "file=@biryani.jpg" http://localhost:8080/api/secure/public/{food_id}/images`
 
 Curl GET example to get images for a specific food
-`curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/foods/2/images`
+`curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/public/foods/2/images`
 
 ### Reviews
 
  * Get one specific record
- ``GET http://localhost:8080/api/secure/reviews/{id}``
+ ``GET http://localhost:8080/api/public/reviews/{id}``
  * Get all reviews for a specific food
- ``GET http://localhost:8080/api/secure/foods/{id}/reviews``
+ ``GET http://localhost:8080/api/public/foods/{id}/reviews``
  * Update a specific record
- ``PUT http://localhost:8080/api/secure/reviews/{id}``
+ ``PUT http://localhost:8080/api/public/reviews/{id}``
  * Delete a specific record
- ``DELETE http://localhost:8080/api/secure/reviews/{id}`` 
+ ``DELETE http://localhost:8080/api/public/reviews/{id}`` 
  * Create new record
- ``POST http://localhost:8080/api/secure/foods/{id}/reviews``
+ ``POST http://localhost:8080/api/public/foods/{id}/reviews``
 
 Curl POST example of creating an review 
 `curl -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/reviews`
@@ -324,7 +324,7 @@ Curl GET example to get reviews for a specific food
    
    Tested Examples Curl:
    
-   * curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters/distance/maxDist=20/lon=0.45/lat=0.56
-   * curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters/cuisinetype/type=fast_food
-   * curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters/foodtype/type=veggie
-   * curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters/price/max=5
+   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters/distance/maxDist=20/lon=0.45/lat=0.56`
+   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters/cuisinetype/type=fast_food`
+   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters/foodtype/type=veggie`
+   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters/price/max=5`

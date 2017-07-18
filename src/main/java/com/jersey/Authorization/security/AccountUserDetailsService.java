@@ -35,7 +35,7 @@ public class AccountUserDetailsService implements UserDetailsService {
 
         Collection<GrantedAuthority> grantedAuthorities = new ArrayList();
         String personRoles = person.getRoles();
-        StringTokenizer tokens = new StringTokenizer(personRoles);
+        StringTokenizer tokens = new StringTokenizer(personRoles , ",");
 
         while(tokens.hasMoreTokens())
         {

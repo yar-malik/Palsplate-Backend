@@ -7,6 +7,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface LoginDao extends JpaRepository<Login, Long> {
 
-    @Query("SELECT u FROM Login u WHERE LOWER(u.username) = LOWER(:username)")
-    Login findByUsername(@Param("username") String username);
+    @Query("SELECT u FROM Login u WHERE LOWER(u.email) = LOWER(:email)")
+    Login findByEmail(@Param("email") String email);
 }

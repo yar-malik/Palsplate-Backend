@@ -13,6 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.StringTokenizer;
 
 @Component
 public class AccountUserDetailsService implements UserDetailsService {
@@ -23,21 +24,24 @@ public class AccountUserDetailsService implements UserDetailsService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        Login person = loginDaoRepository.findByUsername(username);
+        Login person = loginDaoRepository.findByEmail(email);
 
         if (person == null)
         {
-            throw new UsernameNotFoundException("User " + username + " was not found in the database");
+            throw new UsernameNotFoundException("User with email address " + email + " was not found. Did you forget your registered email?");
         }
 
         Collection<GrantedAuthority> grantedAuthorities = new ArrayList();
-        GrantedAuthority g = new SimpleGrantedAuthority("ROLE_USER");
-        grantedAuthorities.add(g);
-        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        String personRoles = person.getRoles();
+        StringTokenizer tokens = new StringTokenizer(personRoles , ",");
 
-        return new User(person.getUserName(), person.getPassword(), grantedAuthorities);
+        while(tokens.hasMoreTokens())
+        {
+            grantedAuthorities.add(new SimpleGrantedAuthority(tokens.nextToken()));
+        }
 
+        return new User(person.getEmail(), person.getPassword(), grantedAuthorities);
     }
 }

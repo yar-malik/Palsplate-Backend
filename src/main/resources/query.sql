@@ -3,7 +3,7 @@ CREATE TABLE login
   id serial NOT NULL,
   username character varying NOT NULL,
   password character varying NOT NULL,
-  granted_role varying NOT NULL,
+  granted_role character varying NOT NULL,
   CONSTRAINT pk_login_id PRIMARY KEY (id)
 )
 

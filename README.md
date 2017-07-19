@@ -120,10 +120,10 @@ where <refresh-token> is received in the previous command
 Following is a list of some examples of rest requests one can use:
 
 ```
-GET: http://localhost:8080/api/secure/cooks
-GET: http://localhost:8080/api/secure/cooks/1
+GET: http://localhost:8080/api/public/cooks
+GET: http://localhost:8080/api/public/cooks/1
 GET: http://localhost:8080/api/public/foods
-GET: http://localhost:8080/api/secure/cooks/1/foods
+GET: http://localhost:8080/api/public/cooks/1/foods
 GET: http://localhost:8080/api/secure/logins
 GET: http://localhost:8080/api/secure/customers/1
 ```

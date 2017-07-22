@@ -328,3 +328,10 @@ Curl GET example to get reviews for a specific food
    * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters/cuisinetype/type=fast_food`
    * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters/foodtype/type=veggie`
    * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters/price/max=5`
+   
+   
+ - - -
+## Database Schema
+   
+   
+   ![palsplateDB_v1.2](src/main/resources/palsplateDB_v1.2.png)

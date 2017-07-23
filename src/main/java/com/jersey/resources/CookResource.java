@@ -2,6 +2,7 @@ package com.jersey.resources;
 
 import com.jersey.persistence.CookDao;
 import com.jersey.representations.Cook;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,6 +78,7 @@ public class CookResource {
      */
     @PUT
     @Path("secure/cooks/{id}")
+    @PreAuthorize("hasPermission(#id,'CookResource', 'ROLE_USER,ROLE_ADMIN')")
     public Cook update(@PathParam("id")long id, @Valid Cook cook) {
         if(cookDao.findOne(id) == null){
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -92,6 +94,7 @@ public class CookResource {
      */
     @DELETE
     @Path("secure/cooks/{id}")
+    @PreAuthorize("hasPermission(#id,'CookResource', 'ROLE_USER,ROLE_ADMIN')")
     public void delete(@PathParam("id")long id) {
         Cook cook = cookDao.findOne(id);
         if(cook == null){

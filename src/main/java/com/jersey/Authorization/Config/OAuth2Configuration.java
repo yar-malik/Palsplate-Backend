@@ -88,9 +88,7 @@ public class OAuth2Configuration {
 
         @Override
         public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-
-            endpoints.allowedTokenEndpointRequestMethods(HttpMethod.GET);
-
+            
             endpoints
                     .tokenStore(tokenStore())
                     .authenticationManager(authenticationManager);

@@ -15,7 +15,7 @@ public class Customer {
     private Long person_id;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cook_id")
+    @JoinColumn(name = "customer_id")
     private Set<Person> persons;
 
     public Customer() {

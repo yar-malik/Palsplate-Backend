@@ -2,6 +2,7 @@ package com.jersey.resources;
 
 import com.jersey.persistence.CustomerDao;
 import com.jersey.representations.Customer;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,8 +30,10 @@ public class CustomerResource {
      * Get all Customers
      * @return customers
      */
+
     @GET
     @Path("secure/customers")
+    @PreAuthorize("hasPermission('CustomerResource', 'ROLE_ADMIN')")
     public List<Customer> getAll(){
         List<Customer> customers = this.customerDao.findAll();
         return customers;
@@ -43,6 +46,7 @@ public class CustomerResource {
      */
     @GET
     @Path("secure/customers/{id}")
+    @PreAuthorize("hasPermission(#id,'CustomerResource', 'ROLE_USER,ROLE_ADMIN')")
     public Customer getOne(@PathParam("id")long id) {
         Customer customer = customerDao.findOne(id);
         if(customer == null){
@@ -71,6 +75,7 @@ public class CustomerResource {
      */
     @PUT
     @Path("secure/customers/{id}")
+    @PreAuthorize("hasPermission(#id,'CustomerResource', 'ROLE_USER,ROLE_ADMIN')")
     public Customer update(@PathParam("id")long id, @Valid Customer customer) {
         if(customerDao.findOne(id) == null){
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -86,6 +91,7 @@ public class CustomerResource {
      */
     @DELETE
     @Path("secure/customers/{id}")
+    @PreAuthorize("hasPermission(#id,'CustomerResource', 'ROLE_USER,ROLE_ADMIN')")
     public void delete(@PathParam("id")long id) {
         Customer customer = customerDao.findOne(id);
         if(customer == null){

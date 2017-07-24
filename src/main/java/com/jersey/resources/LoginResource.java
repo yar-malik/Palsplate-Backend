@@ -2,6 +2,7 @@ package com.jersey.resources;
 
 import com.jersey.persistence.LoginDao;
 import com.jersey.representations.Login;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +34,7 @@ public class LoginResource {
      */
     @GET
     @Path("secure/logins")
+    @PreAuthorize("hasPermission('LoginResource', 'ROLE_ADMIN')")
     public List<Login> getAll() {
         List<Login> logins = this.loginDao.findAll();
         return logins;
@@ -46,6 +48,7 @@ public class LoginResource {
      */
     @GET
     @Path("secure/logins/{id}")
+    @PreAuthorize("hasPermission(#id,'LoginResource', 'ROLE_USER,ROLE_ADMIN')")
     public Login getOne(@PathParam("id") long id) {
         Login login = loginDao.findOne(id);
         if (login == null) {
@@ -76,6 +79,7 @@ public class LoginResource {
      */
     @PUT
     @Path("secure/logins/{id}")
+    @PreAuthorize("hasPermission(#id,'LoginResource', 'ROLE_USER,ROLE_ADMIN')")
     public Login update(@PathParam("id") long id, @Valid Login login) {
         if (loginDao.findOne(id) == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -92,6 +96,7 @@ public class LoginResource {
      */
     @DELETE
     @Path("secure/logins/{id}")
+    @PreAuthorize("hasPermission('LoginResource', 'ROLE_ADMIN')")
     public void delete(@PathParam("id") long id) {
         Login login = loginDao.findOne(id);
         if (login == null) {

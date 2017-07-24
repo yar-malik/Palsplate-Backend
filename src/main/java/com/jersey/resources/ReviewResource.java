@@ -4,6 +4,7 @@ import com.jersey.persistence.ReviewDao;
 import com.jersey.representations.Review;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,6 +66,7 @@ public class ReviewResource {
      */
     @PUT
     @Path("secure/reviews/{id}")
+    @PreAuthorize("hasPermission(#id, 'ReviewResource', 'ROLE_USER,ROLE_ADMIN')")
     public Review update(@PathParam("id")long id, @Valid Review review) {
         if(reviewDao.findOne(id) == null){
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -80,6 +82,7 @@ public class ReviewResource {
      */
     @DELETE
     @Path("secure/reviews/{id}")
+    @PreAuthorize("hasPermission(#id, 'ReviewResource', 'ROLE_ADMIN')")
     public void delete(@PathParam("id")long id) {
         Review review = reviewDao.findOne(id);
         if(review == null){

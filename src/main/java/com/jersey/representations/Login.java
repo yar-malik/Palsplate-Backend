@@ -24,7 +24,7 @@ public class Login {
     @NotNull
     private String roles;
 
-    @OneToMany(fetch=FetchType.LAZY)
+    @OneToMany(fetch=FetchType.EAGER)
     @JoinColumn(name="login_id")
     private Set<Person> persons;
 

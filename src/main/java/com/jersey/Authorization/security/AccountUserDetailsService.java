@@ -1,7 +1,7 @@
 package com.jersey.Authorization.security;
 
-import com.jersey.persistence.LoginDao;
-import com.jersey.representations.Login;
+import com.jersey.persistence.PersonDao;
+import com.jersey.representations.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -19,14 +19,14 @@ import java.util.StringTokenizer;
 public class AccountUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private LoginDao loginDaoRepository;
+    private PersonDao personDaoRepository;
 
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        Login person = loginDaoRepository.findByEmail(email);
+        Person person = personDaoRepository.findByEmail(email);
 
         if (person == null)
         {

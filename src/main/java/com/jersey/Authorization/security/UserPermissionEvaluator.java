@@ -16,9 +16,6 @@ import java.util.StringTokenizer;
 public class UserPermissionEvaluator implements PermissionEvaluator {
 
     @Autowired
-    private LoginDao loginDaoRepository;
-
-    @Autowired
     private CustomerDao customerDaoRepository;
 
     @Autowired
@@ -107,11 +104,6 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
             return checkFoodResourcePermission(authentication, (long) serializable);
         }
 
-        if(resourceType.equals("LoginResource"))
-        {
-            return checkLoginResourcePermission(authentication, (long) serializable);
-        }
-
         if(resourceType.equals("PersonResource"))
         {
             return checkPersonResourcePermission(authentication, (long) serializable);
@@ -127,28 +119,28 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
 
     public boolean checkCustomerResourcePermission(Authentication authentication, long ID)
     {
-        // find the login id of the requested resource
+        // find the person id of the requested resource
         Customer customer = customerDaoRepository.findOne(ID);
         Person person = personDaoRepository.findOne(customer.getPerson_id());
 
-        // find the login id of the user who requested the resource
-        Login currentLogin = loginDaoRepository.findByEmail(authentication.getName());
+        // find the person id of the user who requested the resource
+        Person currentPerson= personDaoRepository.findByEmail(authentication.getName());
 
         //check if they are equal
-        return currentLogin.getId() == person.getLogin_id();
+        return currentPerson.getId() == person.getId();
     }
 
     public boolean checkCookResoucePermission(Authentication authentication, long ID)
     {
-        // find the login id of the requested resource
+        // find the person id of the requested resource
         Cook cook = cookDaoRepository.getOne(ID);
         Person person = personDaoRepository.getOne(cook.getPerson_id());
 
-        // find the login id of the user who requested the resource
-        Login currentLogin = loginDaoRepository.findByEmail(authentication.getName());
+        // find the person id of the user who requested the resource
+        Person currentPerson = personDaoRepository.findByEmail(authentication.getName());
 
         //check if they are equal
-        return currentLogin.getId() == person.getLogin_id();
+        return currentPerson.getId() == person.getId();
 
     }
 
@@ -158,39 +150,28 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
         return checkCookResoucePermission(authentication, food.getCook_id());
     }
 
-    public boolean checkLoginResourcePermission(Authentication authentication, long ID)
-    {
-        Login login = loginDaoRepository.getOne(ID);
-
-        // find the login id of the user who requested the resource
-        Login currentLogin = loginDaoRepository.findByEmail(authentication.getName());
-
-        //check if they are equal
-        return currentLogin.getId() == login.getId();
-
-    }
 
     public boolean checkPersonResourcePermission(Authentication authentication, long ID)
     {
         Person person = personDaoRepository.getOne(ID);
 
-        // find the login id of the user who requested the resource
-        Login currentLogin = loginDaoRepository.findByEmail(authentication.getName());
+        // find the person id of the user who requested the resource
+        Person currentPerson = personDaoRepository.findByEmail(authentication.getName());
 
         //check if they are equal
-        return currentLogin.getId() == person.getLogin_id();
+        return currentPerson.getId() == person.getId();
     }
 
     public boolean checkReviewResourcePermission(Authentication authentication, long ID)
     {
         Review review = reviewDaoRepository.findOne(ID);
 
-        // find the login id of the user who requested the resource
-        Login currentLogin = loginDaoRepository.findByEmail(authentication.getName());
+        // find the person id of the user who requested the resource
+        Person currentPerson= personDaoRepository.findByEmail(authentication.getName());
 
         // TODO add a functionality to link a review with a person
         //check if they are equal
-     //   return currentLogin.getId() == person.getLogin_id();
+     //   return currentPerson.getId() == person.getId();
        return true;
     }
 

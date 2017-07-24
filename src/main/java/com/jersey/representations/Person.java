@@ -15,6 +15,14 @@ public class Person {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "password")
+    @NotNull
+    private String password;
+
+    @Column(name = "granted_role")
+    @NotNull
+    private String roles;
+
     @Column(name = "first_name")
     @NotNull
     private String firstName;
@@ -39,10 +47,6 @@ public class Person {
     @NotNull
     private boolean isPhotoPublic;
 
-    @JoinColumn(name = "login_id")
-    @NotNull
-    private Long login_id;
-
     @JoinColumn(name = "cook_id")
     private Long cook_id;
 
@@ -61,11 +65,10 @@ public class Person {
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.address = address;
-//        this.photoPath = photoPath;
         this.description = description;
         this.isPhotoPublic = isPhotoPublic;
-
     }
+
     public Long getId() {
         return id;
     }
@@ -114,14 +117,6 @@ public class Person {
         this.address = address;
     }
 
-//    public String getPhotoPath() {
-//        return photoPath;
-//    }
-//
-//    public void setPhotoPath(String photoPath) {
-//        this.photoPath = photoPath;
-//    }
-
     public String getDescription() {
         return description;
     }
@@ -136,14 +131,6 @@ public class Person {
 
     public void setIsPhotoPublic(boolean isPhotoPublic) {
         this.isPhotoPublic = isPhotoPublic;
-    }
-
-    public Long getLogin_id() {
-        return login_id;
-    }
-
-    public void setLogin_id(Long login_id) {
-        this.login_id = login_id;
     }
 
     public Long getCook_id() {
@@ -168,5 +155,21 @@ public class Person {
 
     public void setCustomer_id(Long customer_id) {
         this.customer_id = customer_id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 }

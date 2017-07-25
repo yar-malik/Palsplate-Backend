@@ -21,7 +21,7 @@ public class Person {
 
     @Column(name = "granted_role")
     @NotNull
-    private String roles;
+    private String granted_role;
 
     @Column(name = "first_name")
     @NotNull
@@ -47,11 +47,11 @@ public class Person {
     @NotNull
     private boolean isPhotoPublic;
 
-    @JoinColumn(name = "cook_id")
-    private Long cook_id;
-
-    @JoinColumn(name = "customer_id")
-    private Long customer_id;
+//    @JoinColumn(name = "cook_id")
+//    private Long cook_id;
+//
+//    @JoinColumn(name = "customer_id")
+//    private Long customer_id;
 
     public Person() {
     }
@@ -133,14 +133,6 @@ public class Person {
         this.isPhotoPublic = isPhotoPublic;
     }
 
-    public Long getCook_id() {
-        return cook_id;
-    }
-
-    public void setCook_id(Long cook_id) {
-        this.cook_id = cook_id;
-    }
-
     public boolean isPhotoPublic() {
         return isPhotoPublic;
     }
@@ -149,13 +141,6 @@ public class Person {
         isPhotoPublic = photoPublic;
     }
 
-    public Long getCustomer_id() {
-        return customer_id;
-    }
-
-    public void setCustomer_id(Long customer_id) {
-        this.customer_id = customer_id;
-    }
 
     public String getPassword() {
         return password;
@@ -166,10 +151,10 @@ public class Person {
     }
 
     public String getRoles() {
-        return roles;
+        return granted_role;
     }
 
-    public void setRoles(String roles) {
-        this.roles = roles;
+    public void setRoles(String granted_role) {
+        this.granted_role = granted_role;
     }
 }

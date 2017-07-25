@@ -33,7 +33,7 @@ public class CustomerResource {
 
     @GET
     @Path("secure/customers")
-    @PreAuthorize("hasPermission('CustomerResource', 'ROLE_ADMIN')")
+//    @PreAuthorize("hasPermission('CustomerResource', 'ROLE_ADMIN')")
     public List<Customer> getAll(){
         List<Customer> customers = this.customerDao.findAll();
         return customers;
@@ -46,7 +46,7 @@ public class CustomerResource {
      */
     @GET
     @Path("secure/customers/{id}")
-    @PreAuthorize("hasPermission(#id,'CustomerResource', 'ROLE_USER,ROLE_ADMIN')")
+//    @PreAuthorize("hasPermission(#id,'CustomerResource', 'ROLE_USER,ROLE_ADMIN')")
     public Customer getOne(@PathParam("id")long id) {
         Customer customer = customerDao.findOne(id);
         if(customer == null){

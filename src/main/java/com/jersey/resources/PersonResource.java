@@ -34,7 +34,7 @@ public class PersonResource {
      */
     @GET
     @Path("secure/persons")
-    @PreAuthorize("hasPermission('PersonResource', 'ROLE_ADMIN')")
+//    @PreAuthorize("hasPermission('PersonResource', 'ROLE_ADMIN')")
     public List<Person> getAll() {
         List<Person> persons = this.personDao.findAll();
         return persons;
@@ -48,7 +48,7 @@ public class PersonResource {
      */
     @GET
     @Path("secure/persons/{id}")
-    @PreAuthorize("hasPermission(#id, 'PersonResource', 'ROLE_USER,ROLE_ADMIN')")
+//    @PreAuthorize("hasPermission(#id, 'PersonResource', 'ROLE_USER,ROLE_ADMIN')")
     public Person getOne(@PathParam("id") long id) {
         Person person = personDao.findOne(id);
         if (person == null) {

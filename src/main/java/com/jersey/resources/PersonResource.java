@@ -3,6 +3,8 @@ package com.jersey.resources;
 import com.jersey.persistence.PersonDao;
 import com.jersey.representations.Person;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +36,7 @@ public class PersonResource {
      */
     @GET
     @Path("secure/persons")
-//    @PreAuthorize("hasPermission('PersonResource', 'ROLE_ADMIN')")
+    @PreAuthorize("hasPermission('PersonResource', 'ROLE_ADMIN')")
     public List<Person> getAll() {
         List<Person> persons = this.personDao.findAll();
         return persons;
@@ -48,7 +50,7 @@ public class PersonResource {
      */
     @GET
     @Path("secure/persons/{id}")
-//    @PreAuthorize("hasPermission(#id, 'PersonResource', 'ROLE_USER,ROLE_ADMIN')")
+    @PreAuthorize("hasPermission(#id, 'PersonResource', 'ROLE_USER,ROLE_ADMIN')")
     public Person getOne(@PathParam("id") long id) {
         Person person = personDao.findOne(id);
         if (person == null) {
@@ -56,6 +58,16 @@ public class PersonResource {
         } else {
             return person;
         }
+    }
+
+    @GET
+    @Path("secure/currentuser")
+    public Person getPersonViaAccessToken()
+    {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+
+        return CopyPersonSafe(personDao.findByEmail(email));
     }
 
     /**
@@ -104,5 +116,24 @@ public class PersonResource {
         } else {
             personDao.delete(person);
         }
+    }
+
+    /**
+     * Copies the person object without password and other security impacting information
+     * @return Copied person object
+     */
+    private Person CopyPersonSafe(Person person)
+    {
+        Person newPerson = new Person();
+
+        newPerson.setEmail(person.getEmail());
+        newPerson.setId(person.getId());
+        newPerson.setFirstName(person.getFirstName());
+        newPerson.setLastName(person.getLastName());
+        newPerson.setAddress(person.getAddress());
+        newPerson.setPhoneNumber(person.getPhoneNumber());
+        newPerson.setDescription(person.getDescription());
+
+        return  newPerson;
     }
 }

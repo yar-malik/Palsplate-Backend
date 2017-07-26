@@ -33,6 +33,8 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
     @Override
     public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object allowedPermissions) {
 
+        System.out.println("Inside the first has permission");
+
         if(checkIfUserIsAdmin(authentication))
         {
             return true;
@@ -60,6 +62,8 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
 
     @Override
     public boolean hasPermission(Authentication authentication, Serializable serializable, String resourceType, Object allowedPermissions) {
+
+        System.out.println("Inside the second has permission");
 
         if(checkIfUserIsAdmin(authentication))
         {

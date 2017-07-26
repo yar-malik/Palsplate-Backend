@@ -1,9 +1,12 @@
 package com.jersey.representations;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
+@JsonIgnoreProperties
 @Entity
 public class Customer {
 
@@ -12,12 +15,9 @@ public class Customer {
     private Long id;
 
     @JoinColumn(name = "person_id")
+    @NotNull
     private Long person_id;
-
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id")
-    private Set<Person> persons;
-
+    
     public Customer() {
     }
 

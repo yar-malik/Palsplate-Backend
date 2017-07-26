@@ -2,6 +2,7 @@ package com.jersey.representations;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @JsonIgnoreProperties
@@ -13,11 +14,8 @@ public class Cook {
     private Long id;
 
     @JoinColumn(name = "person_id")
+    @NotNull
     private Long person_id;
-
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "cook_id")
-    private Set<Person> persons;
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "cook_id")
@@ -45,13 +43,13 @@ public class Cook {
         this.foods = foods;
     }
 
-    public Set<Person> getPersons() {
-        return persons;
-    }
-
-    public void setPersons(Set<Person> persons) {
-        this.persons = persons;
-    }
+//    public Set<Person> getPersons() {
+//        return persons;
+//    }
+//
+//    public void setPersons(Set<Person> persons) {
+//        this.persons = persons;
+//    }
 
     public Long getPerson_id() {
         return person_id;

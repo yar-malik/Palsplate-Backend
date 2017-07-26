@@ -2,6 +2,7 @@ package com.jersey.representations;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Entity
 @Table(name = "person")
@@ -47,11 +48,13 @@ public class Person {
     @NotNull
     private boolean isPhotoPublic;
 
-//    @JoinColumn(name = "cook_id")
-//    private Long cook_id;
-//
-//    @JoinColumn(name = "customer_id")
-//    private Long customer_id;
+    @OneToMany(fetch=FetchType.EAGER)
+    @JoinColumn(name="person    _id")
+    private Set<Cook> cook;
+
+    @OneToMany(fetch=FetchType.EAGER)
+    @JoinColumn(name="person_id")
+    private Set<Customer> customer;
 
     public Person() {
     }
@@ -141,7 +144,6 @@ public class Person {
         isPhotoPublic = photoPublic;
     }
 
-
     public String getPassword() {
         return password;
     }
@@ -156,5 +158,21 @@ public class Person {
 
     public void setRoles(String granted_role) {
         this.granted_role = granted_role;
+    }
+
+    public Set<Customer> getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Set<Customer> customer) {
+        this.customer = customer;
+    }
+
+    public Set<Cook> getCook() {
+        return cook;
+    }
+
+    public void setCook(Set<Cook> cook) {
+        this.cook = cook;
     }
 }

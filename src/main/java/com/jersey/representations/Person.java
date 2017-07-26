@@ -49,7 +49,7 @@ public class Person {
     private boolean isPhotoPublic;
 
     @OneToMany(fetch=FetchType.EAGER)
-    @JoinColumn(name="person    _id")
+    @JoinColumn(name="person_id")
     private Set<Cook> cook;
 
     @OneToMany(fetch=FetchType.EAGER)

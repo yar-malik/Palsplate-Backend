@@ -46,7 +46,7 @@ public class CustomerResource {
      */
     @GET
     @Path("secure/customers/{id}")
-//    @PreAuthorize("hasPermission(#id,'CustomerResource', 'ROLE_USER,ROLE_ADMIN')")
+    @PreAuthorize("hasPermission(#id,'CustomerResource', 'ROLE_USER,ROLE_ADMIN')")
     public Customer getOne(@PathParam("id")long id) {
         Customer customer = customerDao.findOne(id);
         if(customer == null){

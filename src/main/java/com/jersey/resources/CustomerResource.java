@@ -33,7 +33,7 @@ public class CustomerResource {
 
     @GET
     @Path("secure/customers")
-//    @PreAuthorize("hasPermission('CustomerResource', 'ROLE_ADMIN')")
+    @PreAuthorize("hasPermission('CustomerResource', 'ROLE_ADMIN')")
     public List<Customer> getAll(){
         List<Customer> customers = this.customerDao.findAll();
         return customers;

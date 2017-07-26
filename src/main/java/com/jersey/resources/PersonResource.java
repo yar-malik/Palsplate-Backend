@@ -67,7 +67,7 @@ public class PersonResource {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
 
-        return personDao.findByEmail(email);
+        return CopyPersonSafe(personDao.findByEmail(email));
     }
 
     /**
@@ -116,5 +116,24 @@ public class PersonResource {
         } else {
             personDao.delete(person);
         }
+    }
+
+    /**
+     * Copies the person object without password and other security impacting information
+     * @return Copied person object
+     */
+    private Person CopyPersonSafe(Person person)
+    {
+        Person newPerson = new Person();
+
+        newPerson.setEmail(person.getEmail());
+        newPerson.setId(person.getId());
+        newPerson.setFirstName(person.getFirstName());
+        newPerson.setLastName(person.getLastName());
+        newPerson.setAddress(person.getAddress());
+        newPerson.setPhoneNumber(person.getPhoneNumber());
+        newPerson.setDescription(person.getDescription());
+
+        return  newPerson;
     }
 }

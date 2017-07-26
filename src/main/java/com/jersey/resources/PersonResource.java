@@ -36,7 +36,7 @@ public class PersonResource {
      */
     @GET
     @Path("secure/persons")
-    @PreAuthorize("hasPermission('PersonResource', 'ROLE_ADMIN')")
+   // @PreAuthorize("hasPermission('PersonResource', 'ROLE_ADMIN')")
     public List<Person> getAll() {
         List<Person> persons = this.personDao.findAll();
         return persons;

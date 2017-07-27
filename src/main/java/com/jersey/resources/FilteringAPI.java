@@ -31,7 +31,6 @@ public class FilteringAPI {
             @QueryParam("foodType") String foodType,
             @QueryParam("cuisineType") String cuisineType) {
 
-        System.out.println("entering the new filter");
         List<Food> foods = this.foodDao.findAll();
 
         ArrayList<Food> filterByDistanceFoods = new ArrayList<>();
@@ -44,12 +43,10 @@ public class FilteringAPI {
 
             for(Food f: foods){
                 disDiff = distFrom(lon, lat, f.getLon(), f.getLat())/1000;
-                System.out.println(disDiff);
                 if(disDiff < maxDist){
                     filterByDistanceFoods.add(f);
                 }
             }
-            System.out.println(filterByDistanceFoods.size());
             foods.removeAll(filterByDistanceFoods);
         }
 
@@ -60,7 +57,6 @@ public class FilteringAPI {
                     filterByMaxPriceFoods.add(f);
                 }
             }
-            System.out.println(filterByMaxPriceFoods.size());
             foods.removeAll(filterByMaxPriceFoods);
         }
 
@@ -71,7 +67,6 @@ public class FilteringAPI {
                     filterByFoodTypeFoods.add(f);
                 }
             }
-            System.out.println(filterByFoodTypeFoods.size());
             foods.removeAll(filterByFoodTypeFoods);
         }
 
@@ -81,10 +76,9 @@ public class FilteringAPI {
                     filterByCuisineTypeFoods.add(f);
                 }
             }
-            System.out.println(filterByCuisineTypeFoods.size());
             foods.removeAll(filterByCuisineTypeFoods);
         }
-        
+
         return foods;
     }
 

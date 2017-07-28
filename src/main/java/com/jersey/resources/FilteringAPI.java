@@ -38,7 +38,7 @@ public class FilteringAPI {
         ArrayList<Food> filterByFoodTypeFoods = new ArrayList<>();
         ArrayList<Food> filterByCuisineTypeFoods= new ArrayList<>();
 
-        if(maxDist != null && lon != null && lat != null){
+        if(maxDist != null && lon != null && lat != null && maxP){
             Double disDiff;
 
             for(Food f: foods){
@@ -53,7 +53,7 @@ public class FilteringAPI {
 
         if(maxPrice != null){
             for(Food f: foods){
-                if(f.getPrice() <= maxPrice){
+                if(f.getPrice() > maxPrice){
                     filterByMaxPriceFoods.add(f);
                 }
             }
@@ -78,6 +78,8 @@ public class FilteringAPI {
             }
             foods.removeAll(filterByCuisineTypeFoods);
         }
+
+        log.info("Filtered result size: " + foods.size());
 
         return foods;
     }

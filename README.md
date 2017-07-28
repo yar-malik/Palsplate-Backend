@@ -25,13 +25,7 @@ Populate palsplate-demo database with some dummy data.
 Use the following queries: 
 
 ```
-INSERT INTO login VALUES (1, 'Asfandyar', 'mypass');
-INSERT INTO login VALUES (2, 'Giroud', 'giroud_pass');
-INSERT INTO login VALUES (3, 'ramsey', 'ramsey_mypass');
-
-INSERT INTO PERSON VALUES (1, 'asfandyar@gmail.com', 'Asfandyar', 'Malik', '01575117434', 'islamabad', 'best chef ever', true, 1)	
-INSERT INTO PERSON VALUES (2, 'giroud@gmail.com', 'Oliver', 'Giroud', '+1575117434', 'paris', 'love food ever', true, 2)	
-INSERT INTO PERSON VALUES (3, 'ramsey@gmail.com', 'Aaron', 'Ramsey', '+157511743434', 'wales', 'foodie', true, 3)	
+INSERT INTO PERSON VALUES (1, 'asfandyar@gmail.com', 'Asfandyar', 'Malik', 'mypass', 'ROLE_USER,ROLE_ADMIN', '01575117434', 'islamabad', 'best chef ever', true)
 
 INSERT INTO Customer VALUES (1, 1)
 
@@ -124,51 +118,18 @@ GET: http://localhost:8080/api/public/cooks
 GET: http://localhost:8080/api/public/cooks/1
 GET: http://localhost:8080/api/public/foods
 GET: http://localhost:8080/api/public/cooks/1/foods
-GET: http://localhost:8080/api/secure/logins
 GET: http://localhost:8080/api/secure/customers/1
 ```
-
-### Login
-* Get one specific record
-``GET http://localhost:8080/api/secure/logins/{id}``
-* Update a specific record
-``PUT http://localhost:8080/api/secure/logins/{id}``
-* Delete a specific record
-``DELETE http://localhost:8080/api/secure/logins/{id}``
-* Create a new record with following payload
-``POST http://localhost:8080/api/secure/logins``
-```
-{
-  "userName":"Ronaldo",
-  "password":"mypass"
-}
-```
-where {id} is the unique id identifying a customer
-
 
 ### Person
 
  * Get one specific record
  ``GET http://localhost:8080/api/secure/persons/{id}``
  * Update a specific record
- ``PUT http://localhost:8080/api/secure/logins/{id}``
+ ``PUT http://localhost:8080/api/secure/persons/{id}``
  * Delete a specific record
- ``DELETE http://localhost:8080/api/secure/logins/{id}``
+ ``DELETE http://localhost:8080/api/secure/persons/{id}``
  * Create a new record with following payload
-
-`POST http://localhost:8080/persons`
-```
-{
-"email": "wishere@gmail.com",
-"firstName": "Jack",
-"lastName": "wishere",
-"phoneNumber": "+157511743434",
-"address": "uk",
-"description": "foodie",
-"isPhotoPublic": "true",
-"login_id": 4
-}
-```
 
 `curl -X POST -d @curlJson.txt -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/persons --header "Content-Type:application/json"`
 
@@ -176,14 +137,15 @@ where {id} is the unique id identifying a customer
 where curlJson.txt contains:
 ```
 {
-"email": "Saad@gmail.com",
-"firstName": "Saad",
-"lastName": "Saeed",
+"email": "wishere@gmail.com",
+"firstName": "Jack",
+"lastName": "wishere",
+"password": "mypass",
+"granted_role": "ROLE_USER,ROLE_ADMIN",
 "phoneNumber": "+157511743434",
-"address": "Germany",
+"address": "uk",
 "description": "foodie",
-"isPhotoPublic": "true",
-"login_id": 2
+"isPhotoPublic": "true"
 }
 
 ```
@@ -304,30 +266,36 @@ Curl GET example to get reviews for a specific food
 `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/reviews`
 
 
-
 - - - -
 ## Filtering API
 
  * Get all foods below provided price
- ``GET http://localhost:8080/api/secure/filters/price/max={max}``
+ ``GET http://localhost:8080/api/public/filters?maxPrice={max}``
 
  * Get all foods of certain food type
- ``GET http://localhost:8080/api/secure/filters/foodtype/type={type}``
+ ``GET http://localhost:8080/api/public/filters?foodType={foodType}``
 
  * Get all foods of certain cuisine type
- ``GET http://localhost:8080/api/secure/filters/cuisinetype/type={type}``
+ ``GET http://localhost:8080/api/public/filters?cuisineType={cuisineType}``
 
  * Get all foods a certain distane away from customer
- ``GET http://localhost:8080/api/secure/filters/distance/maxDist={maxDist}/lon={lon}/lat={lat}``
-   In the following API. lng and lat are coordiates of current location of customer and maxDist is what customer inputted. 
-   Also note that maxDist should be in kilometers. 
+   In the following API. lng and lat are coordiates of current location of customer and maxDist is what customer inputted.
+    Also note that maxDist should be in kilometers.
+
+ ``GET http://localhost:8080/api/secure/filters?maxDist={maxDist}&lon={lon}&lat={lat}``
+
+
+ * Multiple filters can be added seperated by `&`. Keywords are (maxDist, lat, lon), cuisineType, foodType, maxPrice
+ ``GET http://localhost:8080/api/secure/filters?foodType={foodType}&maxPrice={maxPrice}``
+
    
    Tested Examples Curl:
    
-   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters/distance/maxDist=20/lon=0.45/lat=0.56`
-   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters/cuisinetype/type=fast_food`
-   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters/foodtype/type=veggie`
-   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters/price/max=5`
+   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters?maxDist=20&lon=0.45&lat=0.56`
+   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters?cuisinetype=fast_food`
+   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters?foodtype=veggie`
+   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters?maxPrice=5`
+   * `curl -i -H "Authorization: Bearer <access-token>" "http://localhost:8080/api/public/filters?foodType=vegetarian&maxPrice=4`
    
    
  - - -

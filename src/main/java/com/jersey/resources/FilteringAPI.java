@@ -50,10 +50,9 @@ public class FilteringAPI {
             foods.removeAll(filterByDistanceFoods);
         }
 
-
         if(maxPrice != null){
             for(Food f: foods){
-                if(f.getPrice() <= maxPrice){
+                if(f.getPrice() > maxPrice){
                     filterByMaxPriceFoods.add(f);
                 }
             }
@@ -62,8 +61,9 @@ public class FilteringAPI {
 
 
         if(foodType != null){
+
             for(Food f: foods){
-                if(f.getFood_type() .equalsIgnoreCase(foodType) ){
+                if(!f.getFood_type().equalsIgnoreCase(foodType) ){
                     filterByFoodTypeFoods.add(f);
                 }
             }
@@ -72,12 +72,14 @@ public class FilteringAPI {
 
         if(cuisineType != null){
             for(Food f: foods){
-                if(f.getCuisine_type() .equalsIgnoreCase(cuisineType) ){
+                if(!f.getCuisine_type().equalsIgnoreCase(cuisineType) ){
                     filterByCuisineTypeFoods.add(f);
                 }
             }
             foods.removeAll(filterByCuisineTypeFoods);
         }
+
+        log.info("Filtered result size: " + foods.size());
 
         return foods;
     }

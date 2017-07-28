@@ -1,12 +1,3 @@
-CREATE TABLE login
-(
-  id serial NOT NULL,
-  username character varying NOT NULL,
-  password character varying NOT NULL,
-  granted_role character varying NOT NULL,
-  CONSTRAINT pk_login_id PRIMARY KEY (id)
-)
-
 CREATE TABLE person
 (
   id serial NOT NULL,
@@ -18,10 +9,7 @@ CREATE TABLE person
   description character varying NOT NULL,
   is_photo_public boolean NOT NULL,
   login_id bigint NOT NULL,
-  CONSTRAINT pk_person_id PRIMARY KEY (id),
-  CONSTRAINT fk_person__login FOREIGN KEY (login_id)
-    REFERENCES login (id) MATCH SIMPLE
-    ON UPDATE CASCADE ON DELETE CASCADE
+  CONSTRAINT pk_person_id PRIMARY KEY (id)
 )
 
 CREATE TABLE customer

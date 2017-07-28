@@ -279,16 +279,23 @@ Curl GET example to get reviews for a specific food
  ``GET http://localhost:8080/api/public/filters?cuisineType={cuisineType}``
 
  * Get all foods a certain distane away from customer
- ``GET http://localhost:8080/api/secure/filters/distance/maxDist?{maxDist}lon={lon}/lat={lat}``
-   In the following API. lng and lat are coordiates of current location of customer and maxDist is what customer inputted. 
-   Also note that maxDist should be in kilometers. 
+   In the following API. lng and lat are coordiates of current location of customer and maxDist is what customer inputted.
+    Also note that maxDist should be in kilometers.
+
+ ``GET http://localhost:8080/api/secure/filters?maxDist={maxDist}&lon={lon}&lat={lat}``
+
+
+ * Multiple filters can be added seperated by `&`. Keywords are (maxDist, lat, lon), cuisineType, foodType, maxPrice
+ ``GET http://localhost:8080/api/secure/filters?foodType={foodType}&maxPrice={maxPrice}``
+
    
    Tested Examples Curl:
    
-   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters/distance/maxDist=20/lon=0.45/lat=0.56`
-   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters/cuisinetype/type=fast_food`
-   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters/foodtype/type=veggie`
-   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters/price/max=5`
+   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters?maxDist=20&lon=0.45&lat=0.56`
+   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters?cuisinetype=fast_food`
+   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters?foodtype=veggie`
+   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters?maxPrice=5`
+   * `curl -i -H "Authorization: Bearer <access-token>" "http://localhost:8080/api/public/filters?foodType=vegetarian&maxPrice=4`
    
    
  - - -

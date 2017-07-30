@@ -150,6 +150,10 @@ where curlJson.txt contains:
 
 ```
 
+ * Post a picture for one specific record
+`curl -H "Authorization: Bearer <access-token>" -F "file=@asfandz.jpg" http://localhost:8080/api/public/persons/1/photo`
+
+
 
 ### Cook
 

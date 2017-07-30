@@ -3,7 +3,6 @@ package com.jersey.resources;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.jersey.persistence.PersonDao;
-import com.jersey.representations.Image;
 import com.jersey.representations.Person;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.LogManager;
@@ -11,9 +10,9 @@ import org.apache.log4j.Logger;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +37,9 @@ import java.util.Map;
 public class PersonResource {
 
     private static final Logger log = LogManager.getLogger(PersonResource.class);
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     private Cloudinary cloudinary;
@@ -99,6 +101,9 @@ public class PersonResource {
     @POST
     @Path("secure/persons")
     public Person save(@Valid Person person) {
+
+        person.setPassword(passwordEncoder.encode(person.getPassword()));
+
         return personDao.save(person);
     }
 
@@ -205,6 +210,4 @@ public class PersonResource {
         }
         return tempFile;
     }
-
-
 }

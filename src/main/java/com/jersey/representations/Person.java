@@ -67,7 +67,7 @@ public class Person {
 
     public Person(Long id, String email, String firstName, String lastName,
                 String phoneNumber, String address, String description,
-                boolean isPhotoPublic) {
+                boolean isPhotoPublic, String photoName, String photoPublicId) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
@@ -76,6 +76,8 @@ public class Person {
         this.address = address;
         this.description = description;
         this.isPhotoPublic = isPhotoPublic;
+        this.photoName = photoName;
+        this.photoPublicId = photoPublicId;
     }
 
     public Long getId() {

@@ -103,16 +103,16 @@ public class PersonResource {
     }
 
     /**
-     * Create new Image
+     * Create a Person Photo
      * @param uploadedInputStream
      * @param fileDetail
      * @param person_id
-     * @return new Image for a specific food_id
+     * @return new Photo for a specific person
      */
-    @PUT
+    @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Path("public/persons/{person_id}/photo")
-    public Person uploadFile(
+    public Person uploadPhoto(
             @FormDataParam("file") InputStream uploadedInputStream,
             @FormDataParam("file") FormDataContentDisposition fileDetail,
             @PathParam("person_id")long person_id) throws IOException {
@@ -141,10 +141,6 @@ public class PersonResource {
             return personDao.save(person);
         }
     }
-
-
-
-
 
     /**
      * Update existing Person

@@ -70,7 +70,7 @@ public class PersonResource {
      */
     @GET
     @Path("secure/persons/{id}")
-    @PreAuthorize("hasPermission(#id, 'PersonResource', 'ROLE_USER,ROLE_ADMIN')")
+//    @PreAuthorize("hasPermission(#id, 'PersonResource', 'ROLE_USER,ROLE_ADMIN')")
     public Person getOne(@PathParam("id") long id) {
         Person person = personDao.findOne(id);
         if (person == null) {
@@ -81,7 +81,7 @@ public class PersonResource {
     }
 
     @GET
-    @Path("secure/currentuser")
+    @Path("secure/persons/currentuser")
     public Person getPersonViaAccessToken()
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -155,7 +155,7 @@ public class PersonResource {
      */
     @PUT
     @Path("secure/persons/{id}")
-    @PreAuthorize("hasPermission(#id, 'PersonResource', 'ROLE_USER,ROLE_ADMIN')")
+//    @PreAuthorize("hasPermission(#id, 'PersonResource', 'ROLE_USER,ROLE_ADMIN')")
     public Person update(@PathParam("id") long id, @Valid Person person) {
         if (personDao.findOne(id) == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -172,7 +172,7 @@ public class PersonResource {
      */
     @DELETE
     @Path("secure/persons/{id}")
-    @PreAuthorize("hasPermission(#id, 'PersonResource', 'ROLE_ADMIN')")
+//    @PreAuthorize("hasPermission(#id, 'PersonResource', 'ROLE_ADMIN')")
     public void delete(@PathParam("id") long id) {
         Person person = personDao.findOne(id);
         if (person == null) {

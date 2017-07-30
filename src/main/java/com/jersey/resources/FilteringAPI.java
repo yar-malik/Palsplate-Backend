@@ -25,13 +25,11 @@ public class FilteringAPI {
     @Path("public/filters")
     public List<Food> getUsers(
             @QueryParam("maxDist") Integer maxDist,
-            @QueryParam("lon") Integer lon,
-            @QueryParam("lat") Integer lat,
+            @QueryParam("lon") Double lon,
+            @QueryParam("lat") Double lat,
             @QueryParam("maxPrice") Integer maxPrice,
             @QueryParam("foodType") String foodType,
             @QueryParam("cuisineType") String cuisineType) {
-
-        System.out.println("Entering this public filters ");
 
         List<Food> foods = this.foodDao.findAll();
 
@@ -40,17 +38,11 @@ public class FilteringAPI {
         ArrayList<Food> filterByFoodTypeFoods = new ArrayList<>();
         ArrayList<Food> filterByCuisineTypeFoods= new ArrayList<>();
 
-        System.out.println("maxDist" + maxDist);
-        System.out.println("lon" + lon);
-        System.out.println("lat" + lat);
-
         if(maxDist != null && lon != null && lat != null){
-            System.out.println("MaxDist");
             Double disDiff;
-
             for(Food f: foods){
                 disDiff = distFrom(lon, lat, f.getLon(), f.getLat())/1000;
-                if(disDiff < maxDist){
+                if(disDiff > maxDist){
                     filterByDistanceFoods.add(f);
                 }
             }
@@ -58,8 +50,6 @@ public class FilteringAPI {
         }
 
         if(maxPrice != null){
-            System.out.println("MaxPrice");
-
             for(Food f: foods){
                 if(f.getPrice() > maxPrice){
                     filterByMaxPriceFoods.add(f);
@@ -70,7 +60,6 @@ public class FilteringAPI {
 
 
         if(foodType != null){
-            System.out.println("FoodType");
             for(Food f: foods){
                 if(!f.getFood_type().equalsIgnoreCase(foodType) ){
                     filterByFoodTypeFoods.add(f);
@@ -80,7 +69,6 @@ public class FilteringAPI {
         }
 
         if(cuisineType != null){
-            System.out.println("CuisineType");
             for(Food f: foods){
                 if(!f.getCuisine_type().equalsIgnoreCase(cuisineType) ){
                     filterByCuisineTypeFoods.add(f);

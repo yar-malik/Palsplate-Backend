@@ -56,6 +56,12 @@ public class Person {
     @JoinColumn(name="person_id")
     private Set<Customer> customer;
 
+    @Column(name = "photo_name")
+    private String photoName;
+
+    @Column(name = "photo_public_id")
+    private String photoPublicId;
+
     public Person() {
     }
 
@@ -174,5 +180,21 @@ public class Person {
 
     public void setCook(Set<Cook> cook) {
         this.cook = cook;
+    }
+
+    public String isPhotoPublicId() {
+        return photoPublicId;
+    }
+
+    public void setPhotoPublicId(String photoPublicId) {
+        this.photoPublicId = photoPublicId;
+    }
+
+    public String isPhotoName() {
+        return photoName;
+    }
+
+    public void setPhotoName(String photoName) {
+        this.photoName = photoName;
     }
 }

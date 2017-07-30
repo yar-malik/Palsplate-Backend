@@ -1,7 +1,16 @@
 package com.jersey.resources;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.jersey.persistence.PersonDao;
+import com.jersey.representations.Image;
 import com.jersey.representations.Person;
+import org.apache.commons.io.IOUtils;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,7 +22,12 @@ import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
 
 @Path("")
@@ -22,6 +36,12 @@ import java.util.List;
 @Transactional
 @Component
 public class PersonResource {
+
+    private static final Logger log = LogManager.getLogger(PersonResource.class);
+
+    @Autowired
+    private Cloudinary cloudinary;
+
     private PersonDao personDao;
 
     @Inject
@@ -50,7 +70,7 @@ public class PersonResource {
      */
     @GET
     @Path("secure/persons/{id}")
-    @PreAuthorize("hasPermission(#id, 'PersonResource', 'ROLE_USER,ROLE_ADMIN')")
+//    @PreAuthorize("hasPermission(#id, 'PersonResource', 'ROLE_USER,ROLE_ADMIN')")
     public Person getOne(@PathParam("id") long id) {
         Person person = personDao.findOne(id);
         if (person == null) {
@@ -61,7 +81,7 @@ public class PersonResource {
     }
 
     @GET
-    @Path("secure/currentuser")
+    @Path("secure/persons/currentuser")
     public Person getPersonViaAccessToken()
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -83,6 +103,50 @@ public class PersonResource {
     }
 
     /**
+     * Create new Image
+     * @param uploadedInputStream
+     * @param fileDetail
+     * @param person_id
+     * @return new Image for a specific food_id
+     */
+    @PUT
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Path("public/persons/{person_id}/photo")
+    public Person uploadFile(
+            @FormDataParam("file") InputStream uploadedInputStream,
+            @FormDataParam("file") FormDataContentDisposition fileDetail,
+            @PathParam("person_id")long person_id) throws IOException {
+
+        log.info("fileDetail: " + fileDetail);
+        log.info("fileDetail.getName: " + fileDetail.getName());
+        log.info("fileDetail.getFileName: " + fileDetail.getFileName());
+
+        Person person = personDao.findOne(person_id);
+
+        if (person == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        else {
+
+            File myfile = inputStream2file(uploadedInputStream, fileDetail.getFileName(), fileDetail.getType());
+            Map uploadResult = cloudinary.uploader().upload(myfile, ObjectUtils.emptyMap());
+
+            log.info("cloudinary secure_url: " + uploadResult.get("secure_url"));
+            log.info("cloudinary public_id: " + uploadResult.get("public_id"));
+            log.info("cloudinary original_filename: " + uploadResult.get("original_filename"));
+
+            person.setPhotoName(fileDetail.getFileName());
+            person.setPhotoPublicId(uploadResult.get("public_id").toString());
+
+            return personDao.save(person);
+        }
+    }
+
+
+
+
+
+    /**
      * Update existing Person
      *
      * @param id
@@ -91,7 +155,7 @@ public class PersonResource {
      */
     @PUT
     @Path("secure/persons/{id}")
-    @PreAuthorize("hasPermission(#id, 'PersonResource', 'ROLE_USER,ROLE_ADMIN')")
+//    @PreAuthorize("hasPermission(#id, 'PersonResource', 'ROLE_USER,ROLE_ADMIN')")
     public Person update(@PathParam("id") long id, @Valid Person person) {
         if (personDao.findOne(id) == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -108,7 +172,7 @@ public class PersonResource {
      */
     @DELETE
     @Path("secure/persons/{id}")
-    @PreAuthorize("hasPermission(#id, 'PersonResource', 'ROLE_ADMIN')")
+//    @PreAuthorize("hasPermission(#id, 'PersonResource', 'ROLE_ADMIN')")
     public void delete(@PathParam("id") long id) {
         Person person = personDao.findOne(id);
         if (person == null) {
@@ -136,4 +200,15 @@ public class PersonResource {
 
         return  newPerson;
     }
+
+    public File inputStream2file (InputStream in, String filename, String suffix) throws IOException {
+        final File tempFile = File.createTempFile(filename, suffix);
+        tempFile.deleteOnExit();
+        try (FileOutputStream out = new FileOutputStream(tempFile)) {
+            IOUtils.copy(in, out);
+        }
+        return tempFile;
+    }
+
+
 }

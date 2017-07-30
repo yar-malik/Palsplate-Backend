@@ -31,6 +31,8 @@ public class FilteringAPI {
             @QueryParam("foodType") String foodType,
             @QueryParam("cuisineType") String cuisineType) {
 
+        System.out.println("Entering this public filters ");
+
         List<Food> foods = this.foodDao.findAll();
 
         ArrayList<Food> filterByDistanceFoods = new ArrayList<>();
@@ -38,7 +40,12 @@ public class FilteringAPI {
         ArrayList<Food> filterByFoodTypeFoods = new ArrayList<>();
         ArrayList<Food> filterByCuisineTypeFoods= new ArrayList<>();
 
+        System.out.println("maxDist" + maxDist);
+        System.out.println("lon" + lon);
+        System.out.println("lat" + lat);
+
         if(maxDist != null && lon != null && lat != null){
+            System.out.println("MaxDist");
             Double disDiff;
 
             for(Food f: foods){
@@ -51,6 +58,8 @@ public class FilteringAPI {
         }
 
         if(maxPrice != null){
+            System.out.println("MaxPrice");
+
             for(Food f: foods){
                 if(f.getPrice() > maxPrice){
                     filterByMaxPriceFoods.add(f);
@@ -61,7 +70,7 @@ public class FilteringAPI {
 
 
         if(foodType != null){
-
+            System.out.println("FoodType");
             for(Food f: foods){
                 if(!f.getFood_type().equalsIgnoreCase(foodType) ){
                     filterByFoodTypeFoods.add(f);
@@ -71,6 +80,7 @@ public class FilteringAPI {
         }
 
         if(cuisineType != null){
+            System.out.println("CuisineType");
             for(Food f: foods){
                 if(!f.getCuisine_type().equalsIgnoreCase(cuisineType) ){
                     filterByCuisineTypeFoods.add(f);

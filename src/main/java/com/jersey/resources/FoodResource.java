@@ -165,7 +165,7 @@ public class FoodResource {
      */
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Path("secure/foods/{food_id}/images")
+    @Path("public/foods/{food_id}/images")
     public Image uploadFile(
             @FormDataParam("file") InputStream uploadedInputStream,
             @FormDataParam("file") FormDataContentDisposition fileDetail,
@@ -190,7 +190,7 @@ public class FoodResource {
         return imageDao.save(image);
     }
 
-    public static File inputStream2file (InputStream in, String filename, String suffix) throws IOException {
+    public File inputStream2file (InputStream in, String filename, String suffix) throws IOException {
         final File tempFile = File.createTempFile(filename, suffix);
         tempFile.deleteOnExit();
         try (FileOutputStream out = new FileOutputStream(tempFile)) {

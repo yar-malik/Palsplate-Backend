@@ -343,7 +343,18 @@ where curlJsonReservation.json contains:
    * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/public/foods?maxPrice=5`
    * `curl -i -H "Authorization: Bearer <access-token>" "http://localhost:8080/api/public/foods?foodType=vegetarian&maxPrice=4`
    
-   
+
+- - - -
+## Email
+ * Get all foods below provided price
+ ``GET http://localhost:8080/api/public/email?to={to}&emailType={emailType}``
+
+ where emailType currently is only signup. to should be a valid email address. e.g.
+
+ `curl -i -H "Authorization: Bearer <access-token>" "http://localhost:8080/api/public/email?to=malikasfandyarashraf@gmail.com&emailType=signup"`
+
+Congratulations, now go and check your Spam folder. Dont forget to click the option of show all images, if it is in Spam folder.
+
  - - -
 ## Database Schema
    

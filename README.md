@@ -313,35 +313,35 @@ where curlJsonReservation.json contains:
 
 
 - - - -
-## Filtering API
+## Food Filtering API
 
  * Get all foods below provided price
- ``GET http://localhost:8080/api/public/filters?maxPrice={max}``
+ ``GET http://localhost:8080/api/public/foods?maxPrice={max}``
 
  * Get all foods of certain food type
- ``GET http://localhost:8080/api/public/filters?foodType={foodType}``
+ ``GET http://localhost:8080/api/public/foods?foodType={foodType}``
 
  * Get all foods of certain cuisine type
- ``GET http://localhost:8080/api/public/filters?cuisineType={cuisineType}``
+ ``GET http://localhost:8080/api/public/foods?cuisineType={cuisineType}``
 
  * Get all foods a certain distane away from customer
    In the following API. lng and lat are coordiates of current location of customer and maxDist is what customer inputted.
     Also note that maxDist should be in kilometers.
 
- ``GET http://localhost:8080/api/secure/filters?maxDist={maxDist}&lon={lon}&lat={lat}``
+ ``GET http://localhost:8080/api/public/foods?maxDist={maxDist}&lon={lon}&lat={lat}``
 
 
  * Multiple filters can be added seperated by `&`. Keywords are (maxDist, lat, lon), cuisineType, foodType, maxPrice
- ``GET http://localhost:8080/api/secure/filters?foodType={foodType}&maxPrice={maxPrice}``
+ ``GET http://localhost:8080/api/public/foods?foodType={foodType}&maxPrice={maxPrice}``
 
    
    Tested Examples Curl:
    
-   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters?maxDist=20&lon=0.45&lat=0.56`
-   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters?cuisinetype=fast_food`
-   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters?foodtype=veggie`
-   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/filters?maxPrice=5`
-   * `curl -i -H "Authorization: Bearer <access-token>" "http://localhost:8080/api/public/filters?foodType=vegetarian&maxPrice=4`
+   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/public/foods?maxDist=20&lon=0.45&lat=0.56`
+   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/public/foods?cuisinetype=fast_food`
+   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/public/foods?foodtype=veggie`
+   * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/public/foods?maxPrice=5`
+   * `curl -i -H "Authorization: Bearer <access-token>" "http://localhost:8080/api/public/foods?foodType=vegetarian&maxPrice=4`
    
    
  - - -

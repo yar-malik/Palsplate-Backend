@@ -53,23 +53,12 @@ public class FoodResource {
     private ImageDao imageDao;
 
     /**
-     * Get all Foods
-     * @return foods
-     */
-    @GET
-    @Path("public/foods")
-    public List<Food> getAll(){
-        List<Food> foods = this.foodDao.findAll();
-        return foods;
-    }
-
-    /**
      * Get single Food
      * @param id
      * @return food
      */
     @GET
-    @Path("public/food/{id}")
+    @Path("public/foods/{id}")
     public Food getOne(@PathParam("id")long id) {
         Food food = foodDao.findOne(id);
         if(food == null){
@@ -191,7 +180,10 @@ public class FoodResource {
         return imageDao.save(image);
     }
 
-
+    /**
+     * Get Foods
+     * @return foods
+     */
     @GET
     @Path("public/foods")
     public List<Food> getUsers(

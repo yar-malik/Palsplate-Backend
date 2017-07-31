@@ -346,7 +346,7 @@ where curlJsonReservation.json contains:
 
 - - - -
 ## Email
- * Get all foods below provided price
+ * Send an Email to certain recipient
  ``GET http://localhost:8080/api/public/email?to={to}&emailType={emailType}``
 
  where emailType currently is only signup. to should be a valid email address. e.g.

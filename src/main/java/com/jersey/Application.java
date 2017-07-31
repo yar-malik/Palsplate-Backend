@@ -5,6 +5,7 @@ import com.jersey.config.JerseyInitialization;
 import org.glassfish.jersey.server.monitoring.ApplicationEvent;
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.glassfish.jersey.servlet.ServletProperties;
+import org.jhades.JHades;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.ErrorAttributes;
@@ -33,6 +34,8 @@ public class Application {
     public AppErrorController appErrorController(){return new AppErrorController(errorAttributes);}
 
     public static void main(String[] args) {
+
+        new JHades().overlappingJarsReport();
         new SpringApplicationBuilder(Application.class).run(args);
     }
 

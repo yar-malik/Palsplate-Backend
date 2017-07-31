@@ -17,6 +17,10 @@ public class Customer {
     @JoinColumn(name = "person_id")
     @NotNull
     private Long person_id;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id")
+    private Set<Reservation> reservations;
     
     public Customer() {
     }

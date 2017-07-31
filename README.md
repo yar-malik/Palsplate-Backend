@@ -270,6 +270,33 @@ Curl GET example to get reviews for a specific food
 `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/reviews`
 
 
+### Reservation
+
+ * Get one specific record
+ ``GET http://localhost:8080/api/public/reservations/{id}``
+ * Update a specific record
+ ``PUT http://localhost:8080/api/secure/reservations/{id}``
+ * Delete a specific record
+ ``DELETE http://localhost:8080/api/secure/reservations/{id}``
+ * Create a new record with a curl example
+
+
+`curl -X POST -d @curlJsonReservation.json -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/reservations --header "Content-Type:application/json"`
+
+where curlJsonReservation.json contains:
+```
+{
+  "is_active": true,
+  "customerId": 1,
+  "foodId": 2
+}
+```
+
+* Change activity status of certain reservation
+ ``POST http://localhost:8080/api/secure/reservations/{id}?active={active}``
+ where `id` is reservation id and `active` is boolean true or false
+
+
 - - - -
 ## Filtering API
 

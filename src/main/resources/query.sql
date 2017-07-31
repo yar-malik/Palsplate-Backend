@@ -76,3 +76,18 @@ CREATE TABLE review
     REFERENCES food (id) MATCH SIMPLE
     ON UPDATE CASCADE ON DELETE CASCADE
 )
+
+CREATE TABLE reservation
+(
+  id serial NOT NULL,
+  is_active boolean NOT NULL,
+  CONSTRAINT pk_customer_id PRIMARY KEY (id),
+  food_id bigint NOT NULL,
+  customer_id bigint NOT NULL,
+  CONSTRAINT fk_reservation__food FOREIGN KEY (food_id)
+      REFERENCES food (id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+  CONSTRAINT fk_reservation__customer FOREIGN KEY (customer_id)
+      REFERENCES customer (id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)

@@ -22,7 +22,7 @@ public class Review {
     @NotNull
     private Long food_id;
 
-    @JoinColumn(name = "food_id")
+    @JoinColumn(name = "customer_id")
     @NotNull
     private Long customer_id;
 

@@ -271,6 +271,16 @@ Curl GET example to get images for a specific food
 Curl POST example of creating an review 
 `curl -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/reviews`
 
+```
+{
+  "text": "bad food",
+  "rating": 1,
+  "food_id": 2,
+  "customer_id":1
+}
+```
+
+
 Curl GET example to get reviews for a specific food
 `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/reviews`
 

@@ -184,7 +184,7 @@ public class Person {
         this.cook = cook;
     }
 
-    public String isPhotoPublicId() {
+    public String getPhotoPublicId() {
         return photoPublicId;
     }
 
@@ -192,7 +192,7 @@ public class Person {
         this.photoPublicId = photoPublicId;
     }
 
-    public String isPhotoName() {
+    public String getPhotoName() {
         return photoName;
     }
 

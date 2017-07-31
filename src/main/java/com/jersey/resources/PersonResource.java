@@ -78,6 +78,8 @@ public class PersonResource {
         if (person == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {
+            person.getPhotoName();
+            person.getPhotoPublicId();
             return person;
         }
     }

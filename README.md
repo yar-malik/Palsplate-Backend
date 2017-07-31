@@ -107,6 +107,11 @@ where <refresh-token> is received in the previous command
 
  ````{"access_token":"ef981a33-b431-44a9-86f3-ce4df31c6d5f","token_type":"bearer","refresh_token":"73f29da8-57c5-4ae3-ac4d-59a061d6c05b","expires_in":1799,"scope":"read write"} ````
 
+4. InOrder to receive currentUser information from token, use the following API:
+
+ `GET http://localhost/api/secure/persons/currentuser`
+
+
 
 - - - -
 ## REST REQUEST
@@ -265,6 +270,16 @@ Curl GET example to get images for a specific food
 
 Curl POST example of creating an review 
 `curl -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/reviews`
+
+```
+{
+  "text": "bad food",
+  "rating": 1,
+  "food_id": 2,
+  "customer_id":1
+}
+```
+
 
 Curl GET example to get reviews for a specific food
 `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/reviews`

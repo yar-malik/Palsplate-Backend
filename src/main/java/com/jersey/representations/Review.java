@@ -22,6 +22,10 @@ public class Review {
     @NotNull
     private Long food_id;
 
+    @JoinColumn(name = "customer_id")
+    @NotNull
+    private Long customer_id;
+
     public Review() {}
 
     public Review(Long id) {
@@ -65,5 +69,13 @@ public class Review {
 
     public void setFood_id(Long food_id) {
         this.food_id = food_id;
+    }
+
+    public Long getCustomer_id() {
+        return customer_id;
+    }
+
+    public void setCustomer_id(Long customer_id) {
+        this.customer_id = customer_id;
     }
 }

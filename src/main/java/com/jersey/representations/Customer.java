@@ -21,7 +21,11 @@ public class Customer {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private Set<Reservation> reservations;
-    
+
+    @OneToMany(fetch=FetchType.LAZY)
+    @JoinColumn(name="customer_id")
+    private Set<Review> reviews;
+
     public Customer() {
     }
 

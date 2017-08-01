@@ -350,7 +350,7 @@ where curlJsonReservation.json contains:
  ``GET http://localhost:8080/api/public/email?to={to}&emailType={emailType}``
 
  where emailType is
-  * signup
+  * sign_up
   * food_uploaded
   * reservation_accepted
   * reservation_declined
@@ -359,7 +359,7 @@ where curlJsonReservation.json contains:
 
  to should be a valid email address. e.g.
 
- `curl -i -H "Authorization: Bearer <access-token>" "http://localhost:8080/api/public/email?to=malikasfandyarashraf@gmail.com&emailType=signup"`
+ `curl -i -H "Authorization: Bearer <access-token>" "http://localhost:8080/api/public/email?to=malikasfandyarashraf@gmail.com&emailType=sign_up&subject=Sign-Up-Email"`
 
 Congratulations, now go and check your Spam folder. Dont forget to click the option of show all images, if it is in Spam folder.
 

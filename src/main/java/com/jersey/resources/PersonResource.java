@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -58,7 +59,7 @@ public class PersonResource {
      */
     @GET
     @Path("secure/persons")
-   // @PreAuthorize("hasPermission('PersonResource', 'ROLE_ADMIN')")
+    @PreAuthorize("hasPermission('PersonResource', 'ROLE_ADMIN')")
     public List<Person> getAll() {
         List<Person> persons = this.personDao.findAll();
         return persons;
@@ -72,7 +73,7 @@ public class PersonResource {
      */
     @GET
     @Path("secure/persons/{id}")
-//    @PreAuthorize("hasPermission(#id, 'PersonResource', 'ROLE_USER,ROLE_ADMIN')")
+    @PreAuthorize("hasPermission(#id, 'PersonResource', 'ROLE_USER,ROLE_ADMIN')")
     public Person getOne(@PathParam("id") long id) {
         Person person = personDao.findOne(id);
         if (person == null) {
@@ -158,7 +159,7 @@ public class PersonResource {
      */
     @PUT
     @Path("secure/persons/{id}")
-//    @PreAuthorize("hasPermission(#id, 'PersonResource', 'ROLE_USER,ROLE_ADMIN')")
+    @PreAuthorize("hasPermission(#id, 'PersonResource', 'ROLE_USER,ROLE_ADMIN')")
     public Person update(@PathParam("id") long id, @Valid Person person) {
         if (personDao.findOne(id) == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -175,7 +176,7 @@ public class PersonResource {
      */
     @DELETE
     @Path("secure/persons/{id}")
-//    @PreAuthorize("hasPermission(#id, 'PersonResource', 'ROLE_ADMIN')")
+    @PreAuthorize("hasPermission(#id, 'PersonResource', 'ROLE_ADMIN')")
     public void delete(@PathParam("id") long id) {
         Person person = personDao.findOne(id);
         if (person == null) {

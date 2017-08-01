@@ -312,8 +312,28 @@ where curlJsonReservation.json contains:
  where `id` is reservation id and `active` is boolean true or false
 
 
+### Email
+
+ * Send an Email to certain recipient
+ ``GET http://localhost:8080/api/public/email?to={to}&emailType={emailType}``
+
+ where emailType is
+  * sign_up
+  * food_uploaded
+  * reservation_accepted
+  * reservation_declined
+  * reservation_requested
+  * sign_up_successful
+
+ to should be a valid email address. e.g.
+
+ `curl -i -H "Authorization: Bearer <access-token>" "http://localhost:8080/api/public/email?to=malikasfandyarashraf@gmail.com&emailType=sign_up&subject=Sign Up Email"`
+
+Congratulations, now go and check your Spam folder. Dont forget to click the option of show all images, if it is in Spam folder.
+
+
 - - - -
-## Food Filtering API
+### Food Filtering API
 
  * Get all foods below provided price
  ``GET http://localhost:8080/api/public/foods?maxPrice={max}``
@@ -342,26 +362,7 @@ where curlJsonReservation.json contains:
    * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/public/foods?foodtype=veggie`
    * `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/public/foods?maxPrice=5`
    * `curl -i -H "Authorization: Bearer <access-token>" "http://localhost:8080/api/public/foods?foodType=vegetarian&maxPrice=4`
-   
 
-- - - -
-## Email
- * Send an Email to certain recipient
- ``GET http://localhost:8080/api/public/email?to={to}&emailType={emailType}``
-
- where emailType is
-  * sign_up
-  * food_uploaded
-  * reservation_accepted
-  * reservation_declined
-  * reservation_requested
-  * sign_up_successful
-
- to should be a valid email address. e.g.
-
- `curl -i -H "Authorization: Bearer <access-token>" "http://localhost:8080/api/public/email?to=malikasfandyarashraf@gmail.com&emailType=sign_up&subject=Sign Up Email"`
-
-Congratulations, now go and check your Spam folder. Dont forget to click the option of show all images, if it is in Spam folder.
 
  - - -
 ## Database Schema

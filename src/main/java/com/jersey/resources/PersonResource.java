@@ -202,7 +202,6 @@ public class PersonResource {
         newPerson.setDescription(person.getDescription());
         newPerson.setCook(person.getCook());
         newPerson.setCustomer(person.getCustomer());
-
         return  newPerson;
     }
 

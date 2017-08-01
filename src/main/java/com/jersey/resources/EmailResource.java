@@ -33,35 +33,39 @@ public class EmailResource {
 
         ClientResponse response = null;
         EmailResource emailResource = new EmailResource();
-        String html = "";
 
         if(emailType.equalsIgnoreCase("sign_up")){
-            html = emailResource.htmlIntoString("sign_up.html");
+            String html = emailResource.htmlIntoString("sign_up.html");
+            response = emailResource.sendComplexMessage(html, subject);
         }
 
         if(emailType.equalsIgnoreCase("food_uploaded")){
-            html = emailResource.htmlIntoString("food_uploaded.html");
+            String html = emailResource.htmlIntoString("food_uploaded.html");
+            response = emailResource.sendComplexMessage(html, subject);
         }
 
         if(emailType.equalsIgnoreCase("reservation_accepted")){
-            html = emailResource.htmlIntoString("reservation_accepted.html");
+            String html = emailResource.htmlIntoString("reservation_accepted.html");
+            response = emailResource.sendComplexMessage(html, subject);
         }
 
         if(emailType.equalsIgnoreCase("reservation_declined")){
-            html = emailResource.htmlIntoString("reservation_declined.html");
+            String html = emailResource.htmlIntoString("reservation_declined.html");
+            response = emailResource.sendComplexMessage(html, subject);
         }
 
         if(emailType.equalsIgnoreCase("reservation_requested")){
-            html = emailResource.htmlIntoString("reservation_requested.html");
+            String html = emailResource.htmlIntoString("reservation_requested.html");
+            response = emailResource.sendComplexMessage(html, subject);
         }
 
         if(emailType.equalsIgnoreCase("sign_up_successful")){
-            html = emailResource.htmlIntoString("sign_up_successful.html");
+            String html = emailResource.htmlIntoString("sign_up_successful.html");
+            response = emailResource.sendComplexMessage(html, subject);
         }
 
-        response = emailResource.sendComplexMessage(html, subject);
-
         return response.toString();
+
     }
 
     public ClientResponse sendComplexMessage(String html, String subject) {
@@ -74,7 +78,7 @@ public class EmailResource {
         FormDataMultiPart formData = new FormDataMultiPart();
         formData.field("from", "Mailgun User <mailgun@" + "mg.palsplate.com" + ">");
         formData.field("to", "malikasfandyarashraf@gmail.com");
-        formData.field("subject", subject);
+        formData.field("subject", subject.toString());
         formData.field("html", html);
         ClassLoader classLoader = getClass().getClassLoader();
 

@@ -25,7 +25,7 @@ public class EmailResource {
     private static final Logger log = LogManager.getLogger(EmailResource.class);
 
     @GET
-    @Path("public/email")
+    @Path("secure/email")
     public String sendEmail(
                     @QueryParam("subject") String subject,
                     @QueryParam("recipient") String recipient,

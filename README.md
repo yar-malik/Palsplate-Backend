@@ -349,7 +349,15 @@ where curlJsonReservation.json contains:
  * Send an Email to certain recipient
  ``GET http://localhost:8080/api/public/email?to={to}&emailType={emailType}``
 
- where emailType currently is only signup. to should be a valid email address. e.g.
+ where emailType is
+  * signup
+  * food_uploaded
+  * reservation_accepted
+  * reservation_declined
+  * reservation_requested
+  * sign_up_successful
+
+ to should be a valid email address. e.g.
 
  `curl -i -H "Authorization: Bearer <access-token>" "http://localhost:8080/api/public/email?to=malikasfandyarashraf@gmail.com&emailType=signup"`
 

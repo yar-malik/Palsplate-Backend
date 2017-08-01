@@ -32,11 +32,36 @@ public class EmailResource {
         ClientResponse response = null;
         EmailResource emailResource = new EmailResource();
 
-        if(emailType.equalsIgnoreCase("signup")){
-
-            String html = emailResource.htmlIntoString("index.html");
+        if(emailType.equalsIgnoreCase("sign_up")){
+            String html = emailResource.htmlIntoString("sign_up.html");
             response = emailResource.sendComplexMessage(html);
         }
+
+        if(emailType.equalsIgnoreCase("food_uploaded")){
+            String html = emailResource.htmlIntoString("food_uploaded.html");
+            response = emailResource.sendComplexMessage(html);
+        }
+
+        if(emailType.equalsIgnoreCase("reservation_accepted")){
+            String html = emailResource.htmlIntoString("reservation_accepted.html");
+            response = emailResource.sendComplexMessage(html);
+        }
+
+        if(emailType.equalsIgnoreCase("reservation_declined")){
+            String html = emailResource.htmlIntoString("reservation_declined.html");
+            response = emailResource.sendComplexMessage(html);
+        }
+
+        if(emailType.equalsIgnoreCase("reservation_requested")){
+            String html = emailResource.htmlIntoString("reservation_requested.html");
+            response = emailResource.sendComplexMessage(html);
+        }
+
+        if(emailType.equalsIgnoreCase("sign_up_successful")){
+            String html = emailResource.htmlIntoString("sign_up_successful.html");
+            response = emailResource.sendComplexMessage(html);
+        }
+
 
         return response.toString();
     }
@@ -68,7 +93,7 @@ public class EmailResource {
 
             ClassLoader classLoader = getClass().getClassLoader();
 
-            BufferedReader in = new BufferedReader(new FileReader(new File(classLoader.getResource("index.html").getFile())));
+            BufferedReader in = new BufferedReader(new FileReader(new File(classLoader.getResource("sign_up.html").getFile())));
             String str;
             while ((str = in.readLine()) != null) {
                 content += str;

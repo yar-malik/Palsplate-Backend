@@ -123,6 +123,8 @@
         </dependency>
         <!-- End Cloudinary -->
 
+
+        <!-- Dependencies added for Email Sending Api support -->
         <dependency>
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-client</artifactId>
@@ -139,6 +141,7 @@
             <artifactId>jersey-multipart</artifactId>
             <version>1.19.4</version>
         </dependency>
+        <!-- End Dependencies added for Email Sending Api support -->
 
     </dependencies>
 

@@ -20,6 +20,7 @@ import java.util.List;
 @Transactional
 @Component
 public class CustomerResource {
+
     private CustomerDao customerDao;
     @Inject
     public CustomerResource(CustomerDao customerDao){
@@ -55,6 +56,22 @@ public class CustomerResource {
             return customer;
         }
     }
+
+
+
+    @GET
+    @Path("secure/customers/{id}/reservations")
+    public Customer getAllReservationForForCustomer(@PathParam("id")long id) {
+        Customer customer = customerDao.findOne(id);
+        if (customer == null) {
+            throw new WebApplicationException((Response.Status.NOT_FOUND));
+        }
+
+        customer.getReservations().size();
+        return customer;
+    }
+
+
 
     /**
      * Create new Customer

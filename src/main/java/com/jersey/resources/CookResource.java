@@ -43,9 +43,6 @@ public class CookResource {
         }
 
         cook.getFoods().size();
-        System.out.println("Size: " + cook.getFoods().size());
-        System.out.println("cookX: " + cook);
-        System.out.println();
         return cook;
     }
 

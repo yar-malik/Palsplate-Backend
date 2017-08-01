@@ -200,6 +200,9 @@ public class PersonResource {
         newPerson.setAddress(person.getAddress());
         newPerson.setPhoneNumber(person.getPhoneNumber());
         newPerson.setDescription(person.getDescription());
+        newPerson.setCook(person.getCook());
+        newPerson.setCustomer(person.getCustomer());
+
 
         return  newPerson;
     }

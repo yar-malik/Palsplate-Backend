@@ -26,47 +26,45 @@ public class EmailResource {
 
     @GET
     @Path("public/email")
-    public String sendEmail(@QueryParam("to") String to,
-                     @QueryParam("emailType") String emailType) throws FileNotFoundException {
+    public String sendEmail(
+                    @QueryParam("subject") String subject,
+                    @QueryParam("recipient") String recipient,
+                    @QueryParam("emailType") String emailType) throws FileNotFoundException {
 
         ClientResponse response = null;
         EmailResource emailResource = new EmailResource();
+        String html = "";
 
         if(emailType.equalsIgnoreCase("sign_up")){
-            String html = emailResource.htmlIntoString("sign_up.html");
-            response = emailResource.sendComplexMessage(html);
+            html = emailResource.htmlIntoString("sign_up.html");
         }
 
         if(emailType.equalsIgnoreCase("food_uploaded")){
-            String html = emailResource.htmlIntoString("food_uploaded.html");
-            response = emailResource.sendComplexMessage(html);
+            html = emailResource.htmlIntoString("food_uploaded.html");
         }
 
         if(emailType.equalsIgnoreCase("reservation_accepted")){
-            String html = emailResource.htmlIntoString("reservation_accepted.html");
-            response = emailResource.sendComplexMessage(html);
+            html = emailResource.htmlIntoString("reservation_accepted.html");
         }
 
         if(emailType.equalsIgnoreCase("reservation_declined")){
-            String html = emailResource.htmlIntoString("reservation_declined.html");
-            response = emailResource.sendComplexMessage(html);
+            html = emailResource.htmlIntoString("reservation_declined.html");
         }
 
         if(emailType.equalsIgnoreCase("reservation_requested")){
-            String html = emailResource.htmlIntoString("reservation_requested.html");
-            response = emailResource.sendComplexMessage(html);
+            html = emailResource.htmlIntoString("reservation_requested.html");
         }
 
         if(emailType.equalsIgnoreCase("sign_up_successful")){
-            String html = emailResource.htmlIntoString("sign_up_successful.html");
-            response = emailResource.sendComplexMessage(html);
+            html = emailResource.htmlIntoString("sign_up_successful.html");
         }
 
+        response = emailResource.sendComplexMessage(html, subject);
 
         return response.toString();
     }
 
-    public ClientResponse sendComplexMessage(String html) {
+    public ClientResponse sendComplexMessage(String html, String subject) {
 
         Client client = Client.create();
         client.addFilter(new HTTPBasicAuthFilter("api", "key-d1d1af3caff7b163e3860c9cc90f47ea"));
@@ -76,7 +74,7 @@ public class EmailResource {
         FormDataMultiPart formData = new FormDataMultiPart();
         formData.field("from", "Mailgun User <mailgun@" + "mg.palsplate.com" + ">");
         formData.field("to", "malikasfandyarashraf@gmail.com");
-        formData.field("subject", "Yar Bas kar");
+        formData.field("subject", subject);
         formData.field("html", html);
         ClassLoader classLoader = getClass().getClassLoader();
 
@@ -93,7 +91,7 @@ public class EmailResource {
 
             ClassLoader classLoader = getClass().getClassLoader();
 
-            BufferedReader in = new BufferedReader(new FileReader(new File(classLoader.getResource("sign_up.html").getFile())));
+            BufferedReader in = new BufferedReader(new FileReader(new File(classLoader.getResource(file).getFile())));
             String str;
             while ((str = in.readLine()) != null) {
                 content += str;

@@ -140,12 +140,6 @@
             <version>1.19.4</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.jhades</groupId>
-            <artifactId>jhades</artifactId>
-            <version>1.0.4</version>
-        </dependency>
-
     </dependencies>
 
     <build>

@@ -34,8 +34,6 @@ public class Application {
     public AppErrorController appErrorController(){return new AppErrorController(errorAttributes);}
 
     public static void main(String[] args) {
-
-        new JHades().overlappingJarsReport();
         new SpringApplicationBuilder(Application.class).run(args);
     }
 

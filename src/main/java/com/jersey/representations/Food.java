@@ -68,6 +68,10 @@ public class Food {
     @JoinColumn(name="food_id")
     private Set<Review> reviews;
 
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "food_id")
+    private Set<Reservation> reservations;
+
     public Food() {
     }
 
@@ -207,5 +211,13 @@ public class Food {
 
     public void setReviews(Set<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public Set<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(Set<Reservation> reservations) {
+        this.reservations = reservations;
     }
 }

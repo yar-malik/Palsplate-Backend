@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -52,23 +53,12 @@ public class FoodResource {
     private ImageDao imageDao;
 
     /**
-     * Get all Foods
-     * @return foods
-     */
-    @GET
-    @Path("public/foods")
-    public List<Food> getAll(){
-        List<Food> foods = this.foodDao.findAll();
-        return foods;
-    }
-
-    /**
      * Get single Food
      * @param id
      * @return food
      */
     @GET
-    @Path("public/food/{id}")
+    @Path("public/foods/{id}")
     public Food getOne(@PathParam("id")long id) {
         Food food = foodDao.findOne(id);
         if(food == null){
@@ -165,7 +155,7 @@ public class FoodResource {
      */
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Path("secure/foods/{food_id}/images")
+    @Path("public/foods/{food_id}/images")
     public Image uploadFile(
             @FormDataParam("file") InputStream uploadedInputStream,
             @FormDataParam("file") FormDataContentDisposition fileDetail,
@@ -190,7 +180,85 @@ public class FoodResource {
         return imageDao.save(image);
     }
 
-    public static File inputStream2file (InputStream in, String filename, String suffix) throws IOException {
+    /**
+     * Get Foods
+     * @return foods
+     */
+    @GET
+    @Path("public/foods")
+    public List<Food> getUsers(
+            @QueryParam("maxDist") Integer maxDist,
+            @QueryParam("lon") Double lon,
+            @QueryParam("lat") Double lat,
+            @QueryParam("maxPrice") Integer maxPrice,
+            @QueryParam("foodType") String foodType,
+            @QueryParam("cuisineType") String cuisineType) {
+
+        List<Food> foods = this.foodDao.findAll();
+
+        ArrayList<Food> filterByDistanceFoods = new ArrayList<>();
+        ArrayList<Food> filterByMaxPriceFoods = new ArrayList<>();
+        ArrayList<Food> filterByFoodTypeFoods = new ArrayList<>();
+        ArrayList<Food> filterByCuisineTypeFoods= new ArrayList<>();
+
+        if(maxDist != null && lon != null && lat != null){
+            Double disDiff;
+            for(Food f: foods){
+                disDiff = distFrom(lon, lat, f.getLon(), f.getLat())/1000;
+                if(disDiff > maxDist){
+                    filterByDistanceFoods.add(f);
+                }
+            }
+            foods.removeAll(filterByDistanceFoods);
+        }
+
+        if(maxPrice != null){
+            for(Food f: foods){
+                if(f.getPrice() > maxPrice){
+                    filterByMaxPriceFoods.add(f);
+                }
+            }
+            foods.removeAll(filterByMaxPriceFoods);
+        }
+
+
+        if(foodType != null){
+            for(Food f: foods){
+                if(!f.getFood_type().equalsIgnoreCase(foodType) ){
+                    filterByFoodTypeFoods.add(f);
+                }
+            }
+            foods.removeAll(filterByFoodTypeFoods);
+        }
+
+        if(cuisineType != null){
+            for(Food f: foods){
+                if(!f.getCuisine_type().equalsIgnoreCase(cuisineType) ){
+                    filterByCuisineTypeFoods.add(f);
+                }
+            }
+            foods.removeAll(filterByCuisineTypeFoods);
+        }
+
+        log.info("Filtered result size: " + foods.size());
+
+        return foods;
+    }
+
+    public double distFrom(double lat1, double lng1, double lat2, double lng2) {
+        double earthRadius = 6371000; //meters
+        double dLat = Math.toRadians(lat2-lat1);
+        double dLng = Math.toRadians(lng2-lng1);
+        double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+                        Math.sin(dLng/2) * Math.sin(dLng/2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        double dist = earthRadius * c;
+
+        return dist;
+    }
+
+    public File inputStream2file (InputStream in, String filename, String suffix) throws IOException {
         final File tempFile = File.createTempFile(filename, suffix);
         tempFile.deleteOnExit();
         try (FileOutputStream out = new FileOutputStream(tempFile)) {
@@ -198,4 +266,5 @@ public class FoodResource {
         }
         return tempFile;
     }
+    
 }

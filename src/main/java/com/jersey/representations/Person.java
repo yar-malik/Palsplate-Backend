@@ -56,12 +56,18 @@ public class Person {
     @JoinColumn(name="person_id")
     private Set<Customer> customer;
 
+    @Column(name = "photo_name")
+    private String photoName;
+
+    @Column(name = "photo_public_id")
+    private String photoPublicId;
+
     public Person() {
     }
 
     public Person(Long id, String email, String firstName, String lastName,
                 String phoneNumber, String address, String description,
-                boolean isPhotoPublic) {
+                boolean isPhotoPublic, String photoName, String photoPublicId) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
@@ -70,6 +76,8 @@ public class Person {
         this.address = address;
         this.description = description;
         this.isPhotoPublic = isPhotoPublic;
+        this.photoName = photoName;
+        this.photoPublicId = photoPublicId;
     }
 
     public Long getId() {
@@ -174,5 +182,21 @@ public class Person {
 
     public void setCook(Set<Cook> cook) {
         this.cook = cook;
+    }
+
+    public String getPhotoPublicId() {
+        return photoPublicId;
+    }
+
+    public void setPhotoPublicId(String photoPublicId) {
+        this.photoPublicId = photoPublicId;
+    }
+
+    public String getPhotoName() {
+        return photoName;
+    }
+
+    public void setPhotoName(String photoName) {
+        this.photoName = photoName;
     }
 }

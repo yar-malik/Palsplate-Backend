@@ -19,6 +19,7 @@ import java.util.List;
 @Component
 @Transactional
 @Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class ReviewResource {
 
     private static final Logger log = LogManager.getLogger(ReviewResource.class);

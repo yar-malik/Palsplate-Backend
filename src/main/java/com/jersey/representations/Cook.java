@@ -43,14 +43,6 @@ public class Cook {
         this.foods = foods;
     }
 
-//    public Set<Person> getPersons() {
-//        return persons;
-//    }
-//
-//    public void setPersons(Set<Person> persons) {
-//        this.persons = persons;
-//    }
-
     public Long getPerson_id() {
         return person_id;
     }

@@ -101,7 +101,7 @@ public class PersonResource {
      * @return new person
      */
     @POST
-    @Path("secure/persons")
+    @Path("public/persons")
     public Person save(@Valid Person person) {
 
         person.setPassword(passwordEncoder.encode(person.getPassword()));

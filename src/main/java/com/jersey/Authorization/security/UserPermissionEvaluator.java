@@ -42,8 +42,8 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
     @Override
     public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object allowedPermissions) {
 
-        System.out.println("\n\n\n Inside the first has permission salam \n\n\n");
-        LogManager.getLogger(LoggingFilter.class).info("\n\n\n Inside the first has permission \n\n\n");
+        System.out.println("\n\n\n has permission 1 salam \n\n\n");
+        LogManager.getLogger(LoggingFilter.class).info("\n\n\n has permission 1 salam \n\n\n");
 
         if(checkIfUserIsAdmin(authentication))
         {
@@ -73,8 +73,8 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
     @Override
     public boolean hasPermission(Authentication authentication, Serializable serializable, String resourceType, Object allowedPermissions) {
 
-        System.out.println("\n\n\n Inside the second has permission \n\n\n");
-        LogManager.getLogger(LoggingFilter.class).info("\n\n\n Inside the second has permission \n\n\n");
+        System.out.println("\n\n\n has permission 2 \n\n\n");
+        LogManager.getLogger(LoggingFilter.class).info("\n\n\n has permission 2 \n\n\n");
 
         if(checkIfUserIsAdmin(authentication))
         {

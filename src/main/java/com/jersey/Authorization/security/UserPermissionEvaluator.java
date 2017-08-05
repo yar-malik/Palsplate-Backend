@@ -4,6 +4,7 @@ import com.jersey.persistence.*;
 import com.jersey.representations.*;
 import com.jersey.resources.LoggingFilter;
 import org.apache.log4j.LogManager;
+import org.hibernate.annotations.Proxy;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.PermissionEvaluator;
@@ -18,6 +19,7 @@ import java.util.StringTokenizer;
 
 @Component
 @Transactional
+@Proxy(lazy=false)
 public class UserPermissionEvaluator implements PermissionEvaluator {
 
 

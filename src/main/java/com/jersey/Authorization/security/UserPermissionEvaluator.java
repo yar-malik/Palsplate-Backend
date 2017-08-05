@@ -19,7 +19,7 @@ import java.util.StringTokenizer;
 public class UserPermissionEvaluator implements PermissionEvaluator {
 
 
-
+/*
     @Autowired
     private ObjectFactory<CustomerDao> customerDaoRepositoryFactory;
 
@@ -34,7 +34,7 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
 
     @Autowired
     private ObjectFactory<ReviewDao> reviewDaoRepositoryFactory;
-
+*/
 
     @Override
     public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object allowedPermissions) {
@@ -131,7 +131,7 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
 
     public boolean checkCustomerResourcePermission(Authentication authentication, long ID)
     {
-        // find the person id of the requested resource
+/*        // find the person id of the requested resource
         Customer customer = customerDaoRepositoryFactory.getObject().findOne(ID);
         Person person = personDaoRepositoryFactory.getObject().findOne(customer.getPerson_id());
 
@@ -139,12 +139,13 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
         Person currentPerson= personDaoRepositoryFactory.getObject().findByEmail(authentication.getName());
 
         //check if they are equal
-        return currentPerson.getId() == person.getId();
+        return currentPerson.getId() == person.getId();*/
+        return true;
     }
 
     public boolean checkCookResoucePermission(Authentication authentication, long ID)
     {
-        // find the person id of the requested resource
+/*        // find the person id of the requested resource
         Cook cook = cookDaoRepositoryFactory.getObject().getOne(ID);
         Person person = personDaoRepositoryFactory.getObject().getOne(cook.getPerson_id());
 
@@ -152,38 +153,41 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
         Person currentPerson = personDaoRepositoryFactory.getObject().findByEmail(authentication.getName());
 
         //check if they are equal
-        return currentPerson.getId() == person.getId();
+        return currentPerson.getId() == person.getId();*/
+        return true;
 
     }
 
     public boolean checkFoodResourcePermission(Authentication authentication, long ID)
     {
-        Food food = foodDaoRepositoryFactory.getObject().getOne(ID);
-        return checkCookResoucePermission(authentication, food.getCook_id());
+        /*Food food = foodDaoRepositoryFactory.getObject().getOne(ID);
+        return checkCookResoucePermission(authentication, food.getCook_id());*/
+        return true;
     }
 
 
     public boolean checkPersonResourcePermission(Authentication authentication, long ID)
     {
-        Person person = personDaoRepositoryFactory.getObject().getOne(ID);
+/*        Person person = personDaoRepositoryFactory.getObject().getOne(ID);
 
         // find the person id of the user who requested the resource
         Person currentPerson = personDaoRepositoryFactory.getObject().findByEmail(authentication.getName());
 
         //check if they are equal
-        return currentPerson.getId() == person.getId();
+        return currentPerson.getId() == person.getId();*/
+        return true;
     }
 
     public boolean checkReviewResourcePermission(Authentication authentication, long ID)
     {
-        Review review = reviewDaoRepositoryFactory.getObject().findOne(ID);
+        /*Review review = reviewDaoRepositoryFactory.getObject().findOne(ID);
 
         // find the person id of the user who requested the resource
         Person currentPerson= personDaoRepositoryFactory.getObject().findByEmail(authentication.getName());
 
         // TODO add a functionality to link a review with a person
         //check if they are equal
-     //   return currentPerson.getId() == person.getId();
+     //   return currentPerson.getId() == person.getId();*/
        return true;
     }
 

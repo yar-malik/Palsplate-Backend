@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 @Component
-@Transactional
 @Proxy(lazy=false)
 public class UserPermissionEvaluator implements PermissionEvaluator {
 

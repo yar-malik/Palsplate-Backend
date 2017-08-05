@@ -23,7 +23,6 @@ import org.apache.log4j.Logger;
 
 @Configuration
 @EnableJpaRepositories(basePackages = "com.jersey.persistence")
-@EnableTransactionManagement
 public class SqlInitialization{
 
     private static final Logger log = LogManager.getLogger(SqlInitialization.class);

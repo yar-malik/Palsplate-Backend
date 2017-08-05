@@ -10,12 +10,14 @@ import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 @Component
+@Transactional
 public class UserPermissionEvaluator implements PermissionEvaluator {
 
 

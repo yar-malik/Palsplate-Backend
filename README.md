@@ -192,6 +192,8 @@ where curlJsonCook.txt contains:
  ``DELETE http://localhost:8080/api/secure/customers/{id}``
  * Get photo of a customer
  ``GET http://localhost:8080/api/secure/customers/{id}/photo``
+ * Get all reservations of a customer
+ ``GET http://localhost:8080/api/secure/customers/{id}/reservations ``
  * Create a new record with a curl example
 
 `curl -X POST -d @curlJsonCustomer.txt -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/customers --header "Content-Type:application/json"`

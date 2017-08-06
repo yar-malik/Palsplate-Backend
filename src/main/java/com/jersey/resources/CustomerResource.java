@@ -80,7 +80,7 @@ public class CustomerResource {
     }
 
     @GET
-    @Path("secure/customers/{id}/photos")
+    @Path("secure/customers/{id}/photo")
     public JSONObject getImageForCustomer(@PathParam("id")long id) {
         Customer customer = customerDao.findOne(id);
         if (customer == null) {

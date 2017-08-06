@@ -1,7 +1,12 @@
 package com.jersey.resources;
 
 import com.jersey.persistence.CookDao;
+import com.jersey.persistence.PersonDao;
 import com.jersey.representations.Cook;
+import com.jersey.representations.Customer;
+import com.jersey.representations.Person;
+import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +26,9 @@ import java.util.List;
 @Transactional
 public class CookResource {
     private final CookDao cookDao;
+
+    @Autowired
+    private PersonDao personDao;
 
     @Inject
     public CookResource(CookDao cookDao) {
@@ -53,6 +61,21 @@ public class CookResource {
             throw new WebApplicationException((Response.Status.NOT_FOUND));
         }
         return cook;
+    }
+
+    @GET
+    @Path("secure/cooks/{id}/photo")
+    public JSONObject getPhotoForCook(@PathParam("id")long id) {
+        Cook cook = cookDao.findOne(id);
+        if (cook == null) {
+            throw new WebApplicationException((Response.Status.NOT_FOUND));
+        }
+        else{
+            Person person = personDao.findOne(cook.getPerson_id());
+            JSONObject jsonPhoto = new JSONObject();
+            jsonPhoto.put("cookPhoto", person.getPhotoPublicId());
+            return jsonPhoto;
+        }
     }
 
     /**

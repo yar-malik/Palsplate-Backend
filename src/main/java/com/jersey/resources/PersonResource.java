@@ -50,7 +50,6 @@ public class PersonResource {
     @Inject
     public PersonResource(PersonDao personDao)
     {
-        System.out.println("\n\n\nPerson resource created\n\n\n");
         this.personDao = personDao;
     }
 

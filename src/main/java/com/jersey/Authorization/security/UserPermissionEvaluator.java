@@ -5,7 +5,6 @@ import com.jersey.representations.*;
 import com.jersey.resources.LoggingFilter;
 import org.apache.log4j.LogManager;
 import org.springframework.beans.factory.ObjectFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -34,7 +33,9 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
 
     @Inject
     public UserPermissionEvaluator(ObjectFactory<CustomerDao> customerDaoRepositoryFactory, ObjectFactory<PersonDao> personDaoRepositoryFactory, ObjectFactory<CookDao> cookDaoRepositoryFactory, ObjectFactory<FoodDao> foodDaoRepositoryFactory, ObjectFactory<ReviewDao> reviewDaoRepositoryFactory) {
-        System.out.println("\n\n\nUser permission evaluator\n\n\n");
+
+        LogManager.getLogger(LoggingFilter.class).info("Initializing the UserPermissionEvaluator...");
+
         this.customerDaoRepositoryFactory = customerDaoRepositoryFactory;
         this.personDaoRepositoryFactory = personDaoRepositoryFactory;
         this.cookDaoRepositoryFactory = cookDaoRepositoryFactory;
@@ -45,8 +46,7 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
     @Override
     public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object allowedPermissions) {
 
-        System.out.println("\n\n\n has permission 1 \n\n\n");
-        LogManager.getLogger(LoggingFilter.class).info("\n\n\n has permission 1 \n\n\n");
+        LogManager.getLogger(LoggingFilter.class).info("Calling haspermission without resourceType");
 
         if(checkIfUserIsAdmin(authentication))
         {
@@ -76,10 +76,7 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
     @Override
     public boolean hasPermission(Authentication authentication, Serializable serializable, String resourceType, Object allowedPermissions) {
 
-        System.out.println("\n\n\n has permission 2 \n\n\n");
-        LogManager.getLogger(LoggingFilter.class).info("\n\n\n has permission 2 \n\n\n");
-
-
+        LogManager.getLogger(LoggingFilter.class).info("Calling hasPermission with resourceType");
 
         if(checkIfUserIsAdmin(authentication))
         {

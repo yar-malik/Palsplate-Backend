@@ -1,6 +1,8 @@
 package com.jersey.Authorization.Config;
 
 import com.jersey.Authorization.security.UserPermissionEvaluator;
+import com.jersey.resources.LoggingFilter;
+import org.apache.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -19,7 +21,7 @@ public class CustomMethodSecurityConfiguration extends GlobalMethodSecurityConfi
     @Override
     protected MethodSecurityExpressionHandler createExpressionHandler() {
 
-        System.out.println("\n\n\nThis being executed\n\n\n");
+        LogManager.getLogger(LoggingFilter.class).info("Initializing the CustomMethodSecurityConfiguration ...");
 
         DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
         expressionHandler.setPermissionEvaluator(userPermissionEvaluator);

@@ -10,13 +10,11 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.support.TransactionTemplate;
 import javax.sql.DataSource;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Properties;
-import java.util.Scanner;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -93,6 +91,9 @@ public class SqlInitialization{
         //Audit History flags
         hibernateProperties.setProperty("org.hibernate.envers.store_data_at_delete", "true");
         hibernateProperties.setProperty("org.hibernate.envers.global_with_modified_flag", "true");
+
+        hibernateProperties.setProperty("hibernate.enable_lazy_load_no_trans","true");
+
 
         return hibernateProperties;
     }

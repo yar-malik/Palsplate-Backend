@@ -4,7 +4,6 @@ import com.jersey.persistence.*;
 import com.jersey.representations.*;
 import com.jersey.resources.LoggingFilter;
 import org.apache.log4j.LogManager;
-import org.hibernate.annotations.Proxy;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.PermissionEvaluator;
@@ -18,6 +17,7 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 @Component
+@Transactional
 public class UserPermissionEvaluator implements PermissionEvaluator {
 
 
@@ -39,7 +39,6 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
         this.foodDaoRepositoryFactory = foodDaoRepositoryFactory;
         this.reviewDaoRepositoryFactory = reviewDaoRepositoryFactory;
     }
-
 
     @Override
     public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object allowedPermissions) {
@@ -77,6 +76,8 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
 
         System.out.println("\n\n\n has permission 2 \n\n\n");
         LogManager.getLogger(LoggingFilter.class).info("\n\n\n has permission 2 \n\n\n");
+
+
 
         if(checkIfUserIsAdmin(authentication))
         {
@@ -166,6 +167,7 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
         Food food = foodDaoRepositoryFactory.getObject().getOne(ID);
         return checkCookResoucePermission(authentication, food.getCook_id());
     }
+
 
 
     public boolean checkPersonResourcePermission(Authentication authentication, long ID)

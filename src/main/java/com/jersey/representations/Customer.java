@@ -26,6 +26,8 @@ public class Customer {
     @JoinColumn(name="customer_id")
     private Set<Review> reviews;
 
+    public String photoPublicId;
+
     public Customer() {
     }
 
@@ -62,5 +64,13 @@ public class Customer {
 
     public void setReviews(Set<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public String getPhotoPublicId() {
+        return photoPublicId;
+    }
+
+    public void setPhotoPublicId(String photoPublicId) {
+        this.photoPublicId = photoPublicId;
     }
 }

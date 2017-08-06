@@ -1,7 +1,9 @@
 package com.jersey.resources;
 
 import com.jersey.persistence.CustomerDao;
+import com.jersey.persistence.PersonDao;
 import com.jersey.representations.Customer;
+import com.jersey.representations.Person;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +24,11 @@ import java.util.List;
 public class CustomerResource {
 
     private CustomerDao customerDao;
+
+    private PersonDao personDao;
+
+    //personDao.findByEmail(email)
+
     @Inject
     public CustomerResource(CustomerDao customerDao){
         this.customerDao = customerDao;
@@ -50,14 +57,14 @@ public class CustomerResource {
 //    @PreAuthorize("hasPermission(#id,'CustomerResource', 'ROLE_USER,ROLE_ADMIN')")
     public Customer getOne(@PathParam("id")long id) {
         Customer customer = customerDao.findOne(id);
+        Person person = personDao.findOne(customer.getPerson_id());
         if(customer == null){
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }else {
+            customer.setPhotoPublicId(person.getPhotoPublicId());
             return customer;
         }
     }
-
-
 
     @GET
     @Path("secure/customers/{id}/reservations")
@@ -70,8 +77,6 @@ public class CustomerResource {
         customer.getReservations().size();
         return customer;
     }
-
-
 
     /**
      * Create new Customer
@@ -90,6 +95,7 @@ public class CustomerResource {
      * @param customer
      * @return updated customer
      */
+
     @PUT
     @Path("secure/customers/{id}")
 //    @PreAuthorize("hasPermission(#id,'CustomerResource', 'ROLE_USER,ROLE_ADMIN')")

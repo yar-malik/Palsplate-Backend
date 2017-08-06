@@ -18,11 +18,11 @@ public class Customer {
     @NotNull
     private Long person_id;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private Set<Reservation> reservations;
 
-    @OneToMany(fetch=FetchType.LAZY)
+    @OneToMany(fetch=FetchType.EAGER)
     @JoinColumn(name="customer_id")
     private Set<Review> reviews;
 

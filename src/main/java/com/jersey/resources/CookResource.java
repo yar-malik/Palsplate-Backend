@@ -36,16 +36,12 @@ public class CookResource {
     @GET
     @Path("public/cooks/{id}/foods")
     public Cook getAllFoodsForCook(@PathParam("id")long id) {
-        System.out.println("id foods loop");
         Cook cook = cookDao.findOne(id);
         if (cook == null) {
             throw new WebApplicationException((Response.Status.NOT_FOUND));
         }
 
         cook.getFoods().size();
-        System.out.println("Size: " + cook.getFoods().size());
-        System.out.println("cookX: " + cook);
-        System.out.println();
         return cook;
     }
 

@@ -1,7 +1,11 @@
 package com.jersey.resources;
 
 import com.jersey.persistence.CustomerDao;
+import com.jersey.persistence.PersonDao;
 import com.jersey.representations.Customer;
+import com.jersey.representations.Person;
+import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +24,14 @@ import java.util.List;
 @Transactional
 @Component
 public class CustomerResource {
+
     private CustomerDao customerDao;
+
+    @Autowired
+    private PersonDao personDao;
+
+    //personDao.findByEmail(email)
+
     @Inject
     public CustomerResource(CustomerDao customerDao){
         this.customerDao = customerDao;
@@ -56,6 +67,34 @@ public class CustomerResource {
         }
     }
 
+    @GET
+    @Path("secure/customers/{id}/reservations")
+    public Customer getAllReservationForForCustomer(@PathParam("id")long id) {
+        Customer customer = customerDao.findOne(id);
+        if (customer == null) {
+            throw new WebApplicationException((Response.Status.NOT_FOUND));
+        }
+
+        customer.getReservations().size();
+        return customer;
+    }
+
+    @GET
+    @Path("secure/customers/{id}/photo")
+    public JSONObject getImageForCustomer(@PathParam("id")long id) {
+        Customer customer = customerDao.findOne(id);
+        if (customer == null) {
+            throw new WebApplicationException((Response.Status.NOT_FOUND));
+        }
+        else{
+            Person person = personDao.findOne(customer.getPerson_id());
+            JSONObject jsonPhoto = new JSONObject();
+            jsonPhoto.put("customerPhoto", person.getPhotoPublicId());
+            return jsonPhoto;
+        }
+    }
+
+
     /**
      * Create new Customer
      * @param customer
@@ -73,6 +112,7 @@ public class CustomerResource {
      * @param customer
      * @return updated customer
      */
+
     @PUT
     @Path("secure/customers/{id}")
     @PreAuthorize("hasPermission(#id,'CustomerResource', 'ROLE_USER,ROLE_ADMIN')")

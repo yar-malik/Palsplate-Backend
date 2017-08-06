@@ -134,6 +134,15 @@ GET: http://localhost:8080/api/secure/customers/1
  ``PUT http://localhost:8080/api/secure/persons/{id}``
  * Delete a specific record
  ``DELETE http://localhost:8080/api/secure/persons/{id}``
+    @Bean
+    public ServletRegistrationBean jerseyServlet() {
+        Map<String,String> params = new HashMap<String,String>();
+        params.put("javax.ws.rs.Application","com.verico.multipart.app.MultiPartApp");
+        params.put("jersey.config.server.provider.classnames","org.glassfish.jersey.filter.LoggingFilter;org.glassfish.jersey.media.multipart.MultiPartFeature");
+        ServletRegistrationBean registration = new ServletRegistrationBean(new ServletContainer(), "/resources");
+        registration.setInitParameters(params);
+        registration.addInitParameter(ServletProperties.JAXRS_APPLICATION_CLASS, JerseyInitialization.class.getName());
+        return registration;
  * Create a new record with following payload
 
 `curl -X POST -d @curlJson.txt -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/persons --header "Content-Type:application/json"`
@@ -192,6 +201,8 @@ where curlJsonCook.txt contains:
  ``DELETE http://localhost:8080/api/secure/customers/{id}``
  * Get photo of a customer
  ``GET http://localhost:8080/api/secure/customers/{id}/photo``
+ * Get all reservations of a customer
+ ``GET http://localhost:8080/api/secure/customers/{id}/reservations ``
  * Create a new record with a curl example
 
 `curl -X POST -d @curlJsonCustomer.txt -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/customers --header "Content-Type:application/json"`

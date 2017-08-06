@@ -1,9 +1,8 @@
 package com.jersey.resources;
 
-import com.jersey.persistence.CustomerDao;
-import com.jersey.persistence.PersonDao;
-import com.jersey.representations.Customer;
-import com.jersey.representations.Person;
+import com.jersey.persistence.*;
+import com.jersey.representations.*;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,6 +28,15 @@ public class CustomerResource {
 
     @Autowired
     private PersonDao personDao;
+
+    @Autowired
+    private CookDao cookDao;
+
+    @Autowired
+    private FoodDao foodDao;
+
+    @Autowired
+    private ReservationDao reservationDao;
 
     @Inject
     public CustomerResource(CustomerDao customerDao){
@@ -67,14 +75,33 @@ public class CustomerResource {
 
     @GET
     @Path("secure/customers/{id}/reservations")
-    public Customer getAllReservationForForCustomer(@PathParam("id")long id) {
+    public JSONObject getAllReservationForForCustomer(@PathParam("id")long id) {
         Customer customer = customerDao.findOne(id);
+        JSONObject reservationJsonObject = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
         if (customer == null) {
             throw new WebApplicationException((Response.Status.NOT_FOUND));
         }
+        else{
 
-        customer.getReservations().size();
-        return customer;
+            for(Reservation reservation: customer.getReservations()){
+                JSONObject jsonReservationAll = new JSONObject();
+                Food food = foodDao.findOne(reservation.getFoodId());
+                Cook cook = cookDao.findOne(food.getCook_id());
+                Person person = personDao.findOne(cook.getPerson_id());
+                jsonReservationAll.put("cookFirstName", person.getFirstName());
+                jsonReservationAll.put("cookLastName", person.getLastName());
+                jsonReservationAll.put("cookPhoto", person.getPhotoPublicId());
+                jsonReservationAll.put("foodOfferStart", food.getOffer_start());
+                jsonReservationAll.put("foodOfferStop", food.getOffer_stop());
+                jsonReservationAll.put("foodImage", food.getImages());
+                jsonArray.add(jsonReservationAll);
+            }
+
+            reservationJsonObject.put("reservations", jsonArray);
+
+        }
+        return reservationJsonObject;
     }
 
     @GET

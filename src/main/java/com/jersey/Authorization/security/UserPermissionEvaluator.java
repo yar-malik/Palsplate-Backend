@@ -44,7 +44,7 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
     public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object allowedPermissions) {
 
         System.out.println("\n\n\n has permission 1 \n\n\n");
-        LogManager.getLogger(LoggingFilter.class).info("\n\n\n has permission 1 salam \n\n\n");
+        LogManager.getLogger(LoggingFilter.class).info("\n\n\n has permission 1 \n\n\n");
 
         if(checkIfUserIsAdmin(authentication))
         {

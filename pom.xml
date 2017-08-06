@@ -143,6 +143,14 @@
         </dependency>
         <!-- End Dependencies added for Email Sending Api support -->
 
+        <!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>

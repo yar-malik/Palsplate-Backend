@@ -57,10 +57,10 @@ public class Person {
     private Set<Customer> customer;
 
     @Column(name = "photo_name")
-    private String photoName;
+    public String photoName;
 
     @Column(name = "photo_public_id")
-    private String photoPublicId;
+    public String photoPublicId;
 
     public Person() {
     }

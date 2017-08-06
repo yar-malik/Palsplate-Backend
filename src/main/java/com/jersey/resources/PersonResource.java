@@ -34,7 +34,7 @@ import java.util.Map;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Transactional
-@Component
+@Component("PersonResource")
 public class PersonResource {
 
     private static final Logger log = LogManager.getLogger(PersonResource.class);

@@ -168,8 +168,8 @@ where curlJson.txt contains:
  ``PUT http://localhost:8080/api/public/cooks/{id}``
  * Delete a specific record
  ``DELETE http://localhost:8080/api/public/cooks/{id}``
- * GET photo of a cook
-  ``GET http://localhost:8080/api/secure/cooks/{id}/photo``
+ * Get photo of a cook
+  ``GET http://localhost:8080/api/public/cooks/{id}/photo``
  * Create a new record with a curl example
 
 
@@ -190,7 +190,7 @@ where curlJsonCook.txt contains:
  ``PUT http://localhost:8080/api/secure/customers/{id}``
  * Delete a specific record
  ``DELETE http://localhost:8080/api/secure/customers/{id}``
- * GET photo of a customer
+ * Get photo of a customer
  ``GET http://localhost:8080/api/secure/customers/{id}/photo``
  * Create a new record with a curl example
 

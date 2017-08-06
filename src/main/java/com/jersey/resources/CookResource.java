@@ -64,7 +64,7 @@ public class CookResource {
     }
 
     @GET
-    @Path("secure/cooks/{id}/photo")
+    @Path("public/cooks/{id}/photo")
     public JSONObject getPhotoForCook(@PathParam("id")long id) {
         Cook cook = cookDao.findOne(id);
         if (cook == null) {

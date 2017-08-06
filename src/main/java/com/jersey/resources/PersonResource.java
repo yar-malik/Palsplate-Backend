@@ -34,7 +34,7 @@ import java.util.Map;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Transactional
-@Component("PersonResource")
+@Component
 public class PersonResource {
 
     private static final Logger log = LogManager.getLogger(PersonResource.class);
@@ -48,7 +48,9 @@ public class PersonResource {
     private PersonDao personDao;
 
     @Inject
-    public PersonResource(PersonDao personDao) {
+    public PersonResource(PersonDao personDao)
+    {
+        System.out.println("\n\n\nPerson resource created\n\n\n");
         this.personDao = personDao;
     }
 

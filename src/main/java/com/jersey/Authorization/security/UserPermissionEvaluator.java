@@ -12,6 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -31,8 +32,9 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
 
     private ObjectFactory<ReviewDao> reviewDaoRepositoryFactory;
 
-    @Autowired
+    @Inject
     public UserPermissionEvaluator(ObjectFactory<CustomerDao> customerDaoRepositoryFactory, ObjectFactory<PersonDao> personDaoRepositoryFactory, ObjectFactory<CookDao> cookDaoRepositoryFactory, ObjectFactory<FoodDao> foodDaoRepositoryFactory, ObjectFactory<ReviewDao> reviewDaoRepositoryFactory) {
+        System.out.println("\n\n\nUser permission evaluator\n\n\n");
         this.customerDaoRepositoryFactory = customerDaoRepositoryFactory;
         this.personDaoRepositoryFactory = personDaoRepositoryFactory;
         this.cookDaoRepositoryFactory = cookDaoRepositoryFactory;

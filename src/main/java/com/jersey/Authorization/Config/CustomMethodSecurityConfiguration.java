@@ -19,6 +19,8 @@ public class CustomMethodSecurityConfiguration extends GlobalMethodSecurityConfi
     @Override
     protected MethodSecurityExpressionHandler createExpressionHandler() {
 
+        System.out.println("\n\n\nThis being executed\n\n\n");
+
         DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
         expressionHandler.setPermissionEvaluator(userPermissionEvaluator);
         return expressionHandler;

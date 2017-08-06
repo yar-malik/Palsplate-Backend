@@ -42,7 +42,7 @@ public class CustomerResource {
 
     @GET
     @Path("secure/customers")
-  //  @PreAuthorize("hasPermission('CustomerResource', 'ROLE_ADMIN')")
+    @PreAuthorize("hasPermission('CustomerResource', 'ROLE_ADMIN')")
     public List<Customer> getAll(){
         List<Customer> customers = this.customerDao.findAll();
         return customers;
@@ -55,7 +55,7 @@ public class CustomerResource {
      */
     @GET
     @Path("secure/customers/{id}")
-//    @PreAuthorize("hasPermission(#id,'CustomerResource', 'ROLE_USER,ROLE_ADMIN')")
+    @PreAuthorize("hasPermission(#id,'CustomerResource', 'ROLE_USER,ROLE_ADMIN')")
     public Customer getOne(@PathParam("id")long id) {
         Customer customer = customerDao.findOne(id);
         if(customer == null){
@@ -113,7 +113,7 @@ public class CustomerResource {
 
     @PUT
     @Path("secure/customers/{id}")
-//    @PreAuthorize("hasPermission(#id,'CustomerResource', 'ROLE_USER,ROLE_ADMIN')")
+    @PreAuthorize("hasPermission(#id,'CustomerResource', 'ROLE_USER,ROLE_ADMIN')")
     public Customer update(@PathParam("id")long id, @Valid Customer customer) {
         if(customerDao.findOne(id) == null){
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -129,7 +129,7 @@ public class CustomerResource {
      */
     @DELETE
     @Path("secure/customers/{id}")
-//    @PreAuthorize("hasPermission(#id,'CustomerResource', 'ROLE_USER,ROLE_ADMIN')")
+    @PreAuthorize("hasPermission(#id,'CustomerResource', 'ROLE_USER,ROLE_ADMIN')")
     public void delete(@PathParam("id")long id) {
         Customer customer = customerDao.findOne(id);
         if(customer == null){

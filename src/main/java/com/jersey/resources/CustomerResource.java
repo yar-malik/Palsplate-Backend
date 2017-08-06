@@ -30,8 +30,6 @@ public class CustomerResource {
     @Autowired
     private PersonDao personDao;
 
-    //personDao.findByEmail(email)
-
     @Inject
     public CustomerResource(CustomerDao customerDao){
         this.customerDao = customerDao;
@@ -81,7 +79,7 @@ public class CustomerResource {
 
     @GET
     @Path("secure/customers/{id}/photo")
-    public JSONObject getImageForCustomer(@PathParam("id")long id) {
+    public JSONObject getPhotoForCustomer(@PathParam("id")long id) {
         Customer customer = customerDao.findOne(id);
         if (customer == null) {
             throw new WebApplicationException((Response.Status.NOT_FOUND));

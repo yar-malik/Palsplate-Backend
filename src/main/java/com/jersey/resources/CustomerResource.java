@@ -75,10 +75,12 @@ public class CustomerResource {
 
     @GET
     @Path("secure/customers/{id}/reservations")
-    public JSONObject getAllReservationForForCustomer(@PathParam("id")long id) {
+    public JSONArray getAllReservationForForCustomer(@PathParam("id")long id) {
+
         Customer customer = customerDao.findOne(id);
         JSONObject reservationJsonObject = new JSONObject();
         JSONArray jsonArray = new JSONArray();
+
         if (customer == null) {
             throw new WebApplicationException((Response.Status.NOT_FOUND));
         }
@@ -92,16 +94,11 @@ public class CustomerResource {
                 jsonReservationAll.put("cookFirstName", person.getFirstName());
                 jsonReservationAll.put("cookLastName", person.getLastName());
                 jsonReservationAll.put("cookPhoto", person.getPhotoPublicId());
-                jsonReservationAll.put("foodOfferStart", food.getOffer_start());
-                jsonReservationAll.put("foodOfferStop", food.getOffer_stop());
-                jsonReservationAll.put("foodImage", food.getImages());
+                jsonReservationAll.put("food", food);
                 jsonArray.add(jsonReservationAll);
             }
-
-            reservationJsonObject.put("reservations", jsonArray);
-
         }
-        return reservationJsonObject;
+        return jsonArray;
     }
 
     @GET

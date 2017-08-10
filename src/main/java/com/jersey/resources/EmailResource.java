@@ -77,7 +77,7 @@ public class EmailResource {
         WebResource webResource = client.resource("https://api.mailgun.net/v3/" + "mg.palsplate.com" + "/messages");
 
         FormDataMultiPart formData = new FormDataMultiPart();
-        formData.field("from", "Mailgun User <asfandyar@" + "mg.palsplate.com" + ">");
+        formData.field("from", "Mailgun User <info@" + "mg.palsplate.com" + ">");
         formData.field("to", recipient);
         formData.field("subject", subject.toString());
         formData.field("html", html);

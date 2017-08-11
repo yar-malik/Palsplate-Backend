@@ -30,7 +30,6 @@ public class SqlInitialization{
 
         URI dbUri = null;
         String PALSPLATE_DB_URL = System.getenv().get("PALSPLATE_DB_URL");
-        System.out.println("PALSPLATE_DB_URL: "  + PALSPLATE_DB_URL);
         try {
             dbUri = new URI(PALSPLATE_DB_URL);
         } catch (URISyntaxException e) {

@@ -72,7 +72,7 @@ public class EmailResource {
     public ClientResponse sendComplexMessage(String html, String subject, String recipient) {
 
         Client client = Client.create();
-        client.addFilter(new HTTPBasicAuthFilter("api", "key-d1d1af3caff7b163e3860c9cc90f47ea"));
+        client.addFilter(new HTTPBasicAuthFilter("api", System.getenv().get("MAILGUN_APIKEY")));
 
         WebResource webResource = client.resource("https://api.mailgun.net/v3/" + "mg.palsplate.com" + "/messages");
 

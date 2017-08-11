@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -63,7 +64,13 @@ public class PersonResource {
     @PreAuthorize("hasPermission('PersonResource', 'ROLE_ADMIN')")
     public List<Person> getAll() {
         List<Person> persons = this.personDao.findAll();
-        return persons;
+        List<Person> personsSafe = new ArrayList<>();
+
+        for(Person person: persons){
+            personsSafe.add(CopyPersonSafe(person));
+        }
+
+        return personsSafe;
     }
 
     /**
@@ -82,7 +89,7 @@ public class PersonResource {
         } else {
             person.getPhotoName();
             person.getPhotoPublicId();
-            return person;
+            return CopyPersonSafe(person);
         }
     }
 
@@ -195,15 +202,19 @@ public class PersonResource {
     {
         Person newPerson = new Person();
 
-        newPerson.setEmail(person.getEmail());
         newPerson.setId(person.getId());
+        newPerson.setEmail(person.getEmail());
         newPerson.setFirstName(person.getFirstName());
         newPerson.setLastName(person.getLastName());
-        newPerson.setAddress(person.getAddress());
         newPerson.setPhoneNumber(person.getPhoneNumber());
+        newPerson.setAddress(person.getAddress());
         newPerson.setDescription(person.getDescription());
+        newPerson.setIsPhotoPublic(person.getIsPhotoPublic());
         newPerson.setCook(person.getCook());
         newPerson.setCustomer(person.getCustomer());
+        newPerson.setPhotoName(person.getPhotoName());
+        newPerson.setPhotoPublicId(person.getPhotoPublicId());
+
         return  newPerson;
     }
 

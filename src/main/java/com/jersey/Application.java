@@ -1,5 +1,6 @@
 package com.jersey;
 
+import com.jersey.Authorization.Config.CustomMethodSecurityConfiguration;
 import com.jersey.config.AppErrorController;
 import com.jersey.config.JerseyInitialization;
 import org.glassfish.jersey.servlet.ServletContainer;
@@ -27,8 +28,13 @@ public class Application {
     @Bean
     public AppErrorController appErrorController(){return new AppErrorController(errorAttributes);}
 
+    //force init this bean
+    @Autowired
+    private CustomMethodSecurityConfiguration customMethodSecurityConfiguration;
+
     public static void main(String[] args) {
         new SpringApplicationBuilder(Application.class).run(args);
+
     }
 
     @Bean

@@ -93,8 +93,6 @@ public class SqlInitialization{
 
         hibernateProperties.setProperty("hibernate.enable_lazy_load_no_trans","true");
 
-        System.out.println("Hi, does this work?");
-
 
         return hibernateProperties;
     }

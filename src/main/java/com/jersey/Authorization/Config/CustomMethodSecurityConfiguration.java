@@ -4,6 +4,8 @@ import com.jersey.Authorization.security.UserPermissionEvaluator;
 import com.jersey.resources.LoggingFilter;
 import org.apache.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
@@ -11,8 +13,9 @@ import org.springframework.security.access.expression.method.MethodSecurityExpre
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 
-@Configuration
+@Configuration("CustomMethodSecurityConfig")
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
+@ComponentScan("com.jersey.Authorization.Config")
 public class CustomMethodSecurityConfiguration extends GlobalMethodSecurityConfiguration{
 
     @Autowired

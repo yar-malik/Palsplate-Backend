@@ -30,7 +30,7 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
     private ObjectFactory<FoodDao> foodDaoRepositoryFactory;
 
     private ObjectFactory<ReviewDao> reviewDaoRepositoryFactory;
-    
+
 
     @Inject
     public UserPermissionEvaluator(ObjectFactory<CustomerDao> customerDaoRepositoryFactory, ObjectFactory<PersonDao> personDaoRepositoryFactory, ObjectFactory<CookDao> cookDaoRepositoryFactory, ObjectFactory<FoodDao> foodDaoRepositoryFactory, ObjectFactory<ReviewDao> reviewDaoRepositoryFactory) {

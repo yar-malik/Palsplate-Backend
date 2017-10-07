@@ -84,7 +84,7 @@ public class ReservationResource {
      */
     @PUT
     @Path("secure/reservations/{id}")
-    @PreAuthorize("hasPermission(#id,'ReservationResource', 'ROLE_USER,ROLE_ADMIN')")
+   // @PreAuthorize("hasPermission(#id,'ReservationResource', 'ROLE_USER,ROLE_ADMIN')")
     public Reservation update(@PathParam("id")long id, @Valid Reservation reservation) {
         if(reservationDao.findOne(id) == null){
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -100,7 +100,7 @@ public class ReservationResource {
      */
     @DELETE
     @Path("secure/reservations/{id}")
-    @PreAuthorize("hasPermission(#id,'ReservationResource', 'ROLE_USER,ROLE_ADMIN')")
+    //@PreAuthorize("hasPermission(#id,'ReservationResource', 'ROLE_USER,ROLE_ADMIN')")
     public void delete(@PathParam("id")long id) {
         Reservation reservation = reservationDao.findOne(id);
         if(reservation == null){

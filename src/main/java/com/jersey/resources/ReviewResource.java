@@ -67,7 +67,7 @@ public class ReviewResource {
      */
     @PUT
     @Path("secure/reviews/{id}")
-    @PreAuthorize("hasPermission(#id, 'ReviewResource', 'ROLE_USER,ROLE_ADMIN')")
+    //@PreAuthorize("hasPermission(#id, 'ReviewResource', 'ROLE_USER,ROLE_ADMIN')")
     public Review update(@PathParam("id")long id, @Valid Review review) {
         if(reviewDao.findOne(id) == null){
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -83,7 +83,7 @@ public class ReviewResource {
      */
     @DELETE
     @Path("secure/reviews/{id}")
-    @PreAuthorize("hasPermission(#id, 'ReviewResource', 'ROLE_ADMIN')")
+    //@PreAuthorize("hasPermission(#id, 'ReviewResource', 'ROLE_ADMIN')")
     public void delete(@PathParam("id")long id) {
         Review review = reviewDao.findOne(id);
         if(review == null){

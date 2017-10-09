@@ -13,14 +13,15 @@ import org.springframework.security.access.expression.method.MethodSecurityExpre
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 
-@Configuration("CustomMethodSecurityConfig")
+@Configuration
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
-@ComponentScan("com.jersey.Authorization.Config")
+@ComponentScan("com.jersey.Authorization")
 public class CustomMethodSecurityConfiguration extends GlobalMethodSecurityConfiguration{
 
     @Autowired
     private UserPermissionEvaluator userPermissionEvaluator;
 
+    @Bean
     @Override
     protected MethodSecurityExpressionHandler createExpressionHandler() {
 

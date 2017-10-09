@@ -10,9 +10,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.ErrorAttributes;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +18,7 @@ import java.util.Map;
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan
+@Import(CustomMethodSecurityConfiguration.class)
 public class Application {
 
     @Autowired
@@ -28,13 +27,8 @@ public class Application {
     @Bean
     public AppErrorController appErrorController(){return new AppErrorController(errorAttributes);}
 
-    //force init this bean
-    @Autowired
-    private CustomMethodSecurityConfiguration customMethodSecurityConfiguration;
-
     public static void main(String[] args) {
         new SpringApplicationBuilder(Application.class).run(args);
-
     }
 
     @Bean

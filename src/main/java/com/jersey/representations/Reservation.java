@@ -1,8 +1,12 @@
 package com.jersey.representations;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.Set;
 
 @JsonIgnoreProperties
@@ -24,6 +28,14 @@ public class Reservation {
     @JoinColumn(name = "customer_id")
     @NotNull
     private Long customer_id;
+
+    @JoinColumn(name = "created_timestamp")
+    @CreationTimestamp
+    private Date created_timestamp;
+
+    @JoinColumn(name = "last_modified_timestamp")
+    @UpdateTimestamp
+    private Date last_modified_timestamp;
 
     public Reservation() {
     }
@@ -64,4 +76,8 @@ public class Reservation {
     public void setIs_active(Boolean is_active) {
         this.is_active = is_active;
     }
+
+    public Date getCreateTimestamp(){return this.created_timestamp;}
+
+    public Date getLastModifiedTimestamp(){return this.last_modified_timestamp;}
 }

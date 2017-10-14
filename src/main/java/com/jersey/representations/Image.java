@@ -2,8 +2,11 @@ package com.jersey.representations;
 
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @JsonIgnoreProperties
 @Entity(name = "image")
@@ -23,6 +26,14 @@ public class Image {
     @NotNull
     private Long food_id;
 
+    @JoinColumn(name = "created_timestamp")
+    @CreationTimestamp
+    private Date created_timestamp;
+
+    @JoinColumn(name = "last_modified_timestamp")
+    @UpdateTimestamp
+    private Date last_modified_timestamp;
+
     public Image() {}
 
     public Image(Long id) {
@@ -32,6 +43,10 @@ public class Image {
     public Long getId() {
         return id;
     }
+
+    public Date getCreateTimestamp(){return this.created_timestamp;}
+
+    public Date getLastModifiedTimestamp(){return this.last_modified_timestamp;}
 
     public void setId(Long id) {
         this.id = id;

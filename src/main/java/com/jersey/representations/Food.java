@@ -1,5 +1,8 @@
 package com.jersey.representations;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -72,6 +75,14 @@ public class Food {
     @JoinColumn(name = "food_id")
     private Set<Reservation> reservations;
 
+    @JoinColumn(name = "created_timestamp")
+    @CreationTimestamp
+    private Date created_timestamp;
+
+    @JoinColumn(name = "last_modified_timestamp")
+    @UpdateTimestamp
+    private Date last_modified_timestamp;
+
     public Food() {
     }
 
@@ -128,6 +139,10 @@ public class Food {
     public String getDescription() {
         return description;
     }
+
+    public Date getCreateTimestamp(){return this.created_timestamp;}
+
+    public Date getLastModifiedTimestamp(){return this.last_modified_timestamp;}
 
     public void setDescription(String description) {
         this.description = description;

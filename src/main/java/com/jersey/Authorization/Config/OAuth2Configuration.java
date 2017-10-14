@@ -129,6 +129,11 @@ public class OAuth2Configuration {
     @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
     protected static class CustomMethodSecurityConfiguration extends GlobalMethodSecurityConfiguration {
 
+        public CustomMethodSecurityConfiguration()
+        {
+          createExpressionHandler();
+        }
+
         @Autowired
         private UserPermissionEvaluator userPermissionEvaluator;
 

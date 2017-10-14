@@ -135,7 +135,7 @@ public class OAuth2Configuration {
         @Override
         protected MethodSecurityExpressionHandler createExpressionHandler() {
 
-            LogManager.getLogger(LoggingFilter.class).info("Initializing the CustomMethodSecurityConfiguration ...");
+            LogManager.getLogger(LoggingFilter.class).info("Initializing the CustomMethodSecurityConfiguration...");
 
             DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
             expressionHandler.setPermissionEvaluator(userPermissionEvaluator);

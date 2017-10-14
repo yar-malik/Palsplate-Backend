@@ -1,6 +1,5 @@
 package com.jersey;
 
-import com.jersey.Authorization.Config.CustomMethodSecurityConfiguration;
 import com.jersey.config.AppErrorController;
 import com.jersey.config.JerseyInitialization;
 import org.glassfish.jersey.servlet.ServletContainer;
@@ -18,7 +17,6 @@ import java.util.Map;
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan
-@Import(CustomMethodSecurityConfiguration.class)
 public class Application {
 
     @Autowired

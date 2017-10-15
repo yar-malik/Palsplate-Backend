@@ -131,7 +131,7 @@ public class OAuth2Configuration {
 
         public CustomMethodSecurityConfiguration()
         {
-          createExpressionHandler();
+            createExpressionHandler();
         }
 
         @Autowired

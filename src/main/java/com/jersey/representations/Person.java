@@ -1,7 +1,11 @@
 package com.jersey.representations;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -61,6 +65,14 @@ public class Person {
 
     @Column(name = "photo_public_id")
     public String photoPublicId;
+
+    @JoinColumn(name = "created_timestamp")
+    @CreationTimestamp
+    private Date created_timestamp;
+
+    @JoinColumn(name = "last_modified_timestamp")
+    @UpdateTimestamp
+    private Date last_modified_timestamp;
 
     public Person() {
     }
@@ -199,4 +211,8 @@ public class Person {
     public void setPhotoName(String photoName) {
         this.photoName = photoName;
     }
+
+    public Date getCreateTimestamp(){return this.created_timestamp;}
+
+    public Date getLastModifiedTimestamp(){return this.last_modified_timestamp;}
 }

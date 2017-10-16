@@ -4,14 +4,23 @@ package com.jersey.Authorization.Config;
 import com.jersey.Authorization.security.Authorities;
 import com.jersey.Authorization.security.CustomAuthenticationEntryPoint;
 import com.jersey.Authorization.security.CustomLogoutSuccessHandler;
+import com.jersey.Authorization.security.UserPermissionEvaluator;
+import com.jersey.resources.LoggingFilter;
+import org.apache.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
+import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -26,6 +35,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import javax.sql.DataSource;
 
 @Configuration
+@ComponentScan
 public class OAuth2Configuration {
 
     @Configuration
@@ -111,6 +121,30 @@ public class OAuth2Configuration {
         @Override
         public void setEnvironment(Environment environment) {
             this.propertyResolver = new RelaxedPropertyResolver(environment, ENV_OAUTH);
+        }
+
+    }
+
+    @Configuration
+    @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
+    protected static class CustomMethodSecurityConfiguration extends GlobalMethodSecurityConfiguration {
+
+        public CustomMethodSecurityConfiguration()
+        {
+            createExpressionHandler();
+        }
+
+        @Autowired
+        private UserPermissionEvaluator userPermissionEvaluator;
+
+        @Override
+        protected MethodSecurityExpressionHandler createExpressionHandler() {
+
+            LogManager.getLogger(LoggingFilter.class).info("Initializing the CustomMethodSecurityConfiguration ...");
+
+            DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
+            expressionHandler.setPermissionEvaluator(userPermissionEvaluator);
+            return expressionHandler;
         }
 
     }

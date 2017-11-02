@@ -29,13 +29,13 @@ public class Reservation {
     @NotNull
     private Long customer_id;
 
-    @JoinColumn(name = "created_timestamp")
+    @JoinColumn(name = "createdat")
     @CreationTimestamp
-    private Date created_timestamp;
+    private Date createdat;
 
-    @JoinColumn(name = "last_modified_timestamp")
+    @JoinColumn(name = "updatedat")
     @UpdateTimestamp
-    private Date last_modified_timestamp;
+    private Date updatedat;
 
     public Reservation() {
     }
@@ -51,7 +51,6 @@ public class Reservation {
     public void setId(Long id) {
         this.id = id;
     }
-
 
     public Long getFoodId() {
         return food_id;
@@ -77,7 +76,11 @@ public class Reservation {
         this.is_active = is_active;
     }
 
-    public Date getCreateTimestamp(){return this.created_timestamp;}
+    public Date getCreatedat() { return createdat; }
 
-    public Date getLastModifiedTimestamp(){return this.last_modified_timestamp;}
+    public void setCreatedat(Date createdat) { this.createdat = createdat;}
+
+    public Date getUpdatedat() { return updatedat; }
+
+    public void setUpdatedat(Date updatedat) { this.updatedat = updatedat; }
 }

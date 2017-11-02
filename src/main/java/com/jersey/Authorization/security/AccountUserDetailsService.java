@@ -21,15 +21,13 @@ public class AccountUserDetailsService implements UserDetailsService {
     @Autowired
     private PersonDao personDaoRepository;
 
-
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         Person person = personDaoRepository.findByEmail(email);
 
-        if (person == null)
-        {
+        if (person == null){
             throw new UsernameNotFoundException("User with email address " + email + " was not found. Did you forget your registered email?");
         }
 
@@ -37,8 +35,7 @@ public class AccountUserDetailsService implements UserDetailsService {
         String personRoles = person.getRoles();
         StringTokenizer tokens = new StringTokenizer(personRoles , ",");
 
-        while(tokens.hasMoreTokens())
-        {
+        while(tokens.hasMoreTokens()){
             grantedAuthorities.add(new SimpleGrantedAuthority(tokens.nextToken()));
         }
 

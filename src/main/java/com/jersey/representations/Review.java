@@ -30,13 +30,13 @@ public class Review {
     @NotNull
     private Long customer_id;
 
-    @JoinColumn(name = "created_timestamp")
+    @JoinColumn(name = "createdat")
     @CreationTimestamp
-    private Date created_timestamp;
+    private Date createdat;
 
-    @JoinColumn(name = "last_modified_timestamp")
+    @JoinColumn(name = "updatedat")
     @UpdateTimestamp
-    private Date last_modified_timestamp;
+    private Date updatedat;
 
     public Review() {}
 
@@ -91,7 +91,11 @@ public class Review {
         this.customer_id = customer_id;
     }
 
-    public Date getCreateTimestamp(){return this.created_timestamp;}
+    public Date getCreatedat() { return createdat; }
 
-    public Date getLastModifiedTimestamp(){return this.last_modified_timestamp;}
+    public void setCreatedat(Date createdat) { this.createdat = createdat; }
+
+    public Date getUpdatedat() { return updatedat; }
+
+    public void setUpdatedat(Date updatedat) { this.updatedat = updatedat;}
 }

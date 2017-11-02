@@ -41,7 +41,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-
         web
             .ignoring()
             .antMatchers("/register")
@@ -49,7 +48,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/lostpassword")
             .antMatchers("/resetpassword")
             .antMatchers("/public/**");
-
     }
 
     @Override
@@ -69,7 +67,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         protected MethodSecurityExpressionHandler createExpressionHandler() {
             return new OAuth2MethodSecurityExpressionHandler();
         }
-
     }
-
 }

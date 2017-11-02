@@ -38,11 +38,9 @@ public class CustomLogoutSuccessHandler extends AbstractAuthenticationTargetUrlR
             if (oAuth2AccessToken != null) {
                 tokenStore.removeAccessToken(oAuth2AccessToken);
             }
-
         }
 
         response.setStatus(HttpServletResponse.SC_OK);
-
     }
 
 }

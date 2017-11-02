@@ -20,7 +20,6 @@ import java.util.StringTokenizer;
 @Transactional
 public class UserPermissionEvaluator implements PermissionEvaluator {
 
-
     private ObjectFactory<CustomerDao> customerDaoRepositoryFactory;
 
     private ObjectFactory<PersonDao> personDaoRepositoryFactory;
@@ -48,8 +47,7 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
 
         LogManager.getLogger(LoggingFilter.class).info("Calling haspermission without resourceType");
 
-        if(checkIfUserIsAdmin(authentication))
-        {
+        if(checkIfUserIsAdmin(authentication)){
             return true;
         }
 
@@ -59,12 +57,9 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
 
         boolean userHasGrantedRole = false;
 
-        for(String permission : allowedPermissionsArray)
-        {
-            for(GrantedAuthority userPermission : userPermissions)
-            {
-                if(permission.equals(userPermission.getAuthority()))
-                {
+        for(String permission : allowedPermissionsArray){
+            for(GrantedAuthority userPermission : userPermissions) {
+                if(permission.equals(userPermission.getAuthority())) {
                     userHasGrantedRole = true;
                 }
             }
@@ -78,8 +73,7 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
 
         LogManager.getLogger(LoggingFilter.class).info("Calling hasPermission with resourceType");
 
-        if(checkIfUserIsAdmin(authentication))
-        {
+        if(checkIfUserIsAdmin(authentication)){
             return true;
         }
 
@@ -89,53 +83,43 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
 
         boolean userHasGrantedRole = false;
 
-        for(String permission : allowedPermissionsArray)
-        {
-            for(GrantedAuthority userPermission : userPermissions)
-            {
-                if(permission.equals(userPermission.getAuthority()))
-                {
+        for(String permission : allowedPermissionsArray){
+            for(GrantedAuthority userPermission : userPermissions){
+                if(permission.equals(userPermission.getAuthority())){
                     userHasGrantedRole = true;
                 }
             }
         }
 
-        if(!userHasGrantedRole)
-        {
+        if(!userHasGrantedRole){
             return false;
         }
 
         // check whether the user is making a call to only their own resource or not
-        if(resourceType.equals("CustomerResource"))
-        {
+        if(resourceType.equals("CustomerResource")){
             return checkCustomerResourcePermission(authentication, (long) serializable);
         }
 
-        if(resourceType.equals("CookResource"))
-        {
+        if(resourceType.equals("CookResource")){
             return checkCookResoucePermission(authentication, (long) serializable);
         }
 
-        if(resourceType.equals("FoodResource"))
-        {
+        if(resourceType.equals("FoodResource")) {
             return checkFoodResourcePermission(authentication, (long) serializable);
         }
 
-        if(resourceType.equals("PersonResource"))
-        {
+        if(resourceType.equals("PersonResource")) {
             return checkPersonResourcePermission(authentication, (long) serializable);
         }
 
-        if(resourceType.equals("ReviewResource"))
-        {
+        if(resourceType.equals("ReviewResource")) {
             return checkReviewResourcePermission(authentication, (long) serializable);
         }
 
         return false;
     }
 
-    public boolean checkCustomerResourcePermission(Authentication authentication, long ID)
-    {
+    public boolean checkCustomerResourcePermission(Authentication authentication, long ID){
         // find the person id of the requested resource
         Customer customer = customerDaoRepositoryFactory.getObject().findOne(ID);
         Person person = personDaoRepositoryFactory.getObject().findOne(customer.getPerson_id());
@@ -147,8 +131,7 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
         return currentPerson.getId() == person.getId();
     }
 
-    public boolean checkCookResoucePermission(Authentication authentication, long ID)
-    {
+    public boolean checkCookResoucePermission(Authentication authentication, long ID) {
         // find the person id of the requested resource
         Cook cook = cookDaoRepositoryFactory.getObject().getOne(ID);
         Person person = personDaoRepositoryFactory.getObject().getOne(cook.getPerson_id());
@@ -161,16 +144,14 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
 
     }
 
-    public boolean checkFoodResourcePermission(Authentication authentication, long ID)
-    {
+    public boolean checkFoodResourcePermission(Authentication authentication, long ID){
         Food food = foodDaoRepositoryFactory.getObject().getOne(ID);
         return checkCookResoucePermission(authentication, food.getCook_id());
     }
 
 
 
-    public boolean checkPersonResourcePermission(Authentication authentication, long ID)
-    {
+    public boolean checkPersonResourcePermission(Authentication authentication, long ID){
         Person person = personDaoRepositoryFactory.getObject().getOne(ID);
 
         // find the person id of the user who requested the resource
@@ -180,8 +161,7 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
         return currentPerson.getId() == person.getId();
     }
 
-    public boolean checkReviewResourcePermission(Authentication authentication, long ID)
-    {
+    public boolean checkReviewResourcePermission(Authentication authentication, long ID){
         Review review = reviewDaoRepositoryFactory.getObject().findOne(ID);
 
         // find the person id of the user who requested the resource
@@ -193,27 +173,22 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
        return true;
     }
 
-    public ArrayList<String> getPermissions(String permissions)
-    {
+    public ArrayList<String> getPermissions(String permissions){
         ArrayList<String> permissionsArray = new ArrayList<String>();
         StringTokenizer tokens = new StringTokenizer(permissions, ",");
 
-        while(tokens.hasMoreTokens())
-        {
+        while(tokens.hasMoreTokens()){
             permissionsArray.add(tokens.nextToken());
         }
 
         return permissionsArray;
     }
 
-    public boolean checkIfUserIsAdmin(Authentication authentication)
-    {
+    public boolean checkIfUserIsAdmin(Authentication authentication){
         ArrayList<GrantedAuthority> userPermissions = new ArrayList<GrantedAuthority>(authentication.getAuthorities());
 
-        for(GrantedAuthority authority : userPermissions)
-        {
-            if(authority.getAuthority().equals("ROLE_ADMIN"))
-            {
+        for(GrantedAuthority authority : userPermissions){
+            if(authority.getAuthority().equals("ROLE_ADMIN")){
                 // if the resource requester is an admin then allow all requests
                 return true;
             }

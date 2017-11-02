@@ -81,9 +81,7 @@ public class SqlInitialization{
         hibernateProperties.setProperty("hibernate.use_sql_comments", "false");
         hibernateProperties.setProperty("hibernate.format_sql", "false");
         hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "false");
-
         hibernateProperties.setProperty("hibernate.generate_statistics", "false");
-
         hibernateProperties.setProperty("javax.persistence.validation.mode", "none");
 
         //Audit History flags

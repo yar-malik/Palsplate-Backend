@@ -19,11 +19,11 @@ public class Food {
     @NotNull
     private String name;
 
-    @Column(name = "offer_start", updatable = false)
+    @Column(name = "offer_start")
     @Temporal(TemporalType.TIMESTAMP)
     private Date offer_start;
 
-    @Column(name = "offer_stop", updatable = false)
+    @Column(name = "offer_stop")
     @Temporal(TemporalType.TIMESTAMP)
     private Date offer_stop;
 
@@ -75,13 +75,13 @@ public class Food {
     @JoinColumn(name = "food_id")
     private Set<Reservation> reservations;
 
-    @JoinColumn(name = "created_timestamp")
+    @JoinColumn(name = "createdat")
     @CreationTimestamp
-    private Date created_timestamp;
+    private Date createdat;
 
-    @JoinColumn(name = "last_modified_timestamp")
+    @JoinColumn(name = "updatedat")
     @UpdateTimestamp
-    private Date last_modified_timestamp;
+    private Date updatedat;
 
     public Food() {
     }
@@ -139,10 +139,6 @@ public class Food {
     public String getDescription() {
         return description;
     }
-
-    public Date getCreateTimestamp(){return this.created_timestamp;}
-
-    public Date getLastModifiedTimestamp(){return this.last_modified_timestamp;}
 
     public void setDescription(String description) {
         this.description = description;
@@ -203,6 +199,14 @@ public class Food {
     public void setIs_active(Boolean is_active) {
         this.is_active = is_active;
     }
+
+    public Date getCreatedat() {return createdat;}
+
+    public void setCreatedat(Date createdat) {this.createdat = createdat;}
+
+    public Date getUpdatedat() {return updatedat;}
+
+    public void setUpdatedat(Date updatedat) { this.updatedat = updatedat;}
 
     public Long getCook_id() {
         return cook_id;

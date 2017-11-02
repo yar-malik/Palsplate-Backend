@@ -117,12 +117,10 @@ public class OAuth2Configuration {
                     .accessTokenValiditySeconds(propertyResolver.getProperty(PROP_TOKEN_VALIDITY_SECONDS, Integer.class, 43200));
         }
 
-
         @Override
         public void setEnvironment(Environment environment) {
             this.propertyResolver = new RelaxedPropertyResolver(environment, ENV_OAUTH);
         }
-
     }
 
     @Configuration
@@ -146,6 +144,5 @@ public class OAuth2Configuration {
             expressionHandler.setPermissionEvaluator(userPermissionEvaluator);
             return expressionHandler;
         }
-
     }
 }

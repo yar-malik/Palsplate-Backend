@@ -26,13 +26,13 @@ public class Image {
     @NotNull
     private Long food_id;
 
-    @JoinColumn(name = "created_timestamp")
+    @JoinColumn(name = "createdat")
     @CreationTimestamp
-    private Date created_timestamp;
+    private Date createdat;
 
-    @JoinColumn(name = "last_modified_timestamp")
+    @JoinColumn(name = "updatedat")
     @UpdateTimestamp
-    private Date last_modified_timestamp;
+    private Date updatedat;
 
     public Image() {}
 
@@ -44,9 +44,13 @@ public class Image {
         return id;
     }
 
-    public Date getCreateTimestamp(){return this.created_timestamp;}
+    public Date getCreatedat() { return createdat; }
 
-    public Date getLastModifiedTimestamp(){return this.last_modified_timestamp;}
+    public void setCreatedat(Date createdat) { this.createdat = createdat; }
+
+    public Date getUpdatedat() { return updatedat; }
+
+    public void setUpdatedat(Date updatedat) { this.updatedat = updatedat; }
 
     public void setId(Long id) {
         this.id = id;

@@ -1,6 +1,5 @@
 package com.jersey;
 
-import com.jersey.config.AppErrorController;
 import com.jersey.config.JerseyInitialization;
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.glassfish.jersey.servlet.ServletProperties;
@@ -23,9 +22,6 @@ public class Application {
 
     @Autowired
     private ErrorAttributes errorAttributes;
-
-    @Bean
-    public AppErrorController appErrorController(){return new AppErrorController(errorAttributes);}
 
     public static void main(String[] args) {
         new SpringApplicationBuilder(Application.class).run(args);

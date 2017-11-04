@@ -90,7 +90,6 @@ public class SqlInitialization{
 
         hibernateProperties.setProperty("hibernate.enable_lazy_load_no_trans","true");
 
-
         return hibernateProperties;
     }
 

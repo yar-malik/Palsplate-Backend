@@ -7,6 +7,7 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 import com.sun.jersey.multipart.FormDataMultiPart;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.cloudinary.json.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,11 +30,13 @@ public class EmailResource {
     public String sendEmail(
                     @QueryParam("subject") String subject,
                     @QueryParam("recipient") String recipient,
-                    @QueryParam("emailType") String emailType) throws FileNotFoundException {
+                    @QueryParam("emailType") String emailType,
+                    @QueryParam("name") String name) throws FileNotFoundException {
 
         System.out.println("emailType: " + emailType);
         System.out.println("subject: " + subject);
         System.out.println("recipient: " + recipient);
+        System.out.println("name: " + name);
 
         ClientResponse response = null;
         EmailResource emailResource = new EmailResource();
@@ -63,25 +66,29 @@ public class EmailResource {
             html = emailResource.htmlIntoString("sign_up_successful.html");
         }
 
-        response = emailResource.sendComplexMessage(html, subject, recipient);
+        response = emailResource.sendComplexMessage(html, subject, recipient, name);
 
         return response.toString();
 
     }
 
-    public ClientResponse sendComplexMessage(String html, String subject, String recipient) {
+    public ClientResponse sendComplexMessage(String html, String subject, String recipient, String name) {
+
+        JSONObject recipientVariableJson = new JSONObject();
+        JSONObject nameObject = new JSONObject();
+        nameObject.put("name", name);
+        recipientVariableJson.put(recipient, nameObject);
 
         Client client = Client.create();
         client.addFilter(new HTTPBasicAuthFilter("api", System.getenv().get("MAILGUN_APIKEY")));
-
-        WebResource webResource = client.resource("https://api.mailgun.net/v3/" + "mg.palsplate.com" + "/messages");
+        WebResource webResource = client.resource("https://api.mailgun.net/v3/mg.palsplate.com/messages");
 
         FormDataMultiPart formData = new FormDataMultiPart();
         formData.field("from", "Palsplate UG <info@" + "mg.palsplate.com" + ">");
         formData.field("to", recipient);
         formData.field("subject", subject.toString());
         formData.field("html", html);
-        ClassLoader classLoader = getClass().getClassLoader();
+        formData.field("recipient-variables", recipientVariableJson.toString());
 
         ClientResponse clientResponse = webResource.type(MediaType.MULTIPART_FORM_DATA_TYPE).post(ClientResponse.class, formData);
         log.info(clientResponse.toString());

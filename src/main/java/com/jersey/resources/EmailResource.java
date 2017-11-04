@@ -1,5 +1,6 @@
 package com.jersey.resources;
 
+import com.jersey.representations.Email;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -11,6 +12,7 @@ import org.cloudinary.json.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.*;
@@ -25,52 +27,96 @@ public class EmailResource {
 
     private static final Logger log = LogManager.getLogger(EmailResource.class);
 
-    @GET
-    @Path("secure/email")
-    public String sendEmail(
-                    @QueryParam("subject") String subject,
-                    @QueryParam("recipient") String recipient,
-                    @QueryParam("emailType") String emailType,
-                    @QueryParam("name") String name) throws FileNotFoundException {
+//    @GET
+//    @Path("secure/email")
+//    public String sendEmail(
+//                    @QueryParam("subject") String subject,
+//                    @QueryParam("recipient") String recipient,
+//                    @QueryParam("emailType") String emailType,
+//                    @QueryParam("name") String name) throws FileNotFoundException {
+//
+//        System.out.println("emailType: " + emailType);
+//        System.out.println("subject: " + subject);
+//        System.out.println("recipient: " + recipient);
+//        System.out.println("name: " + name);
+//
+//        ClientResponse response = null;
+//        EmailResource emailResource = new EmailResource();
+//        String html = null;
+//
+//        if(emailType.equalsIgnoreCase("sign_up")){
+//             html = emailResource.htmlIntoString("sign_up.html");
+//        }
+//
+//        if(emailType.equalsIgnoreCase("food_uploaded")){
+//            html = emailResource.htmlIntoString("food_uploaded.html");
+//        }
+//
+//        if(emailType.equalsIgnoreCase("reservation_accepted")){
+//            html = emailResource.htmlIntoString("reservation_accepted.html");
+//        }
+//
+//        if(emailType.equalsIgnoreCase("reservation_declined")){
+//            html = emailResource.htmlIntoString("reservation_declined.html");
+//        }
+//
+//        if(emailType.equalsIgnoreCase("reservation_requested")){
+//            html = emailResource.htmlIntoString("reservation_requested.html");
+//        }
+//
+//        if(emailType.equalsIgnoreCase("sign_up_successful")){
+//            html = emailResource.htmlIntoString("sign_up_successful.html");
+//        }
+//
+//        response = emailResource.sendComplexMessage(html, subject, recipient, name);
+//
+//        return response.toString();
+//
+//    }
 
-        System.out.println("emailType: " + emailType);
-        System.out.println("subject: " + subject);
-        System.out.println("recipient: " + recipient);
-        System.out.println("name: " + name);
+    @POST
+    @Path("secure/emails")
+    public String sendEmail(@Valid Email email) throws FileNotFoundException {
+
+        System.out.println("emailType: " + email.type);
+        System.out.println("subject: " + email.subject);
+        System.out.println("recipient: " + email.recipient);
+        System.out.println("name: " + email.name);
 
         ClientResponse response = null;
         EmailResource emailResource = new EmailResource();
         String html = null;
 
-        if(emailType.equalsIgnoreCase("sign_up")){
-             html = emailResource.htmlIntoString("sign_up.html");
+        if(email.type.equalsIgnoreCase("sign_up")){
+            html = emailResource.htmlIntoString("sign_up.html");
         }
 
-        if(emailType.equalsIgnoreCase("food_uploaded")){
+        if(email.type.equalsIgnoreCase("food_uploaded")){
             html = emailResource.htmlIntoString("food_uploaded.html");
         }
 
-        if(emailType.equalsIgnoreCase("reservation_accepted")){
+        if(email.type.equalsIgnoreCase("reservation_accepted")){
             html = emailResource.htmlIntoString("reservation_accepted.html");
         }
 
-        if(emailType.equalsIgnoreCase("reservation_declined")){
+        if(email.type.equalsIgnoreCase("reservation_declined")){
             html = emailResource.htmlIntoString("reservation_declined.html");
         }
 
-        if(emailType.equalsIgnoreCase("reservation_requested")){
+        if(email.type.equalsIgnoreCase("reservation_requested")){
             html = emailResource.htmlIntoString("reservation_requested.html");
         }
 
-        if(emailType.equalsIgnoreCase("sign_up_successful")){
+        if(email.type.equalsIgnoreCase("sign_up_successful")){
             html = emailResource.htmlIntoString("sign_up_successful.html");
         }
 
-        response = emailResource.sendComplexMessage(html, subject, recipient, name);
+        response = emailResource.sendComplexMessage(html, email.subject, email.recipient, email.name);
 
         return response.toString();
 
     }
+
 
     public ClientResponse sendComplexMessage(String html, String subject, String recipient, String name) {
 

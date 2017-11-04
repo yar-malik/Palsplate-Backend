@@ -119,7 +119,7 @@ public class FoodResource {
      */
     @PUT
     @Path("secure/foods/{id}")
-    @PreAuthorize("hasPermission(#id,'FoodResource', 'ROLE_USER,ROLE_ADMIN')")
+//    @PreAuthorize("hasPermission(#id,'FoodResource', 'ROLE_USER,ROLE_ADMIN')")
     public Food update(@PathParam("id")long id, @Valid Food food) {
         if(foodDao.findOne(id) == null){
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -135,7 +135,7 @@ public class FoodResource {
      */
     @DELETE
     @Path("secure/foods/{id}")
-    @PreAuthorize("hasPermission(#id,'FoodResource', 'ROLE_USER,ROLE_ADMIN')")
+//    @PreAuthorize("hasPermission(#id,'FoodResource', 'ROLE_USER,ROLE_ADMIN')")
     public void delete(@PathParam("id")long id) {
         Food food = foodDao.findOne(id);
         if(food == null){

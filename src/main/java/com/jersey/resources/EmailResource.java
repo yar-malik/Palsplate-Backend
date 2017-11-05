@@ -27,53 +27,6 @@ public class EmailResource {
 
     private static final Logger log = LogManager.getLogger(EmailResource.class);
 
-//    @GET
-//    @Path("secure/email")
-//    public String sendEmail(
-//                    @QueryParam("subject") String subject,
-//                    @QueryParam("recipient") String recipient,
-//                    @QueryParam("emailType") String emailType,
-//                    @QueryParam("name") String name) throws FileNotFoundException {
-//
-//        System.out.println("emailType: " + emailType);
-//        System.out.println("subject: " + subject);
-//        System.out.println("recipient: " + recipient);
-//        System.out.println("name: " + name);
-//
-//        ClientResponse response = null;
-//        EmailResource emailResource = new EmailResource();
-//        String html = null;
-//
-//        if(emailType.equalsIgnoreCase("sign_up")){
-//             html = emailResource.htmlIntoString("sign_up.html");
-//        }
-//
-//        if(emailType.equalsIgnoreCase("food_uploaded")){
-//            html = emailResource.htmlIntoString("food_uploaded.html");
-//        }
-//
-//        if(emailType.equalsIgnoreCase("reservation_accepted")){
-//            html = emailResource.htmlIntoString("reservation_accepted.html");
-//        }
-//
-//        if(emailType.equalsIgnoreCase("reservation_declined")){
-//            html = emailResource.htmlIntoString("reservation_declined.html");
-//        }
-//
-//        if(emailType.equalsIgnoreCase("reservation_requested")){
-//            html = emailResource.htmlIntoString("reservation_requested.html");
-//        }
-//
-//        if(emailType.equalsIgnoreCase("sign_up_successful")){
-//            html = emailResource.htmlIntoString("sign_up_successful.html");
-//        }
-//
-//        response = emailResource.sendComplexMessage(html, subject, recipient, name);
-//
-//        return response.toString();
-//
-//    }
-
     @POST
     @Path("secure/emails")
     public String sendEmail(@Valid Email email) throws FileNotFoundException {
@@ -114,9 +67,7 @@ public class EmailResource {
         response = emailResource.sendComplexMessage(html, email.subject, email.recipient, email.name);
 
         return response.toString();
-
     }
-
 
     public ClientResponse sendComplexMessage(String html, String subject, String recipient, String name) {
 

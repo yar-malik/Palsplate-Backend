@@ -17,6 +17,14 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "createdat", updatable = false)
+    @CreationTimestamp
+    private Date createdat;
+
+    @Column(name = "updatedat")
+    @UpdateTimestamp
+    private Date updatedat;
+
     @JoinColumn(name = "person_id")
     @NotNull
     private Long person_id;
@@ -28,14 +36,6 @@ public class Customer {
     @OneToMany(fetch=FetchType.EAGER)
     @JoinColumn(name="customer_id")
     private Set<Review> reviews;
-
-    @JoinColumn(name = "createdat")
-    @CreationTimestamp
-    private Date createdat;
-
-    @JoinColumn(name = "updatedat")
-    @UpdateTimestamp
-    private Date updatedat;
 
     public Customer() {
     }

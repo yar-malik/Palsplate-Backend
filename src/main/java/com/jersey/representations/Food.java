@@ -20,11 +20,11 @@ public class Food {
     private String name;
 
     @Column(name = "offer_start")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date offer_start;
 
     @Column(name = "offer_stop")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date offer_stop;
 
     @Column(name = "description")
@@ -59,6 +59,14 @@ public class Food {
     @NotNull
     private Boolean is_active;
 
+    @Column(name = "createdat", updatable = false)
+    @CreationTimestamp
+    private Date createdat;
+
+    @Column(name = "updatedat")
+    @UpdateTimestamp
+    private Date updatedat;
+
     @JoinColumn(name = "cook_id")
     @NotNull
     private Long cook_id;
@@ -74,14 +82,6 @@ public class Food {
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "food_id")
     private Set<Reservation> reservations;
-
-    @JoinColumn(name = "createdat")
-    @CreationTimestamp
-    private Date createdat;
-
-    @JoinColumn(name = "updatedat")
-    @UpdateTimestamp
-    private Date updatedat;
 
     public Food() {
     }
@@ -202,11 +202,7 @@ public class Food {
 
     public Date getCreatedat() {return createdat;}
 
-    public void setCreatedat(Date createdat) {this.createdat = createdat;}
-
     public Date getUpdatedat() {return updatedat;}
-
-    public void setUpdatedat(Date updatedat) { this.updatedat = updatedat;}
 
     public Long getCook_id() {
         return cook_id;

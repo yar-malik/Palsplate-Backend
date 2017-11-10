@@ -22,6 +22,14 @@ public class Review {
     @Column(name="rating")
     private Integer rating;
 
+    @Column(name = "createdat", updatable = false)
+    @CreationTimestamp
+    private Date createdat;
+
+    @Column(name = "updatedat")
+    @UpdateTimestamp
+    private Date updatedat;
+
     @JoinColumn(name = "food_id")
     @NotNull
     private Long food_id;
@@ -29,14 +37,6 @@ public class Review {
     @JoinColumn(name = "customer_id")
     @NotNull
     private Long customer_id;
-
-    @JoinColumn(name = "createdat")
-    @CreationTimestamp
-    private Date createdat;
-
-    @JoinColumn(name = "updatedat")
-    @UpdateTimestamp
-    private Date updatedat;
 
     public Review() {}
 

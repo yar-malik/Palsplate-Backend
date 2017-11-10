@@ -52,6 +52,20 @@ public class Person {
     @NotNull
     private boolean isPhotoPublic;
 
+    @Column(name = "photo_name")
+    public String photoName;
+
+    @Column(name = "photo_public_id")
+    public String photoPublicId;
+
+    @Column(name = "createdat", updatable = false)
+    @CreationTimestamp
+    private Date createdat;
+
+    @Column(name = "updatedat")
+    @UpdateTimestamp
+    private Date updatedat;
+
     @OneToMany(fetch=FetchType.EAGER)
     @JoinColumn(name="person_id")
     private Set<Cook> cook;
@@ -59,20 +73,6 @@ public class Person {
     @OneToMany(fetch=FetchType.EAGER)
     @JoinColumn(name="person_id")
     private Set<Customer> customer;
-
-    @Column(name = "photo_name")
-    public String photoName;
-
-    @Column(name = "photo_public_id")
-    public String photoPublicId;
-
-    @JoinColumn(name = "createdat")
-    @CreationTimestamp
-    private Date createdat;
-
-    @JoinColumn(name = "updatedat")
-    @UpdateTimestamp
-    private Date updatedat;
 
     public Person() {
     }

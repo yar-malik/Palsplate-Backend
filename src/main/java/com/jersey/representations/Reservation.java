@@ -17,9 +17,17 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "is_active")
+    @Column(name = "is_active")
     @NotNull
     private Boolean is_active;
+
+    @Column(name = "createdat", updatable = false)
+    @CreationTimestamp
+    private Date createdat;
+
+    @Column(name = "updatedat")
+    @UpdateTimestamp
+    private Date updatedat;
 
     @JoinColumn(name = "food_id")
     @NotNull
@@ -28,14 +36,6 @@ public class Reservation {
     @JoinColumn(name = "customer_id")
     @NotNull
     private Long customer_id;
-
-    @JoinColumn(name = "createdat")
-    @CreationTimestamp
-    private Date createdat;
-
-    @JoinColumn(name = "updatedat")
-    @UpdateTimestamp
-    private Date updatedat;
 
     public Reservation() {
     }

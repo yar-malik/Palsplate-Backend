@@ -20,11 +20,11 @@ public class Food {
     private String name;
 
     @Column(name = "offer_start")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date offer_start;
 
     @Column(name = "offer_stop")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date offer_stop;
 
     @Column(name = "description")

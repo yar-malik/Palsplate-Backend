@@ -17,6 +17,14 @@ public class Cook {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "createdat", updatable = false)
+    @CreationTimestamp
+    private Date createdat;
+
+    @Column(name = "updatedat")
+    @UpdateTimestamp
+    private Date updatedat;
+
     @JoinColumn(name = "person_id")
     @NotNull
     private Long person_id;
@@ -24,14 +32,6 @@ public class Cook {
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "cook_id")
     private Set<Food> foods;
-
-    @JoinColumn(name = "createdat")
-    @CreationTimestamp
-    private Date createdat;
-
-    @JoinColumn(name = "updatedat")
-    @UpdateTimestamp
-    private Date updatedat;
 
     public Cook() {
     }

@@ -22,17 +22,17 @@ public class Image {
     @Column(name="cloudinary_public_id")
     private String cloudinary_public_id;
 
-    @JoinColumn(name = "food_id")
-    @NotNull
-    private Long food_id;
-
-    @JoinColumn(name = "createdat")
+    @Column(name = "createdat", updatable = false)
     @CreationTimestamp
     private Date createdat;
 
-    @JoinColumn(name = "updatedat")
+    @Column(name = "updatedat")
     @UpdateTimestamp
     private Date updatedat;
+
+    @JoinColumn(name = "food_id")
+    @NotNull
+    private Long food_id;
 
     public Image() {}
 

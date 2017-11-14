@@ -1,9 +1,13 @@
 package com.jersey.resources;
 
 import com.jersey.persistence.ReviewDao;
+import com.jersey.representations.Customer;
 import com.jersey.representations.Review;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +17,7 @@ import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 
 @Path("")
@@ -33,8 +38,29 @@ public class ReviewResource {
 
     @GET
     @Path("public/reviews")
-    public List<Review> getAll(){
-        return this.reviewDao.findAll();
+    public List<Review> getAll(@QueryParam("page") @DefaultValue("0") Integer page,
+                                 @QueryParam("size") @DefaultValue("3") Integer size,
+                                 @QueryParam("sort") List<String> sort) {
+
+        List<Sort.Order> orders = new ArrayList<>();
+
+        for (String propOrder: sort) {
+
+            String[] propOrderSplit = propOrder.split(",");
+            String property = propOrderSplit[0];
+
+            if (propOrderSplit.length == 1) {
+                orders.add(new Sort.Order(property));
+            } else {
+                Sort.Direction direction
+                        = Sort.Direction.fromStringOrNull(propOrderSplit[1]);
+                orders.add(new Sort.Order(direction, property));
+            }
+        }
+
+        Pageable pageable = new PageRequest(page, size, orders.isEmpty() ? null : new Sort(orders));
+
+        return  this.reviewDao.findAll(pageable).getContent();
     }
 
     @GET

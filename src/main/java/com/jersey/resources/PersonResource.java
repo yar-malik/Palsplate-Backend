@@ -65,9 +65,26 @@ public class PersonResource {
     @GET
     @Path("secure/persons")
 //    @PreAuthorize("hasPermission('PersonResource', 'ROLE_ADMIN')")
-    public List<Person> getAll(@QueryParam("page") @DefaultValue("0") Integer page,
-                               @QueryParam("size") @DefaultValue("3") Integer size,
+    public List<Person> getAll(@QueryParam("page") Integer page,
+                               @QueryParam("size") Integer size,
                                @QueryParam("sort") List<String> sort) {
+
+        if(page == null && size == null)
+        {
+            return this.personDao.findAll();
+        }
+
+        //set default value for page
+        if(page == null)
+        {
+            page = new Integer(0);
+        }
+
+        //set defaullt value for size
+        if(size == null)
+        {
+            size = new Integer(3);
+        }
 
         List<Sort.Order> orders = new ArrayList<>();
 

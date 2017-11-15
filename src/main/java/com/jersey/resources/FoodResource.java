@@ -194,30 +194,52 @@ public class FoodResource {
             @QueryParam("maxPrice") Integer maxPrice,
             @QueryParam("foodType") String foodType,
             @QueryParam("cuisineType") String cuisineType,
-            @QueryParam("page") @DefaultValue("0") Integer page,
-            @QueryParam("size") @DefaultValue("3") Integer size,
+            @QueryParam("page") Integer page,
+            @QueryParam("size") Integer size,
             @QueryParam("sort") List<String> sort) {
 
+        List<Food> foods = null;
 
-        List<Sort.Order> orders = new ArrayList<>();
-
-        for (String propOrder: sort) {
-
-            String[] propOrderSplit = propOrder.split(",");
-            String property = propOrderSplit[0];
-
-            if (propOrderSplit.length == 1) {
-                orders.add(new Sort.Order(property));
-            } else {
-                Sort.Direction direction
-                        = Sort.Direction.fromStringOrNull(propOrderSplit[1]);
-                orders.add(new Sort.Order(direction, property));
+        if(page == null && size == null)
+        {
+            foods =  this.foodDao.findAll();
+        }
+        else
+        {
+            //set default value for page
+            if(page == null)
+            {
+                page = new Integer(0);
             }
+
+            //set defaullt value for size
+            if(size == null)
+            {
+                size = new Integer(3);
+            }
+
+
+            List<Sort.Order> orders = new ArrayList<>();
+
+            for (String propOrder: sort) {
+
+                String[] propOrderSplit = propOrder.split(",");
+                String property = propOrderSplit[0];
+
+                if (propOrderSplit.length == 1) {
+                    orders.add(new Sort.Order(property));
+                } else {
+                    Sort.Direction direction
+                            = Sort.Direction.fromStringOrNull(propOrderSplit[1]);
+                    orders.add(new Sort.Order(direction, property));
+                }
+            }
+
+            Pageable pageable = new PageRequest(page, size, orders.isEmpty() ? null : new Sort(orders));
+
+            foods =   this.foodDao.findAll(pageable).getContent();
         }
 
-        Pageable pageable = new PageRequest(page, size, orders.isEmpty() ? null : new Sort(orders));
-
-        List<Food> foods =   this.foodDao.findAll(pageable).getContent();
 
         ArrayList<Food> filterByDistanceFoods = new ArrayList<>();
         ArrayList<Food> filterByMaxPriceFoods = new ArrayList<>();

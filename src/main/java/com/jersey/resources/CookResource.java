@@ -39,9 +39,26 @@ public class CookResource {
 
     @Path("public/cooks")
     @GET
-    public List<Cook> getAll(@QueryParam("page") @DefaultValue("0") Integer page,
-                             @QueryParam("size") @DefaultValue("3") Integer size,
+    public List<Cook> getAll(@QueryParam("page") Integer page,
+                             @QueryParam("size") Integer size,
                              @QueryParam("sort") List<String> sort) {
+
+        if(page == null && size == null)
+        {
+            return this.cookDao.findAll();
+        }
+
+        //set default value for page
+        if(page == null)
+        {
+            page = new Integer(0);
+        }
+
+        //set defaullt value for size
+        if(size == null)
+        {
+            size = new Integer(3);
+        }
 
         List<Sort.Order> orders = new ArrayList<>();
 

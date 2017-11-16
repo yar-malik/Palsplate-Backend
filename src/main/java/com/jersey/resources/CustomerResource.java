@@ -5,6 +5,9 @@ import com.jersey.representations.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +17,7 @@ import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -51,9 +55,46 @@ public class CustomerResource {
     @GET
     @Path("secure/customers")
     //@PreAuthorize("hasPermission('CustomerResource', 'ROLE_ADMIN')")
-    public List<Customer> getAll(){
-        List<Customer> customers = this.customerDao.findAll();
-        return customers;
+    public List<Customer> getAll(@QueryParam("page") Integer page,
+                                 @QueryParam("size") Integer size,
+                                 @QueryParam("sort") List<String> sort) {
+
+        if(page == null && size == null)
+        {
+            return this.customerDao.findAll();
+        }
+
+        //set default value for page
+        if(page == null)
+        {
+            page = new Integer(0);
+        }
+
+        //set defaullt value for size
+        if(size == null)
+        {
+            size = new Integer(3);
+        }
+
+        List<Sort.Order> orders = new ArrayList<>();
+
+        for (String propOrder: sort) {
+
+            String[] propOrderSplit = propOrder.split(",");
+            String property = propOrderSplit[0];
+
+            if (propOrderSplit.length == 1) {
+                orders.add(new Sort.Order(property));
+            } else {
+                Sort.Direction direction
+                        = Sort.Direction.fromStringOrNull(propOrderSplit[1]);
+                orders.add(new Sort.Order(direction, property));
+            }
+        }
+
+        Pageable pageable = new PageRequest(page, size, orders.isEmpty() ? null : new Sort(orders));
+
+        return  this.customerDao.findAll(pageable).getContent();
     }
 
     /**

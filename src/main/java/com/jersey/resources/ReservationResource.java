@@ -1,8 +1,12 @@
 package com.jersey.resources;
 
 import com.jersey.persistence.ReservationDao;
+import com.jersey.representations.Customer;
 import com.jersey.representations.Reservation;
 import com.jersey.representations.Reservation;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +17,7 @@ import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 
 @Path("")
@@ -30,8 +35,46 @@ public class ReservationResource {
 
     @Path("public/reservations")
     @GET
-    public List<Reservation> getAll(){
-        return this.reservationDao.findAll();
+    public List<Reservation> getAll(@QueryParam("page") Integer page,
+                                    @QueryParam("size") Integer size,
+                                    @QueryParam("sort") List<String> sort) {
+
+        if(page == null && size == null)
+        {
+            return this.reservationDao.findAll();
+        }
+
+        //set default value for page
+        if(page == null)
+        {
+            page = new Integer(0);
+        }
+
+        //set defaullt value for size
+        if(size == null)
+        {
+            size = new Integer(3);
+        }
+
+        List<Sort.Order> orders = new ArrayList<>();
+
+        for (String propOrder: sort) {
+
+            String[] propOrderSplit = propOrder.split(",");
+            String property = propOrderSplit[0];
+
+            if (propOrderSplit.length == 1) {
+                orders.add(new Sort.Order(property));
+            } else {
+                Sort.Direction direction
+                        = Sort.Direction.fromStringOrNull(propOrderSplit[1]);
+                orders.add(new Sort.Order(direction, property));
+            }
+        }
+
+        Pageable pageable = new PageRequest(page, size, orders.isEmpty() ? null : new Sort(orders));
+
+        return  this.reservationDao.findAll(pageable).getContent();
     }
 
 

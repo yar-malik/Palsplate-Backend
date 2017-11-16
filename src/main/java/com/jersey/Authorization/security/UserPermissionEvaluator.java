@@ -133,7 +133,7 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
 
     public boolean checkCookResoucePermission(Authentication authentication, long ID) {
         // find the person id of the requested resource
-        Cook cook = cookDaoRepositoryFactory.getObject().getOne(ID);
+        Cook cook = cookDaoRepositoryFactory.getObject().findOne(ID);
         Person person = personDaoRepositoryFactory.getObject().getOne(cook.getPerson_id());
 
         // find the person id of the user who requested the resource

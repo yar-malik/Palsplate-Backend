@@ -185,10 +185,10 @@ public class FoodResource {
     @GET
     @Path("public/foods")
     public List<Food> getUsers(
-            @QueryParam("maxDist") Integer maxDist,
+            @QueryParam("maxDist") Double maxDist,
             @QueryParam("lon") Double lon,
             @QueryParam("lat") Double lat,
-            @QueryParam("maxPrice") Integer maxPrice,
+            @QueryParam("maxPrice") Double maxPrice,
             @QueryParam("foodType") String foodType,
             @QueryParam("cuisineType") String cuisineType) {
 

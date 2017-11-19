@@ -378,19 +378,25 @@ where curlJsonReservation.json contains:
  * Send an Email to certain recipient
  ``GET http://localhost:8080/api/secure/email?recipient={recipient}&emailType={emailType}&subject=Sign-up-Email``
 
- where emailType is
-  * sign_up
-  * food_uploaded
-  * reservation_accepted
-  * reservation_declined
-  * reservation_requested
-  * sign_up_successful
+ where type is
+  * signup_successful
+  * reservation_cook
+  * reservation_customer
 
  to should be a valid email address. e.g.
 
- `curl -i -H "Authorization: Bearer <access-token>" "http://localhost:8080/api/secure/email?recipient=malikasfandyarashraf@gmail.com&emailType=sign_up&subject=Sign-Up-Email"`
+``POST localhost:8080/api/secure/emails``
+```
+{
+  "subject": "Palsplate Registered 101",
+  "recipient": "malikasfandyarashraf@gmail.com",
+  "type": "signup_successful",
+  "name": "Asfandyar King", 
+  "locale": "de"
+}
 
-Congratulations, now go and check your Spam folder. Dont forget to click the option of show all images, if it is in Spam folder.
+```
+
 
  - - -
 ## Database Schema

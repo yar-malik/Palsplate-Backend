@@ -42,7 +42,6 @@ public class EmailResource {
 
         if(email.type.equalsIgnoreCase("signup_successful") && email.locale.equalsIgnoreCase("en")){
             html = emailResource.htmlIntoString("en_signup_successful.html");
-            System.out.println("---cat---");
         }
 
         if(email.type.equalsIgnoreCase("signup_successful") && email.locale.equalsIgnoreCase("de")){

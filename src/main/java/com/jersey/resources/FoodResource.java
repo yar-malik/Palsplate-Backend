@@ -2,8 +2,11 @@ package com.jersey.resources;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.jersey.persistence.CookDao;
 import com.jersey.persistence.FoodDao;
 import com.jersey.persistence.ImageDao;
+import com.jersey.persistence.PersonDao;
+import com.jersey.representations.Cook;
 import com.jersey.representations.Food;
 import com.jersey.representations.Image;
 import com.jersey.representations.Person;
@@ -12,6 +15,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -45,6 +49,12 @@ public class FoodResource {
     private Cloudinary cloudinary;
 
     private FoodDao foodDao;
+
+    @Autowired
+    private PersonDao personDao;
+
+    @Autowired
+    private CookDao cookDao;
 
     @Inject
     public FoodResource(FoodDao foodDao){
@@ -103,16 +113,45 @@ public class FoodResource {
         return food;
     }
 
+    /**
+     * Get location for specific food
+     * @param id
+     * @return food
+     */
     @GET
     @Path("secure/foods/{id}/location_food")
     public Food getLocationForFood(@PathParam("id")long id) {
-        System.out.println("YOYO");
         Food food = foodDao.findOne(id);
         if (food  == null) {
             throw new WebApplicationException((Response.Status.NOT_FOUND));
         }
         food.getLocationFood().size();
         return food;
+    }
+
+    /**
+     * Get food object with person information
+     * @param id
+     * @return food
+     */
+    @GET
+    @Path("secure/foods/{id}/chefinfo")
+    public JSONObject getChefInfoForFood(@PathParam("id")long id) {
+        Food food = foodDao.findOne(id);
+        if (food  == null) {
+            throw new WebApplicationException((Response.Status.NOT_FOUND));
+        }
+
+        Cook cook = cookDao.findOne(food.getCook_id());
+        Person person = personDao.findOne(cook.getPerson_id());
+
+        JSONObject foodcookinfo = new JSONObject();
+        foodcookinfo.put("food", food);
+        foodcookinfo.put("firstname", person.getFirstName());
+        foodcookinfo.put("lastname", person.getLastName());
+        foodcookinfo.put("photo_id", person.getPhotoPublicId());
+
+        return foodcookinfo;
     }
 
     /**

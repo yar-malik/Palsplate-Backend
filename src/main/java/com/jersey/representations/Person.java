@@ -74,6 +74,10 @@ public class Person {
     @JoinColumn(name="person_id")
     private Set<Customer> customer;
 
+    @OneToMany(fetch=FetchType.EAGER)
+    @JoinColumn(name="person_id")
+    private Set<LocationPerson> locationPerson;
+
     public Person() {
     }
 
@@ -219,4 +223,43 @@ public class Person {
     public Date getUpdatedat() { return updatedat; }
 
     public void setUpdatedat(Date updatedat) { this.updatedat = updatedat; }
+
+    public String getGranted_role() {
+        return granted_role;
+    }
+
+    public void setGranted_role(String granted_role) {
+        this.granted_role = granted_role;
+    }
+
+    public Set<LocationPerson> getLocationPerson() {
+        return locationPerson;
+    }
+
+    public void setLocationPerson(Set<LocationPerson> locationPerson) {
+        this.locationPerson = locationPerson;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", granted_role='" + granted_role + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", description='" + description + '\'' +
+                ", isPhotoPublic=" + isPhotoPublic +
+                ", photoName='" + photoName + '\'' +
+                ", photoPublicId='" + photoPublicId + '\'' +
+                ", createdat=" + createdat +
+                ", updatedat=" + updatedat +
+                ", cook=" + cook +
+                ", customer=" + customer +
+                ", locationPerson=" + locationPerson +
+                '}';
+    }
 }

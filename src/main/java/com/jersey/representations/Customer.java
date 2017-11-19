@@ -43,9 +43,8 @@ public class Customer {
     public Customer(Long id, String name, String currency, Double regularPrice, Double discountPrice) {
         this.id = id;
     }
-    public Long getId() {
-        return id;
-    }
+
+    public Long getId() { return id; }
 
     public void setId(Long id) {
         this.id = id;

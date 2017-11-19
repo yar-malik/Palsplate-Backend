@@ -285,7 +285,6 @@ Curl POST example of creating an review
 }
 ```
 
-
 Curl GET example to get reviews for a specific food
 `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/reviews`
 
@@ -316,6 +315,31 @@ where curlJsonReservation.json contains:
  ``POST http://localhost:8080/api/secure/reservations/{id}?active={active}``
  where `id` is reservation id and `active` is boolean true or false
 
+- - - -
+### Location
+
+ * Get location of a food
+ ``GET localhost:8080/api/secure/foods/{id}/location_food``
+
+ * Get location of a person
+ ``GET localhost:8080/api/secure/persons/{id}/location_person``
+
+ * Post location of a person
+  ``POST localhost:8080/api/secure/location_person`` 
+  with following body: 
+```
+{
+    "id": 2,
+    "address": "st 16 rawalpindi pakistan 4600",
+    "lat": 5.5,
+    "lon": 4.56,
+    "street": "st 16",
+    "city": "rawalpindi",
+    "country": "pakistan",
+    "postal_code": "46000",
+    "person_id": 27
+}
+```
 
 - - - -
 ## Food Filtering API

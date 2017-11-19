@@ -83,6 +83,10 @@ public class Food {
     @JoinColumn(name = "food_id")
     private Set<Reservation> reservations;
 
+    @OneToMany(fetch=FetchType.EAGER)
+    @JoinColumn(name="food_id")
+    private Set<LocationFood> locationFood;
+
     public Food() {
     }
 
@@ -234,5 +238,13 @@ public class Food {
 
     public void setReservations(Set<Reservation> reservations) {
         this.reservations = reservations;
+    }
+
+    public Set<LocationFood> getLocationFood() {
+        return locationFood;
+    }
+
+    public void setLocationFood(Set<LocationFood> locationFood) {
+        this.locationFood = locationFood;
     }
 }

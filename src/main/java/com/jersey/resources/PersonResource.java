@@ -3,6 +3,8 @@ package com.jersey.resources;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.jersey.persistence.PersonDao;
+import com.jersey.representations.Cook;
+import com.jersey.representations.LocationPerson;
 import com.jersey.representations.Person;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.LogManager;
@@ -136,12 +138,23 @@ public class PersonResource {
 
     @GET
     @Path("secure/persons/currentuser")
-    public Person getPersonViaAccessToken()
-    {
+    public Person getPersonViaAccessToken(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
 
         return CopyPersonSafe(personDao.findByEmail(email));
+    }
+
+    @GET
+    @Path("secure/persons/{id}/location_person")
+    public Person getLocationForPerson(@PathParam("id")long id) {
+        Person person = personDao.findOne(id);
+        if (person == null) {
+            throw new WebApplicationException((Response.Status.NOT_FOUND));
+        }
+
+        person.getLocationPerson().size();
+        return person;
     }
 
     /**

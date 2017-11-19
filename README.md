@@ -375,15 +375,8 @@ where curlJsonReservation.json contains:
 
 - - - -
 ## Email
- * Send an Email to certain recipient
- ``GET http://localhost:8080/api/secure/email?recipient={recipient}&emailType={emailType}&subject=Sign-up-Email``
 
- where type is
-  * signup_successful
-  * reservation_cook
-  * reservation_customer
-
- to should be a valid email address. e.g.
+Send an Email to certain recipient
 
 ``POST localhost:8080/api/secure/emails``
 ```
@@ -396,6 +389,14 @@ where curlJsonReservation.json contains:
 }
 
 ```
+
+type can be following: 
+  * signup_successful
+  * reservation_cook
+  * reservation_customer
+
+locatel can be following: 
+
 
 
  - - -

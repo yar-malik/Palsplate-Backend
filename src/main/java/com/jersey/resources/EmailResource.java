@@ -30,12 +30,6 @@ public class EmailResource {
     @Path("secure/emails")
     public org.json.simple.JSONObject sendEmail(@Valid Email email) throws FileNotFoundException {
 
-        System.out.println("type: " + email.type);
-        System.out.println("subject: " + email.subject);
-        System.out.println("recipient: " + email.recipient);
-        System.out.println("name: " + email.name);
-        System.out.println("locale: " + email.locale);
-
         ClientResponse response = null;
         EmailResource emailResource = new EmailResource();
         String html = null;

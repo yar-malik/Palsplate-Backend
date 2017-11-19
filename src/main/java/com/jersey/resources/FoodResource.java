@@ -6,6 +6,7 @@ import com.jersey.persistence.FoodDao;
 import com.jersey.persistence.ImageDao;
 import com.jersey.representations.Food;
 import com.jersey.representations.Image;
+import com.jersey.representations.Person;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -96,6 +97,18 @@ public class FoodResource {
             throw new WebApplicationException((Response.Status.NOT_FOUND));
         }
         food.getReviews().size();
+        return food;
+    }
+
+    @GET
+    @Path("secure/foods/{id}/location_food")
+    public Food getLocationForFood(@PathParam("id")long id) {
+        System.out.println("YOYO");
+        Food food = foodDao.findOne(id);
+        if (food  == null) {
+            throw new WebApplicationException((Response.Status.NOT_FOUND));
+        }
+        food.getLocationFood().size();
         return food;
     }
 
@@ -243,7 +256,7 @@ public class FoodResource {
         return foods;
     }
 
-    public double distFrom(double lat1, double lng1, double lat2, double lng2) {
+    public double distFrom(double lat1, double lng1,    double lat2, double lng2) {
         double earthRadius = 6371000; //meters
         double dLat = Math.toRadians(lat2-lat1);
         double dLng = Math.toRadians(lng2-lng1);

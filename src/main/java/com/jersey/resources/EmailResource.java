@@ -17,7 +17,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.*;
 
-
 @Path("")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -29,44 +28,50 @@ public class EmailResource {
 
     @POST
     @Path("secure/emails")
-    public String sendEmail(@Valid Email email) throws FileNotFoundException {
+    public org.json.simple.JSONObject sendEmail(@Valid Email email) throws FileNotFoundException {
 
-        System.out.println("emailType: " + email.type);
+        System.out.println("type: " + email.type);
         System.out.println("subject: " + email.subject);
         System.out.println("recipient: " + email.recipient);
         System.out.println("name: " + email.name);
+        System.out.println("locale: " + email.locale);
 
         ClientResponse response = null;
         EmailResource emailResource = new EmailResource();
         String html = null;
 
-        if(email.type.equalsIgnoreCase("sign_up")){
-            html = emailResource.htmlIntoString("sign_up.html");
+        if(email.type.equalsIgnoreCase("signup_successful") && email.locale.equalsIgnoreCase("en")){
+            html = emailResource.htmlIntoString("en_signup_successful.html");
+            System.out.println("---cat---");
         }
 
-        if(email.type.equalsIgnoreCase("food_uploaded")){
-            html = emailResource.htmlIntoString("food_uploaded.html");
+        if(email.type.equalsIgnoreCase("signup_successful") && email.locale.equalsIgnoreCase("de")){
+            html = emailResource.htmlIntoString("de_signup_successful.html");
         }
 
-        if(email.type.equalsIgnoreCase("reservation_accepted")){
-            html = emailResource.htmlIntoString("reservation_accepted.html");
+        if(email.type.equalsIgnoreCase("reservation_cook") && email.locale.equalsIgnoreCase("en")){
+            html = emailResource.htmlIntoString("en_reservation_cook.html");
         }
 
-        if(email.type.equalsIgnoreCase("reservation_declined")){
-            html = emailResource.htmlIntoString("reservation_declined.html");
+        if(email.type.equalsIgnoreCase("reservation_cook") && email.locale.equalsIgnoreCase("de")){
+            html = emailResource.htmlIntoString("de_signup_successful.html");
         }
 
-        if(email.type.equalsIgnoreCase("reservation_requested")){
-            html = emailResource.htmlIntoString("reservation_requested.html");
+        if(email.type.equalsIgnoreCase("reservation_customer") && email.locale.equalsIgnoreCase("en")){
+            html = emailResource.htmlIntoString("en_reservation_customer.html");
         }
 
-        if(email.type.equalsIgnoreCase("sign_up_successful")){
-            html = emailResource.htmlIntoString("sign_up_successful.html");
+        if(email.type.equalsIgnoreCase("reservation_customer") && email.locale.equalsIgnoreCase("de")){
+            html = emailResource.htmlIntoString("de_signup_successful.html");
         }
 
         response = emailResource.sendComplexMessage(html, email.subject, email.recipient, email.name);
 
-        return response.toString();
+        org.json.simple.JSONObject emailResponse = new org.json.simple.JSONObject();
+        emailResponse.put("response date", response.getResponseDate());
+        emailResponse.put("response status", response.getStatus());
+
+        return emailResponse;
     }
 
     public ClientResponse sendComplexMessage(String html, String subject, String recipient, String name) {
@@ -97,9 +102,7 @@ public class EmailResource {
 
         String content = "";
         try {
-
             ClassLoader classLoader = getClass().getClassLoader();
-
             BufferedReader in = new BufferedReader(new FileReader(new File(classLoader.getResource(file).getFile())));
             String str;
             while ((str = in.readLine()) != null) {

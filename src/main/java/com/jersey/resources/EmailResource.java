@@ -32,41 +32,39 @@ public class EmailResource {
     @Path("public/emails")
     public org.json.simple.JSONObject sendEmail(@Valid Email email) throws FileNotFoundException {
 
-        if (!email.token.equalsIgnoreCase("Palsplate2017")) {
-            throw new WebApplicationException((Response.Status.NOT_FOUND));
+        if (!email.token.equalsIgnoreCase(System.getenv().get("PALSPLATE_EMAIL_TOKEN"))) {
+            throw new WebApplicationException((Response.Status.UNAUTHORIZED));
         }
         else{
-
             ClientResponse response = null;
             EmailResource emailResource = new EmailResource();
-            String html = null;
 
             if(email.type.equalsIgnoreCase("signup_successful") && email.locale.equalsIgnoreCase("en")){
-                html = emailResource.htmlIntoString("en_signup_successful.html");
+                email.body = emailResource.htmlIntoString("en_signup_successful.html");
             }
 
             if(email.type.equalsIgnoreCase("signup_successful") && email.locale.equalsIgnoreCase("de")){
-                html = emailResource.htmlIntoString("de_signup_successful.html");
+                email.body = emailResource.htmlIntoString("de_signup_successful.html");
             }
 
             if(email.type.equalsIgnoreCase("reservation_cook") && email.locale.equalsIgnoreCase("en")){
-                html = emailResource.htmlIntoString("en_reservation_cook.html");
+                email.body = emailResource.htmlIntoString("en_reservation_cook.html");
             }
 
             if(email.type.equalsIgnoreCase("reservation_cook") && email.locale.equalsIgnoreCase("de")){
-                html = emailResource.htmlIntoString("de_signup_successful.html");
+                email.body = emailResource.htmlIntoString("de_signup_successful.html");
             }
 
             if(email.type.equalsIgnoreCase("reservation_customer") && email.locale.equalsIgnoreCase("en")){
-                html = emailResource.htmlIntoString("en_reservation_customer.html");
+                email.body = emailResource.htmlIntoString("en_reservation_customer.html");
             }
 
             if(email.type.equalsIgnoreCase("reservation_customer") && email.locale.equalsIgnoreCase("de")){
-                html = emailResource.htmlIntoString("de_signup_successful.html");
+                email.body = emailResource.htmlIntoString("de_signup_successful.html");
             }
 
             response = emailResource.sendComplexMessage(
-                    html,
+                    email.body,
                     email.subject,
                     email.recipientEmail,
                     email.recipientName,
@@ -85,7 +83,7 @@ public class EmailResource {
         }
     }
 
-    public ClientResponse sendComplexMessage(String html,
+    public ClientResponse sendComplexMessage(String body,
                                              String subject,
                                              String recipientEmail,
                                              String recipientName,
@@ -119,7 +117,7 @@ public class EmailResource {
         formData.field("from", "Palsplate UG <info@" + "mg.palsplate.com" + ">");
         formData.field("to", recipientEmail);
         formData.field("subject", subject.toString());
-        formData.field("html", html);
+        formData.field("html", body);
         formData.field("recipient-variables", recipientVariableJson.toString());
 
         ClientResponse clientResponse = webResource.type(MediaType.MULTIPART_FORM_DATA_TYPE).post(ClientResponse.class, formData);

@@ -7,6 +7,7 @@ public class Email {
     public String subject;
     public String recipientEmail;
     public String recipientName;
+    public String body;
     public String locale;
     public String token;
     public String reservation_id;

@@ -29,7 +29,7 @@ public class EmailResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("secure/emails")
+    @Path("public/emails")
     public org.json.simple.JSONObject sendEmail(@Valid Email email) throws FileNotFoundException {
 
         if (!email.token.equalsIgnoreCase("Palsplate2017")) {

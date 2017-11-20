@@ -16,5 +16,4 @@ public class Email {
     public String foodOfferStart;
     public String foodOfferStop;
 
-
 }

@@ -404,16 +404,21 @@ type can be following:
   * reservation_cook
   * reservation_customer
 
-variables which can be used in html to make dynamic content are as follows
-    * recipient.name
-    * recipient.reservation_id
-    * recipient.person_id
-    * recipient.foodName
-    * recipient.foodPrice
-    * recipient.foodOfferStart
-    * recipient.foodOfferStop
-    * recipient.reservationUrl
-    * recipient.personUrl
+variables which can be used in html to make dynamic content are as follows: 
+
+* recipient.name
+* recipient.reservation_id
+* recipient.person_id
+* recipient.foodName
+* recipient.foodPrice
+* recipient.foodOfferStart
+* recipient.foodOfferStop
+* recipient.reservationUrl
+* recipient.personUrl
+
+variables in html are added in percentage signs: 
+`%recipient.name%`
+
 
 
  - - -

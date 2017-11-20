@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.*;
 
 @Path("")
@@ -30,41 +31,48 @@ public class EmailResource {
     @Path("secure/emails")
     public org.json.simple.JSONObject sendEmail(@Valid Email email) throws FileNotFoundException {
 
-        ClientResponse response = null;
-        EmailResource emailResource = new EmailResource();
-        String html = null;
-
-        if(email.type.equalsIgnoreCase("signup_successful") && email.locale.equalsIgnoreCase("en")){
-            html = emailResource.htmlIntoString("en_signup_successful.html");
+        if (email.token.equalsIgnoreCase("Palsplate2017")) {
+            throw new WebApplicationException((Response.Status.NOT_FOUND));
         }
+        else{
 
-        if(email.type.equalsIgnoreCase("signup_successful") && email.locale.equalsIgnoreCase("de")){
-            html = emailResource.htmlIntoString("de_signup_successful.html");
+            ClientResponse response = null;
+            EmailResource emailResource = new EmailResource();
+            String html = null;
+
+            if(email.type.equalsIgnoreCase("signup_successful") && email.locale.equalsIgnoreCase("en")){
+                html = emailResource.htmlIntoString("en_signup_successful.html");
+            }
+
+            if(email.type.equalsIgnoreCase("signup_successful") && email.locale.equalsIgnoreCase("de")){
+                html = emailResource.htmlIntoString("de_signup_successful.html");
+            }
+
+            if(email.type.equalsIgnoreCase("reservation_cook") && email.locale.equalsIgnoreCase("en")){
+                html = emailResource.htmlIntoString("en_reservation_cook.html");
+            }
+
+            if(email.type.equalsIgnoreCase("reservation_cook") && email.locale.equalsIgnoreCase("de")){
+                html = emailResource.htmlIntoString("de_signup_successful.html");
+            }
+
+            if(email.type.equalsIgnoreCase("reservation_customer") && email.locale.equalsIgnoreCase("en")){
+                html = emailResource.htmlIntoString("en_reservation_customer.html");
+            }
+
+            if(email.type.equalsIgnoreCase("reservation_customer") && email.locale.equalsIgnoreCase("de")){
+                html = emailResource.htmlIntoString("de_signup_successful.html");
+            }
+
+            response = emailResource.sendComplexMessage(html, email.subject, email.recipientEmail, email.recipientName);
+
+            org.json.simple.JSONObject emailResponse = new org.json.simple.JSONObject();
+            emailResponse.put("response date", response.getResponseDate());
+            emailResponse.put("response status", response.getStatus());
+
+            return emailResponse;
+
         }
-
-        if(email.type.equalsIgnoreCase("reservation_cook") && email.locale.equalsIgnoreCase("en")){
-            html = emailResource.htmlIntoString("en_reservation_cook.html");
-        }
-
-        if(email.type.equalsIgnoreCase("reservation_cook") && email.locale.equalsIgnoreCase("de")){
-            html = emailResource.htmlIntoString("de_signup_successful.html");
-        }
-
-        if(email.type.equalsIgnoreCase("reservation_customer") && email.locale.equalsIgnoreCase("en")){
-            html = emailResource.htmlIntoString("en_reservation_customer.html");
-        }
-
-        if(email.type.equalsIgnoreCase("reservation_customer") && email.locale.equalsIgnoreCase("de")){
-            html = emailResource.htmlIntoString("de_signup_successful.html");
-        }
-
-        response = emailResource.sendComplexMessage(html, email.subject, email.recipient, email.name);
-
-        org.json.simple.JSONObject emailResponse = new org.json.simple.JSONObject();
-        emailResponse.put("response date", response.getResponseDate());
-        emailResponse.put("response status", response.getStatus());
-
-        return emailResponse;
     }
 
     public ClientResponse sendComplexMessage(String html, String subject, String recipient, String name) {

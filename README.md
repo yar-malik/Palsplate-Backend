@@ -378,16 +378,23 @@ where curlJsonReservation.json contains:
 - - - -
 ## Email
 
-Send an Email to certain recipient
+Send an Email to certain recipient with following post body
 
 ``POST localhost:8080/api/secure/emails``
 ```
 {
-  "subject": "Palsplate Registered 101",
-  "recipient": "malikasfandyarashraf@gmail.com",
-  "type": "signup_successful",
-  "name": "Asfandyar King", 
-  "locale": "de"
+  "subject": "Palsplate Test Bro 4",
+  "recipientEmail": "malikasfandyarashraf@gmail.com",
+  "type": "reservation_cook",
+  "recipientName": "OGMalik", 
+  "locale": "en",
+  "token": "Palsplate2017",
+  "foodName": "Biryani",
+  "foodPrice": "4.5",
+  "foodOfferStart": "2015-4-10", 
+  "foodOfferStop": "2017-4-10", 
+  "reservation_id": 50,
+  "person_id": 1
 }
 
 ```
@@ -397,8 +404,16 @@ type can be following:
   * reservation_cook
   * reservation_customer
 
-locatel can be following: 
-
+variables which can be used in html to make dynamic content are as follows
+    * recipient.name
+    * recipient.reservation_id
+    * recipient.person_id
+    * recipient.foodName
+    * recipient.foodPrice
+    * recipient.foodOfferStart
+    * recipient.foodOfferStop
+    * recipient.reservationUrl
+    * recipient.personUrl
 
 
  - - -

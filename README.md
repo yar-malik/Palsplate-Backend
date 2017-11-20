@@ -376,7 +376,7 @@ where curlJsonReservation.json contains:
    
 
 - - - -
-## Email
+## Email (with templates)
 
 Send an Email to certain recipient with following post body
 
@@ -419,8 +419,21 @@ variables which can be used in html to make dynamic content are as follows:
 variables in html are added in percentage signs: 
 `%recipient.name%`
 
+ - - -
 
+## Email (contact section)
 
+``POST localhost:8080/api/public/contact_email``
+
+```
+{
+  "subject": "information about food",
+  "body": "I really love your food", 
+  "from": "jojo@gmail.com"
+}
+
+```
+Email from this API would be sent to inbox of `info@palsplate.com`
  - - -
 ## Database Schema
    

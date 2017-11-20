@@ -38,6 +38,7 @@ public class EmailResource {
         else{
             ClientResponse response = null;
             EmailResource emailResource = new EmailResource();
+            email.from = "Palsplate UG <info@mg.palsplate.com>";
 
             if(email.type.equalsIgnoreCase("signup_successful") && email.locale.equalsIgnoreCase("en")){
                 email.body = emailResource.htmlIntoString("en_signup_successful.html");
@@ -64,16 +65,17 @@ public class EmailResource {
             }
 
             response = emailResource.sendComplexMessage(
-                    email.body,
                     email.subject,
                     email.recipientEmail,
                     email.recipientName,
+                    email.from,
+                    email.body,
                     email.reservation_id,
                     email.person_id,
                     email.foodName,
                     email.foodPrice,
                     email.foodOfferStart,
-                    email.foodOfferStart);
+                    email.foodOfferStop);
 
             org.json.simple.JSONObject emailResponse = new org.json.simple.JSONObject();
             emailResponse.put("response date", response.getResponseDate());
@@ -83,10 +85,44 @@ public class EmailResource {
         }
     }
 
-    public ClientResponse sendComplexMessage(String body,
-                                             String subject,
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("public/contact_email")
+    public org.json.simple.JSONObject sendContactEmail(@Valid Email email) {
+
+        if (email.from == null || email.subject == null || email.body == null) {
+            throw new WebApplicationException((Response.Status.BAD_REQUEST));
+        } else {
+            ClientResponse response = null;
+            EmailResource emailResource = new EmailResource();
+
+            response = emailResource.sendComplexMessage(
+                    email.subject,
+                    "info@palsplate.com",
+                    null,
+                    email.from,
+                    email.body,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null);
+
+            org.json.simple.JSONObject emailResponse = new org.json.simple.JSONObject();
+            emailResponse.put("response date", response.getResponseDate());
+            emailResponse.put("response status", response.getStatus());
+
+            return emailResponse;
+        }
+    }
+
+
+    public ClientResponse sendComplexMessage(String subject,
                                              String recipientEmail,
                                              String recipientName,
+                                             String from,
+                                             String body,
                                              String reservation_id,
                                              String person_id,
                                              String foodName,
@@ -107,14 +143,13 @@ public class EmailResource {
         nameObject.put("personUrl", "https://www.palsplate.com/user/" + person_id);
 
         recipientVariableJson.put(recipientEmail, nameObject);
-        System.out.println(recipientVariableJson.toString());
 
         Client client = Client.create();
         client.addFilter(new HTTPBasicAuthFilter("api", System.getenv().get("MAILGUN_APIKEY")));
         WebResource webResource = client.resource("https://api.mailgun.net/v3/mg.palsplate.com/messages");
 
         FormDataMultiPart formData = new FormDataMultiPart();
-        formData.field("from", "Palsplate UG <info@" + "mg.palsplate.com" + ">");
+        formData.field("from", from);
         formData.field("to", recipientEmail);
         formData.field("subject", subject.toString());
         formData.field("html", body);

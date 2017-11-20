@@ -8,6 +8,7 @@ public class Email {
     public String recipientEmail;
     public String recipientName;
     public String body;
+    public String from;
     public String locale;
     public String token;
     public String reservation_id;

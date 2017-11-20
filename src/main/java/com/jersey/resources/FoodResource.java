@@ -135,7 +135,7 @@ public class FoodResource {
      * @return food
      */
     @GET
-    @Path("secure/foods/{id}/chefinfo")
+    @Path("public/foods/{id}/chefinfo")
     public JSONObject getChefInfoForFood(@PathParam("id")long id) {
         Food food = foodDao.findOne(id);
         if (food  == null) {

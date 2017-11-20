@@ -32,14 +32,6 @@ public class EmailResource {
     @Path("secure/emails")
     public org.json.simple.JSONObject sendEmail(@Valid Email email) throws FileNotFoundException {
 
-        System.out.println("token: " + email.token);
-        System.out.println("type: " + email.type);
-        System.out.println("subject: " + email.subject);
-        System.out.println("recipientEmail: " + email.recipientEmail);
-        System.out.println("recipientName: " + email.recipientName);
-        System.out.println("foodOfferStart: " + email.foodOfferStart);
-        System.out.println("foodOfferStop: " + email.foodOfferStop);
-
         if (!email.token.equalsIgnoreCase("Palsplate2017")) {
             throw new WebApplicationException((Response.Status.NOT_FOUND));
         }

@@ -36,7 +36,6 @@ public class EmailResource {
             throw new WebApplicationException((Response.Status.UNAUTHORIZED));
         }
         else{
-            ClientResponse response = null;
             EmailResource emailResource = new EmailResource();
             email.from = "Palsplate UG <info@mg.palsplate.com>";
 
@@ -64,7 +63,7 @@ public class EmailResource {
                 email.body = emailResource.htmlIntoString("de_signup_successful.html");
             }
 
-            response = emailResource.sendComplexMessage(
+            ClientResponse response = emailResource.sendComplexMessage(
                     email.subject,
                     email.recipientEmail,
                     email.recipientName,

@@ -139,7 +139,7 @@ public class EmailResource {
         nameObject.put("foodOfferStart", foodOfferStart);
         nameObject.put("foodOfferStop", foodOfferStop);
         nameObject.put("reservationUrl", "https://www.palsplate.com/reservations/" + reservation_id);
-        nameObject.put("personUrl", "https://www.palsplate.com/user/" + person_id);
+        nameObject.put("personUrl", "https://www.palsplate.com/users/" + person_id);
 
         recipientVariableJson.put(recipientEmail, nameObject);
 

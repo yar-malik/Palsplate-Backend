@@ -31,14 +31,14 @@ public class LocationFoodResource {
         this.locationFoodDao= locationFoodDao;
     }
 
-    @Path("public/location_food")
+    @Path("public/location_foods")
     @GET
     public List<LocationFood> getAll(){
         return this.locationFoodDao.findAll();
     }
 
     @GET
-    @Path("public/location_food/{id}")
+    @Path("public/location_foods/{id}")
     public LocationFood getCook(@PathParam("id")long id) {
         LocationFood locationFood = locationFoodDao.findOne(id);
         if (locationFood == null) {
@@ -53,7 +53,7 @@ public class LocationFoodResource {
      * @return new locationFood
      */
     @POST
-    @Path("secure/location_food")
+    @Path("secure/location_foods")
     public LocationFood save(@Valid LocationFood locationFood) {
             return locationFoodDao.save(locationFood);
     }
@@ -65,7 +65,7 @@ public class LocationFoodResource {
      * @return updated locationFood
      */
     @PUT
-    @Path("secure/location_food/{id}")
+    @Path("secure/location_foods/{id}")
 //    @PreAuthorize("hasPermission(#id,'CookResource', 'ROLE_USER,ROLE_ADMIN')")
     public LocationFood update(@PathParam("id")long id, @Valid LocationFood locationFood) {
         if(locationFoodDao.findOne(id) == null){
@@ -81,7 +81,7 @@ public class LocationFoodResource {
      * @param id
      */
     @DELETE
-    @Path("secure/location_food/{id}")
+    @Path("secure/location_foods/{id}")
 //    @PreAuthorize("hasPermission(#id,'CookResource', 'ROLE_USER,ROLE_ADMIN')")
     public void delete(@PathParam("id")long id) {
         LocationFood locationFood = locationFoodDao.findOne(id);

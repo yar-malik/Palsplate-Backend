@@ -149,6 +149,7 @@ public class FoodResource {
         foodcookinfo.put("food", food);
         foodcookinfo.put("firstname", person.getFirstName());
         foodcookinfo.put("lastname", person.getLastName());
+        foodcookinfo.put("description", person.getDescription());
         foodcookinfo.put("photo_id", person.getPhotoPublicId());
 
         return foodcookinfo;

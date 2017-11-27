@@ -209,8 +209,6 @@ where curlJsonCustomer.txt contains:
 
  * Get one specific record
  ``GET http://localhost:8080/api/public/foods/{id}``
- * Get chef info with food
- ``GET http://localhost:8080/api/secure/foods/{id}/chefinfo``
  * Get all foods for a specific cook
  ``GET http://localhost:8080/api/public/cooks/{id}/foods``
  * Update a specific record

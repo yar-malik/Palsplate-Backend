@@ -435,6 +435,16 @@ variables in html are added in percentage signs:
 ```
 Email from this API would be sent to inbox of `info@palsplate.com`
  - - -
+ ## Auxillary API
+ 
+  * Get reservation with cook and customer information
+  ``GET localhost:8080/api/secure/reservations/{reservation_id}/getCustomerAndCook``
+
+  * Get chef info with food object
+    ``GET localhost:8080/api/public/foods/{food_id}/chefinfo``
+
+ 
+ - - - 
 ## Database Schema
    
    

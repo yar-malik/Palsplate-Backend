@@ -1,9 +1,10 @@
 package com.jersey.resources;
 
-import com.jersey.persistence.ReservationDao;
-import com.jersey.representations.Customer;
+import com.jersey.persistence.*;
+import com.jersey.representations.*;
 import com.jersey.representations.Reservation;
-import com.jersey.representations.Reservation;
+import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -28,6 +29,18 @@ import java.util.List;
 public class ReservationResource {
     private final ReservationDao reservationDao;
 
+    @Autowired
+    private PersonDao personDao;
+
+    @Autowired
+    private CustomerDao customerDao;
+
+    @Autowired
+    private CookDao cookDao;
+
+    @Autowired
+    private FoodDao foodDao;
+
     @Inject
     public ReservationResource(ReservationDao reservationDao) {
         this.reservationDao = reservationDao;
@@ -39,20 +52,15 @@ public class ReservationResource {
                                     @QueryParam("size") Integer size,
                                     @QueryParam("sort") List<String> sort) {
 
-        if(page == null && size == null)
-        {
+        if(page == null && size == null){
             return this.reservationDao.findAll();
         }
 
-        //set default value for page
-        if(page == null)
-        {
+        if(page == null){
             page = new Integer(0);
         }
 
-        //set defaullt value for size
-        if(size == null)
-        {
+        if(size == null){
             size = new Integer(3);
         }
 
@@ -118,6 +126,28 @@ public class ReservationResource {
         }
     }
 
+    @GET
+    @Path("secure/reservations/{id}/getCustomerAndCook")
+    public JSONObject getCustomerAndCook(@PathParam("id")long id) {
+        Reservation reservation = reservationDao.findOne(id);
+        if (reservation  == null) {
+            throw new WebApplicationException((Response.Status.NOT_FOUND));
+        }
+
+        Food food = foodDao.findOne(reservation.getFoodId());
+        Customer customer = customerDao.findOne(reservation.getCustomerId());
+        Cook cook = cookDao.findOne(food.getCook_id());
+
+        Person cookPerson = personDao.findOne(cook.getPerson_id());
+        Person customerPerson = personDao.findOne(customer.getPerson_id());
+
+        JSONObject customerCookInfo = new JSONObject();
+        customerCookInfo.put("cookPerson", cookPerson);
+        customerCookInfo.put("customerPerson", customerPerson);
+        customerCookInfo.put("reservation", reservation);
+
+        return customerCookInfo;
+    }
 
     /**
      * Update existing Reservation

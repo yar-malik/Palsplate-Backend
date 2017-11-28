@@ -1,5 +1,7 @@
 package com.jersey.Authorization.Config;
 
+import com.jersey.Authorization.Config.Facebook.FacebookConnectionSignup;
+import com.jersey.Authorization.Config.Facebook.FacebookSignInAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +17,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecurityExpressionHandler;
+import org.springframework.social.connect.ConnectionFactoryLocator;
+import org.springframework.social.connect.UsersConnectionRepository;
+import org.springframework.social.connect.mem.InMemoryUsersConnectionRepository;
+import org.springframework.social.connect.web.ProviderSignInController;
 
 
 @Configuration
@@ -23,6 +29,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private ConnectionFactoryLocator connectionFactoryLocator;
+
+    @Autowired
+    private UsersConnectionRepository usersConnectionRepository;
+
+    private FacebookConnectionSignup facebookConnectionSignup;
 
     @Bean
     public PasswordEncoder passwordEncoder()
@@ -54,6 +68,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public ProviderSignInController providerSignInController() {
+        ((InMemoryUsersConnectionRepository) usersConnectionRepository)
+                .setConnectionSignUp(facebookConnectionSignup);
+
+        return new ProviderSignInController(
+                connectionFactoryLocator,
+                usersConnectionRepository,
+                new FacebookSignInAdapter());
     }
 
     @EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)

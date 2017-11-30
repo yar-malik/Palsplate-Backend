@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -36,6 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private UsersConnectionRepository usersConnectionRepository;
 
+    @Autowired
     private FacebookConnectionSignup facebookConnectionSignup;
 
     @Bean
@@ -65,6 +67,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                .antMatchers("/login*","/signin/**","/signup/**").permitAll();
+    }
+
+    @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
@@ -72,13 +81,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public ProviderSignInController providerSignInController() {
-        ((InMemoryUsersConnectionRepository) usersConnectionRepository)
-                .setConnectionSignUp(facebookConnectionSignup);
 
-        return new ProviderSignInController(
-                connectionFactoryLocator,
-                usersConnectionRepository,
-                new FacebookSignInAdapter());
+        ((InMemoryUsersConnectionRepository) usersConnectionRepository).setConnectionSignUp(facebookConnectionSignup);
+
+        ProviderSignInController signInController = new ProviderSignInController(connectionFactoryLocator, usersConnectionRepository, new FacebookSignInAdapter());
+        return signInController;
     }
 
     @EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)

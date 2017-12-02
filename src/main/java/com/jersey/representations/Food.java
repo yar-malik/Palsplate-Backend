@@ -79,8 +79,7 @@ public class Food {
     @JoinColumn(name="food_id")
     private Set<LocationFood> locationFood;
 
-    public Food() {
-    }
+    public Food() {}
 
     public Food(Long id, String name, Date offer_start, Date offer_stop,
                 String description, Double price, Integer portion,
@@ -219,5 +218,28 @@ public class Food {
 
     public void setLocationFood(Set<LocationFood> locationFood) {
         this.locationFood = locationFood;
+    }
+
+    @Override
+    public String toString() {
+        return "Food{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", offer_start=" + offer_start +
+                ", offer_stop=" + offer_stop +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", portion=" + portion +
+                ", food_type='" + food_type + '\'' +
+                ", cuisine_type='" + cuisine_type + '\'' +
+                ", is_active=" + is_active +
+                ", createdat=" + createdat +
+                ", updatedat=" + updatedat +
+                ", cook_id=" + cook_id +
+                ", images=" + images +
+                ", reviews=" + reviews +
+                ", reservations=" + reservations +
+                ", locationFood=" + locationFood +
+                '}';
     }
 }

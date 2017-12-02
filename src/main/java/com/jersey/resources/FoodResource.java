@@ -117,7 +117,7 @@ public class FoodResource {
      * @return food
      */
     @GET
-    @Path("secure/foods/{id}/location_food")
+    @Path("secure/foods/{id}/location_foods")
     public Food getLocationForFood(@PathParam("id")long id) {
         Food food = foodDao.findOne(id);
         if (food  == null) {
@@ -259,11 +259,9 @@ public class FoodResource {
             if(page == null){
                 page = new Integer(0);
             }
-
             if(size == null){
                 size = new Integer(3);
             }
-
             List<Sort.Order> orders = new ArrayList<>();
 
             for (String propOrder: sort) {
@@ -310,7 +308,6 @@ public class FoodResource {
             }
             foods.removeAll(filterByMaxPriceFoods);
         }
-
 
         if(foodType != null){
             for(Food f: foods){

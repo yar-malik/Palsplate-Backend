@@ -47,14 +47,6 @@ public class Food {
     @NotNull
     private String cuisine_type;
 
-    @Column(name = "lat")
-    @NotNull
-    private Double lat;
-
-    @Column(name = "lon")
-    @NotNull
-    private Double lon;
-
     @Column(name = "is_active")
     @NotNull
     private Boolean is_active;
@@ -92,8 +84,7 @@ public class Food {
 
     public Food(Long id, String name, Date offer_start, Date offer_stop,
                 String description, Double price, Integer portion,
-                String food_type, String cuisine_type, Double lat,
-                Double lon, Boolean is_active) {
+                String food_type, String cuisine_type, Boolean is_active) {
         this.id = id;
         this.name = name;
         this.offer_start = offer_start;
@@ -103,8 +94,6 @@ public class Food {
         this.portion = portion;
         this.food_type = food_type;
         this.cuisine_type = cuisine_type;
-        this.lat = lat;
-        this.lon = lon;
         this.is_active = is_active;
     }
 
@@ -178,22 +167,6 @@ public class Food {
 
     public void setCuisine_type(String cuisine_type) {
         this.cuisine_type = cuisine_type;
-    }
-
-    public Double getLat() {
-        return lat;
-    }
-
-    public void setLat(Double lat) {
-        this.lat = lat;
-    }
-
-    public Double getLon() {
-        return lon;
-    }
-
-    public void setLon(Double lon) {
-        this.lon = lon;
     }
 
     public Boolean getIs_active() {

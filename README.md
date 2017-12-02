@@ -374,25 +374,80 @@ where curlJsonReservation.json contains:
    
 
 - - - -
-## Email
- * Send an Email to certain recipient
- ``GET http://localhost:8080/api/secure/email?recipient={recipient}&emailType={emailType}&subject=Sign-up-Email``
+## Email (with templates)
 
- where emailType is
-  * sign_up
-  * food_uploaded
-  * reservation_accepted
-  * reservation_declined
-  * reservation_requested
-  * sign_up_successful
+Send an Email to certain recipient with following post body
 
- to should be a valid email address. e.g.
+``POST localhost:8080/api/secure/emails``
+```
+{
+  "subject": "Palsplate Test Bro 4",
+  "recipientEmail": "malikasfandyarashraf@gmail.com",
+  "type": "reservation_cook",
+  "recipientName": "OGMalik", 
+  "locale": "en",
+  "token": "*****",
+  "foodName": "Biryani",
+  "foodPrice": "4.5",
+  "foodOfferStart": "2015-4-10", 
+  "foodOfferStop": "2017-4-10", 
+  "reservation_id": 50,
+  "person_id": 1
+}
 
- `curl -i -H "Authorization: Bearer <access-token>" "http://localhost:8080/api/secure/email?recipient=malikasfandyarashraf@gmail.com&emailType=sign_up&subject=Sign-Up-Email"`
+```
 
-Congratulations, now go and check your Spam folder. Dont forget to click the option of show all images, if it is in Spam folder.
+type can be following: 
+  * signup_successful
+  * reservation_cook
+  * reservation_customer
+  * contact_us
 
+variables which can be used in html to make dynamic content are as follows: 
+
+* recipient.name
+* recipient.reservation_id
+* recipient.person_id
+* recipient.foodName
+* recipient.foodPrice
+* recipient.foodOfferStart
+* recipient.foodOfferStop
+* recipient.reservationUrl
+* recipient.personUrl
+
+variables in html are added in percentage signs: 
+`%recipient.name%`
+
+Note: for email type = `contact_us`, one has to specify the following parameters
+* recipient.type
+* recipient.subject
+* recipient.token
+* recipient.body
+* recipient.from
+
+
+```
+{
+  "type": "contact_us", 
+  "subject": "information about food",
+  "token": "******",
+  "body": "I really love your food", 
+  "from": "jojo@gmail.com"
+}
+
+```
+Email from this API would be sent to inbox of `info@palsplate.com`
  - - -
+ ## Auxillary API
+ 
+  * Get reservation with cook and customer information
+  ``GET localhost:8080/api/secure/reservations/{reservation_id}/getCustomerAndCook``
+
+  * Get chef info with food object
+    ``GET localhost:8080/api/public/foods/{food_id}/chefinfo``
+
+ 
+ - - - 
 ## Database Schema
    
    

@@ -19,7 +19,7 @@
                                   <center>  <img src="https://res.cloudinary.com/palsplate/image/upload/v1509826715/email%20Images/logo_full.png" width="100" height="100" style="display:block; border:0; margin:0;"> </center>
                                 </a>
                                 <p style="margin:0 0 36px; text-align:center; font-size:14px; line-height:20px; color:#626658;">
-                                    Greet, meet, take & eat.
+                                    <i>"Greet, meet, take & eat."</i>
                                 </p>
                                 <!-- begin wrapper -->
                                 <table cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -34,9 +34,9 @@
                                             <td width="4" height="4" src="shadow-left-top.png" no-repeat 100% 0;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
                                             <td colspan="3" rowspan="3" bgcolor="#FFFFFF" style="padding:0 0 30px;">
                                                 <!-- begin content -->
-                                                <img src="https://res.cloudinary.com/palsplate/image/upload/v1509806948/email%20Images/food.jpg" width="600" height="400" alt="Thank You" style="display:block; border:0; margin:0 0 44px; background:#eeeeee;">
-                                                <p style="margin:0 30px 33px;; text-align:center; text-transform:uppercase; font-size:24px; line-height:30px; font-weight:bold; color:#484a42;">
-                                                    Thank You for signing up
+                                                
+                                                <p style="margin:0 30px 33px;; text-align:center;  font-size:24px; line-height:30px; font-weight:bold; color:#484a42;">
+                                                    <br>Essen Reservierung erfolgreich!</br>
                                                 </p>
                                                 <!-- begin articles -->
                                                 <table cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -46,27 +46,55 @@
                                                             
                                                             <td width="30"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
                                                             <td>
-                                                                <a style="display:block; margin:0 0 14px;"><center><img src="https://res.cloudinary.com/palsplate/image/upload/v1509723335/email%20Images/button.jpg" width="150" height="130" alt="More" style="display:block; margin:0; border:0; background:#eeeeee;"></center></a>
-                                                                <p style="font-size:20px; line-height:22px; font-weight:bold; color:#333333; margin:0 0 5px;"><a style="color:#484a42; text-decoration:none;">Signup Successful!</a></p>
-                                                                <p style="margin:0 0 35px; font-size:14px; line-height:18px; color:#333333;">
-                                                                <br>Hallo  %recipient.name% ,</br>
-                                                                <br> Danke für deine Anmeldung bei PalsPlate!</br>
-                                                                <br>Wir heißen Dich hiermit herzlich willkommen in unserer Community!</br>
-                                                                Jetzt kannst du allerlei hausgemachte Köstlichkeiten in deiner Umgebung genießen.
-                                                                <br>Viel Spaß dabei und Guten Appetit!</br>
+                                                            
+                                                                <p style="margin:0 0 15px; font-size:14px; line-height:18px; color:#333333;">
+                                                                Moin  %recipient.name%,<br>
+                                                                <br> Danke, dass Sie das folgende Gericht reserviert haben: %recipient.foodName%.
+                                                                <br><br>Bitte setzen Sie sich mit dem Küchenchef in Verbindung, um eine Abholung zu vereinbaren.
+                                                                <br><br>Weitere Informationen zu Ihrer Reservierung finden Sie unten:
+                                                                
+                                                                <center>
+                                                                <table style="width:50%;border: 1px solid black;border-collapse: collapse;">
+                                                                 <tr>
+                                                                <th style="padding: 1px;border: 1px solid black;border-collapse: collapse;">Reservierung</th>
+                                                                <th style="padding: 1px;border: 1px solid black;border-collapse: collapse;">Preis</th> 
+                                                                <th style="padding: 1px;border: 1px solid black;border-collapse: collapse;">Abholzeit</th> 
+                                                                </tr>
+                                                                <tr>
+                                                                <td style="padding: 1px;border: 1px solid black;border-collapse: collapse;">%recipient.foodName%</td>
+                                                                <td style="padding: 1px;border: 1px solid black;border-collapse: collapse;">%recipient.foodPrice%</td>
+                                                                <td style="padding: 1px;border: 1px solid black;border-collapse: collapse;">%recipient.foodOfferStart%</td>
+                                                                </tr>
+                                                                </table>
+                                                                </center>
+
+                                                                <center><br><b>Viel Spaß und guten Appetit!</b></br></center>
+                                                               
+                                                                   
+
+
+                                                                    <br>
+                                                                    <center>
+                                                                        <a href= %recipient.reservationUrl%  class="myButton" style="background-color:#fd3267;-moz-border-radius:28px;-webkit-border-radius:28px;border-radius:28px;border:1px solid #e97b97;display:inline-block;cursor:pointer;color:#ffffff;font-family:Arial;font-size:17px;padding:16px 31px;text-decoration:none;text-shadow:0px 1px 0px #2f6627;">
+                                                                            Reservierung</a>
+                                                                    </center>  
+                                                                    </br>                                 
+    
+                                                               
                                                                 <br>
-                                                                PS: You can also become a chef with PalsPlate and offer your own cooking delights in your surrounding by just clicking the top button on the palsplate platform.</br></p>
+                                                                PS: Sie können auch ein Koch bei PalsPlate werden und Ihre eigenen Kochkreationen in Ihrer Umgebung anbieten.</br></p>
                                                             </td>
                                                             <td width="30"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
                                                         </tr>
                                                         <tr valign="top">
                                                             <td width="30"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
                                                             <td colspan="3">
-                                                                <a style="display:block; margin:0 0 14px;" ><img src="https://res.cloudinary.com/palsplate/image/upload/v1509805367/email%20Images/lower.jpg" width="540" height="270" alt="More" style="display:block; margin:0; border:0; background:#eeeeee;"></a>
+                                                                <a style="display:block; margin:0 0 14px;" ><img src="https://res.cloudinary.com/palsplate/image/upload/v1510685917/email_images_lower_o7lazk.png" width="540" height="100" alt="More" style="display:block; margin:0; border:0; background:#eeeeee;"></a>
                                                                 <p style="font-size:14px; line-height:22px; font-weight:bold; color:#333333; margin:0 0 5px;"><a href="http://pixelbuddha.net/" style="color:#484a42; text-decoration:none;">Fragen, Kommentare oder Feedback?</a></p>
-                                                                <p style="margin:0 0 35px; font-size:12px; line-height:18px; color:#333333;">Hast Du noch Fragen zu Deinem PalsPlate Konto? Dann zögere nicht uns direkt zu kontaktieren! 
+                                                                <p style="margin:0 0 35px; font-size:12px; line-height:18px; color:#333333;">Kommen Sie gerne mit Fragen, Bedenken oder Feedback auf uns zu.
+ 
                                                                 
-                                                                <br><b>Dein PalsPlate Team. :) &nbsp;&nbsp; </b></br>
+                                                                <br><br><b>Ihr PalsPlate Team. :) &nbsp;&nbsp; </b></br>
 
 
                                                                 </p>
@@ -82,7 +110,7 @@
                                                         <tr valign="top">
                                                             <td width="30"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
                                                             <td>
-                                                                <p style="margin:0 0 4px; font-weight:bold; color:#333333; font-size:14px; line-height:22px;">PalsPlate, Inc.</p>
+                                                                <p style="margin:0 0 4px; font-weight:bold; color:#333333; font-size:14px; line-height:22px;">PalsPlate UG.</p>
                                                                 <p style="margin:0; color:#333333; font-size:11px; line-height:18px;">
                                                                     Hamburg, Germany<br>
                                                                     Help &amp; Support Center: 015123013075<br>
@@ -91,16 +119,16 @@
                                                             </td>
                                                             <td width="30"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
                                                             <td width="120">
-                                                                <a href="https://www.facebook.com/palsplate" style="float:left; width:24px; height:24px; margin:6px 8px 10px 0;">
+                                                                <a href="https://www.facebook.com/Palsplate-637437359979040/" style="float:left; width:24px; height:24px; margin:6px 8px 10px 0;">
                                                                     <img src="https://res.cloudinary.com/palsplate/image/upload/v1509723335/email%20Images/facebook.jpg" width="24" height="24" alt="facebook" style="display:block; margin:0; border:0; background:#eeeeee;">
                                                                 </a>
-                                                                <a href="https://twitter.com/palsplate" style="float:left; width:24px; height:24px; margin:6px 8px 10px 0;">
+                                                                <a href="https://twitter.com/real_palsplate" style="float:left; width:24px; height:24px; margin:6px 8px 10px 0;">
                                                                     <img src="https://res.cloudinary.com/palsplate/image/upload/v1509805067/email%20Images/twitter.png" width="24" height="24" alt="twitter" style="display:block; margin:0; border:0; background:#eeeeee;">
                                                                 </a>
                                                              
                                             
                                                                 <p style="margin:0; font-weight:bold; clear:both; font-size:12px; line-height:22px;">
-                                                                    <a href="http://palsplate.com/" style="color:#e97b97; text-decoration:none;">Visit website</a><br>
+                                                                    <a href="https://www.palsplate.com/" style="color:#e97b97; text-decoration:none;">Besuche die Website</a><br>
                                                                     
                                                                 </p>
                                                             </td>
@@ -134,9 +162,6 @@
                                     </tbody>
                                 </table>
                                 <!-- end wrapper-->
-                                <p style="margin:0; padding:34px 0 0; text-align:center; font-size:11px; line-height:13px; color:#333333;">
-                                    Don‘t want to recieve further emails? You can unsibscribe <a href="http://palsplate.com/unsubscribe" style="color:#333333; text-decoration:underline;">here</a>
-                                </p>
                             </td>
                         </tr>
                     </tbody>

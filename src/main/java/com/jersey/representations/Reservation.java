@@ -60,12 +60,12 @@ public class Reservation {
         this.food_id = foodId;
     }
 
-    public Long getCustomerId() {
+    public Long getCustomer_id() {
         return customer_id;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customer_id = customerId;
+    public void setCustomer_id(Long customer_id) {
+        this.customer_id = customer_id;
     }
 
     public Boolean getIs_active() {

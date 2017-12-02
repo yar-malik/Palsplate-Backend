@@ -2,16 +2,14 @@ package com.jersey.resources;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.jersey.persistence.FoodDao;
-import com.jersey.persistence.ImageDao;
-import com.jersey.representations.Food;
-import com.jersey.representations.Image;
-import com.jersey.representations.Person;
+import com.jersey.persistence.*;
+import com.jersey.representations.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +22,7 @@ import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.xml.stream.Location;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -45,6 +44,15 @@ public class FoodResource {
     private Cloudinary cloudinary;
 
     private FoodDao foodDao;
+
+    @Autowired
+    private LocationFoodDao locationFoodDao;
+
+    @Autowired
+    private PersonDao personDao;
+
+    @Autowired
+    private CookDao cookDao;
 
     @Inject
     public FoodResource(FoodDao foodDao){
@@ -103,16 +111,47 @@ public class FoodResource {
         return food;
     }
 
+    /**
+     * Get location for specific food
+     * @param id
+     * @return food
+     */
     @GET
     @Path("secure/foods/{id}/location_food")
     public Food getLocationForFood(@PathParam("id")long id) {
-        System.out.println("YOYO");
         Food food = foodDao.findOne(id);
         if (food  == null) {
             throw new WebApplicationException((Response.Status.NOT_FOUND));
         }
         food.getLocationFood().size();
         return food;
+    }
+
+    /**
+     * Get food object with person information
+     * @param id
+     * @return food
+     */
+    @GET
+    @Path("public/foods/{id}/chefinfo")
+    public JSONObject getChefInfoForFood(@PathParam("id")long id) {
+        Food food = foodDao.findOne(id);
+        if (food  == null) {
+            throw new WebApplicationException((Response.Status.NOT_FOUND));
+        }
+
+        Cook cook = cookDao.findOne(food.getCook_id());
+        Person person = personDao.findOne(cook.getPerson_id());
+
+
+        JSONObject foodcookinfo = new JSONObject();
+        foodcookinfo.put("food", food);
+        foodcookinfo.put("firstname", person.getFirstName());
+        foodcookinfo.put("lastname", person.getLastName());
+        foodcookinfo.put("description", person.getDescription());
+        foodcookinfo.put("photo_id", person.getPhotoPublicId());
+
+        return foodcookinfo;
     }
 
     /**
@@ -213,24 +252,17 @@ public class FoodResource {
 
         List<Food> foods = null;
 
-        if(page == null && size == null)
-        {
+        if(page == null && size == null){
             foods =  this.foodDao.findAll();
         }
-        else
-        {
-            //set default value for page
-            if(page == null)
-            {
+        else{
+            if(page == null){
                 page = new Integer(0);
             }
 
-            //set defaullt value for size
-            if(size == null)
-            {
+            if(size == null){
                 size = new Integer(3);
             }
-
 
             List<Sort.Order> orders = new ArrayList<>();
 
@@ -253,7 +285,6 @@ public class FoodResource {
             foods =   this.foodDao.findAll(pageable).getContent();
         }
 
-
         ArrayList<Food> filterByDistanceFoods = new ArrayList<>();
         ArrayList<Food> filterByMaxPriceFoods = new ArrayList<>();
         ArrayList<Food> filterByFoodTypeFoods = new ArrayList<>();
@@ -262,10 +293,14 @@ public class FoodResource {
         if(maxDist != null && lon != null && lat != null){
             Double disDiff;
             for(Food f: foods){
-                disDiff = distFrom(lon, lat, f.getLon(), f.getLat())/1000;
-                if(disDiff > maxDist){
-                    filterByDistanceFoods.add(f);
-                }
+//                LocationFood locationFood = locationFoodDao.findOne(f.getLocationFood().);
+//
+//                Cook cook = cookDao.findOne(food.getCook_id());
+//
+//                disDiff = distFrom(lon, lat, f.getLon(), f.getLat())/1000;
+//                if(disDiff > maxDist){
+//                    filterByDistanceFoods.add(f);
+//                }
             }
             foods.removeAll(filterByDistanceFoods);
         }

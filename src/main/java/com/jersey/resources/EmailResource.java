@@ -15,8 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.*;
-
 
 @Path("")
 @Produces(MediaType.APPLICATION_JSON)
@@ -28,63 +28,127 @@ public class EmailResource {
     private static final Logger log = LogManager.getLogger(EmailResource.class);
 
     @POST
-    @Path("secure/emails")
-    public String sendEmail(@Valid Email email) throws FileNotFoundException {
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("public/emails")
+    public org.json.simple.JSONObject sendEmail(@Valid Email email) throws FileNotFoundException {
 
-        System.out.println("emailType: " + email.type);
-        System.out.println("subject: " + email.subject);
-        System.out.println("recipient: " + email.recipient);
-        System.out.println("name: " + email.name);
-
-        ClientResponse response = null;
-        EmailResource emailResource = new EmailResource();
-        String html = null;
-
-        if(email.type.equalsIgnoreCase("sign_up")){
-            html = emailResource.htmlIntoString("sign_up.html");
+        if (!email.token.equalsIgnoreCase(System.getenv().get("PALSPLATE_EMAIL_TOKEN"))) {
+            throw new WebApplicationException((Response.Status.UNAUTHORIZED));
         }
+        else{
+            EmailResource emailResource = new EmailResource();
 
-        if(email.type.equalsIgnoreCase("food_uploaded")){
-            html = emailResource.htmlIntoString("food_uploaded.html");
+            if(email.type.equalsIgnoreCase("signup_successful")){
+                email.from = "Palsplate UG <info@mg.palsplate.com>";
+                if(email.person_id == null || email.recipientName == null){
+                    throw new WebApplicationException((Response.Status.BAD_REQUEST));
+                }
+                else if (email.locale.equalsIgnoreCase("en")){
+                    email.body = emailResource.htmlIntoString("en_signup_successful.html");
+                }
+                else if (email.locale.equalsIgnoreCase("de")){
+                    email.body = emailResource.htmlIntoString("de_signup_successful.html");
+                }
+            }
+
+            if(email.type.equalsIgnoreCase("reservation_cook")){
+                email.from = "Palsplate UG <info@mg.palsplate.com>";
+                if(email.person_id == null || email.recipientName == null || email.foodName ==null
+                        || email.reservation_id == null){
+                    throw new WebApplicationException((Response.Status.BAD_REQUEST));
+                }
+                else if (email.locale.equalsIgnoreCase("en")){
+                    email.body = emailResource.htmlIntoString("en_reservation_cook.html");
+                }
+                else if (email.locale.equalsIgnoreCase("de")){
+                    email.body = emailResource.htmlIntoString("de_reservation_cook.html");
+                }
+            }
+
+            if(email.type.equalsIgnoreCase("reservation_customer")){
+                email.from = "Palsplate UG <info@mg.palsplate.com>";
+                if(email.recipientName == null || email.foodName == null || email.foodPrice ==null
+                        || email.foodOfferStart == null || email.reservation_id == null){
+                    throw new WebApplicationException((Response.Status.BAD_REQUEST));
+                }
+                else if (email.locale.equalsIgnoreCase("en")){
+                    email.body = emailResource.htmlIntoString("en_reservation_customer.html");
+                }
+                else if (email.locale.equalsIgnoreCase("de")){
+                    email.body = emailResource.htmlIntoString("de_reservation_customer.html");
+                }
+            }
+
+            if(email.type.equalsIgnoreCase("contact_us")) {
+                if (email.body == null || email.from == null || email.subject == null) {
+                    throw new WebApplicationException((Response.Status.BAD_REQUEST));
+                }
+                email.recipientEmail = "info@palsplate.com";
+                email.recipientName = null;
+                email.reservation_id = null;
+                email.person_id = null;
+                email.foodName = null;
+                email.foodPrice = null;
+                email.foodOfferStart = null;
+                email.foodOfferStop = null;
+            }
+
+            ClientResponse response = emailResource.sendComplexMessage(
+                    email.subject,
+                    email.recipientEmail,
+                    email.recipientName,
+                    email.from,
+                    email.body,
+                    email.reservation_id,
+                    email.person_id,
+                    email.foodName,
+                    email.foodPrice,
+                    email.foodOfferStart,
+                    email.foodOfferStop);
+
+            org.json.simple.JSONObject emailResponse = new org.json.simple.JSONObject();
+            emailResponse.put("response date", response.getResponseDate());
+            emailResponse.put("response status", response.getStatus());
+
+            return emailResponse;
         }
-
-        if(email.type.equalsIgnoreCase("reservation_accepted")){
-            html = emailResource.htmlIntoString("reservation_accepted.html");
-        }
-
-        if(email.type.equalsIgnoreCase("reservation_declined")){
-            html = emailResource.htmlIntoString("reservation_declined.html");
-        }
-
-        if(email.type.equalsIgnoreCase("reservation_requested")){
-            html = emailResource.htmlIntoString("reservation_requested.html");
-        }
-
-        if(email.type.equalsIgnoreCase("sign_up_successful")){
-            html = emailResource.htmlIntoString("sign_up_successful.html");
-        }
-
-        response = emailResource.sendComplexMessage(html, email.subject, email.recipient, email.name);
-
-        return response.toString();
     }
 
-    public ClientResponse sendComplexMessage(String html, String subject, String recipient, String name) {
+    public ClientResponse sendComplexMessage(String subject,
+                                             String recipientEmail,
+                                             String recipientName,
+                                             String from,
+                                             String body,
+                                             String reservation_id,
+                                             String person_id,
+                                             String foodName,
+                                             String foodPrice,
+                                             String foodOfferStart,
+                                             String foodOfferStop) {
 
         JSONObject recipientVariableJson = new JSONObject();
         JSONObject nameObject = new JSONObject();
-        nameObject.put("name", name);
-        recipientVariableJson.put(recipient, nameObject);
+        nameObject.put("name", recipientName);
+        nameObject.put("reservation_id", reservation_id);
+        nameObject.put("person_id", person_id);
+        nameObject.put("foodName", foodName);
+        nameObject.put("foodPrice", foodPrice);
+        nameObject.put("foodOfferStart", foodOfferStart);
+        nameObject.put("foodOfferStop", foodOfferStop);
+        nameObject.put("reservationUrl", "https://www.palsplate.com/reservations/" + reservation_id);
+        nameObject.put("personUrl", "https://www.palsplate.com/users/" + person_id);
+
+        recipientVariableJson.put(recipientEmail, nameObject);
 
         Client client = Client.create();
         client.addFilter(new HTTPBasicAuthFilter("api", System.getenv().get("MAILGUN_APIKEY")));
         WebResource webResource = client.resource("https://api.mailgun.net/v3/mg.palsplate.com/messages");
 
         FormDataMultiPart formData = new FormDataMultiPart();
-        formData.field("from", "Palsplate UG <info@" + "mg.palsplate.com" + ">");
-        formData.field("to", recipient);
+        formData.field("from", from);
+        formData.field("to", recipientEmail);
         formData.field("subject", subject.toString());
-        formData.field("html", html);
+        formData.field("html", body);
         formData.field("recipient-variables", recipientVariableJson.toString());
 
         ClientResponse clientResponse = webResource.type(MediaType.MULTIPART_FORM_DATA_TYPE).post(ClientResponse.class, formData);
@@ -97,9 +161,7 @@ public class EmailResource {
 
         String content = "";
         try {
-
             ClassLoader classLoader = getClass().getClassLoader();
-
             BufferedReader in = new BufferedReader(new FileReader(new File(classLoader.getResource(file).getFile())));
             String str;
             while ((str = in.readLine()) != null) {

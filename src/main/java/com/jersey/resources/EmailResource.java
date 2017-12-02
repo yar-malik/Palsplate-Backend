@@ -39,28 +39,56 @@ public class EmailResource {
             EmailResource emailResource = new EmailResource();
             email.from = "Palsplate UG <info@mg.palsplate.com>";
 
-            if(email.type.equalsIgnoreCase("signup_successful") && email.locale.equalsIgnoreCase("en")){
-                email.body = emailResource.htmlIntoString("en_signup_successful.html");
+            if(email.type.equalsIgnoreCase("signup_successful")){
+                if(email.person_id == null || email.recipientName == null){
+                    throw new WebApplicationException((Response.Status.BAD_REQUEST));
+                }
+                else if (email.locale.equalsIgnoreCase("en")){
+                    email.body = emailResource.htmlIntoString("en_signup_successful.html");
+                }
+                else if (email.locale.equalsIgnoreCase("de")){
+                    email.body = emailResource.htmlIntoString("de_signup_successful.html");
+                }
             }
 
-            if(email.type.equalsIgnoreCase("signup_successful") && email.locale.equalsIgnoreCase("de")){
-                email.body = emailResource.htmlIntoString("de_signup_successful.html");
+            if(email.type.equalsIgnoreCase("reservation_cook")){
+                if(email.person_id == null || email.recipientName == null || email.foodName ==null
+                        || email.reservation_id == null){
+                    throw new WebApplicationException((Response.Status.BAD_REQUEST));
+                }
+                else if (email.locale.equalsIgnoreCase("en")){
+                    email.body = emailResource.htmlIntoString("en_reservation_cook.html");
+                }
+                else if (email.locale.equalsIgnoreCase("de")){
+                    email.body = emailResource.htmlIntoString("de_reservation_cook.html");
+                }
             }
 
-            if(email.type.equalsIgnoreCase("reservation_cook") && email.locale.equalsIgnoreCase("en")){
-                email.body = emailResource.htmlIntoString("en_reservation_cook.html");
+            if(email.type.equalsIgnoreCase("reservation_customer")){
+                if(email.recipientName == null || email.foodName == null || email.foodPrice ==null
+                        || email.foodOfferStart == null || email.reservation_id == null){
+                    throw new WebApplicationException((Response.Status.BAD_REQUEST));
+                }
+                else if (email.locale.equalsIgnoreCase("en")){
+                    email.body = emailResource.htmlIntoString("en_reservation_customer.html");
+                }
+                else if (email.locale.equalsIgnoreCase("de")){
+                    email.body = emailResource.htmlIntoString("de_reservation_customer.html");
+                }
             }
 
-            if(email.type.equalsIgnoreCase("reservation_cook") && email.locale.equalsIgnoreCase("de")){
-                email.body = emailResource.htmlIntoString("de_reservation_cook.html");
-            }
-
-            if(email.type.equalsIgnoreCase("reservation_customer") && email.locale.equalsIgnoreCase("en")){
-                email.body = emailResource.htmlIntoString("en_reservation_customer.html");
-            }
-
-            if(email.type.equalsIgnoreCase("reservation_customer") && email.locale.equalsIgnoreCase("de")){
-                email.body = emailResource.htmlIntoString("de_reservation_customer.html");
+            if(email.type.equalsIgnoreCase("contact_us")) {
+                if (email.body == null || email.from == null || email.subject == null) {
+                    throw new WebApplicationException((Response.Status.BAD_REQUEST));
+                }
+                email.recipientEmail = "info@palsplate.com";
+                email.recipientName = null;
+                email.reservation_id = null;
+                email.person_id = null;
+                email.foodName = null;
+                email.foodPrice = null;
+                email.foodOfferStart = null;
+                email.foodOfferStop = null;
             }
 
             ClientResponse response = emailResource.sendComplexMessage(
@@ -83,39 +111,6 @@ public class EmailResource {
             return emailResponse;
         }
     }
-
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Path("public/contact_email")
-    public org.json.simple.JSONObject sendContactEmail(@Valid Email email) {
-
-        if (email.from == null || email.subject == null || email.body == null) {
-            throw new WebApplicationException((Response.Status.BAD_REQUEST));
-        } else {
-            ClientResponse response = null;
-            EmailResource emailResource = new EmailResource();
-
-            response = emailResource.sendComplexMessage(
-                    email.subject,
-                    "info@palsplate.com",
-                    null,
-                    email.from,
-                    email.body,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null);
-
-            org.json.simple.JSONObject emailResponse = new org.json.simple.JSONObject();
-            emailResponse.put("response date", response.getResponseDate());
-            emailResponse.put("response status", response.getStatus());
-
-            return emailResponse;
-        }
-    }
-
 
     public ClientResponse sendComplexMessage(String subject,
                                              String recipientEmail,

@@ -401,6 +401,7 @@ type can be following:
   * signup_successful
   * reservation_cook
   * reservation_customer
+  * contact_us
 
 variables which can be used in html to make dynamic content are as follows: 
 
@@ -417,11 +418,11 @@ variables which can be used in html to make dynamic content are as follows:
 variables in html are added in percentage signs: 
 `%recipient.name%`
 
- - - -
+Note: for email type = `contact_us`, one has to specify the following parameters
+* recipient.from
+* recipient.body
+* recipient.subject
 
-## Email (contact section)
-
-``POST localhost:8080/api/public/contact_email``
 
 ```
 {

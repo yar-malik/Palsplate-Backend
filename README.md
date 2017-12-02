@@ -386,7 +386,7 @@ Send an Email to certain recipient with following post body
   "type": "reservation_cook",
   "recipientName": "OGMalik", 
   "locale": "en",
-  "token": "Palsplate2017",
+  "token": "*****",
   "foodName": "Biryani",
   "foodPrice": "4.5",
   "foodOfferStart": "2015-4-10", 
@@ -419,14 +419,18 @@ variables in html are added in percentage signs:
 `%recipient.name%`
 
 Note: for email type = `contact_us`, one has to specify the following parameters
-* recipient.from
-* recipient.body
+* recipient.type
 * recipient.subject
+* recipient.token
+* recipient.body
+* recipient.from
 
 
 ```
 {
+  "type": "contact_us", 
   "subject": "information about food",
+  "token": "******",
   "body": "I really love your food", 
   "from": "jojo@gmail.com"
 }

@@ -65,7 +65,7 @@ public class PersonResource {
      * @return persons
      */
     @GET
-    @Path("secure/persons")
+    @Path("public/persons")
 //    @PreAuthorize("hasPermission('PersonResource', 'ROLE_ADMIN')")
     public List<Person> getAll(@QueryParam("page") Integer page,
                                @QueryParam("size") Integer size,
@@ -141,7 +141,7 @@ public class PersonResource {
     }
 
     @GET
-    @Path("secure/persons/{id}/location_person")
+    @Path("secure/persons/{id}/location_persons")
     public Person getLocationForPerson(@PathParam("id")long id) {
         Person person = personDao.findOne(id);
         if (person == null) {
@@ -247,8 +247,8 @@ public class PersonResource {
      * Copies the person object without password and other security impacting information
      * @return Copied person object
      */
-    private Person CopyPersonSafe(Person person)
-    {
+    private Person CopyPersonSafe(Person person){
+
         Person newPerson = new Person();
 
         newPerson.setId(person.getId());
@@ -263,6 +263,7 @@ public class PersonResource {
         newPerson.setCustomer(person.getCustomer());
         newPerson.setPhotoName(person.getPhotoName());
         newPerson.setPhotoPublicId(person.getPhotoPublicId());
+        newPerson.setLocationPerson(person.getLocationPerson());
 
         return  newPerson;
     }

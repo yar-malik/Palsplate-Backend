@@ -52,7 +52,7 @@ public class EmailResource {
             }
 
             if(email.type.equalsIgnoreCase("reservation_cook") && email.locale.equalsIgnoreCase("de")){
-                email.body = emailResource.htmlIntoString("de_signup_successful.html");
+                email.body = emailResource.htmlIntoString("de_reservation_cook.html");
             }
 
             if(email.type.equalsIgnoreCase("reservation_customer") && email.locale.equalsIgnoreCase("en")){
@@ -60,7 +60,7 @@ public class EmailResource {
             }
 
             if(email.type.equalsIgnoreCase("reservation_customer") && email.locale.equalsIgnoreCase("de")){
-                email.body = emailResource.htmlIntoString("de_signup_successful.html");
+                email.body = emailResource.htmlIntoString("de_reservation_customer.html");
             }
 
             ClientResponse response = emailResource.sendComplexMessage(

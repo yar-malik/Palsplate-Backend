@@ -33,7 +33,7 @@ public class FacebookConnectionSignup implements ConnectionSignUp{
             person.setFirstName(userProfile.getFirstName());
             person.setLastName(userProfile.getLastName());
             person.setEmail(userProfile.getEmail());
-            person.setGranted_role("ROLE_USER_FACEBOOK");
+            person.setRoles("ROLE_USER_FACEBOOK");
             person.setPassword(randomAlphabetic(8));
 
             if(userProfile.getLocation() != null){
@@ -48,7 +48,7 @@ public class FacebookConnectionSignup implements ConnectionSignUp{
                 person.setDescription(userProfile.getAbout());
             }
             else{
-                //temp becauser we have not null constraint
+                //temp because we have not null constraint
                 person.setDescription("This is a placeholder for description");
             }
 

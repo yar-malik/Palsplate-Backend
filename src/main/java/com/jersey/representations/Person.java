@@ -2,11 +2,16 @@ package com.jersey.representations;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 @Entity
 @Table(name = "person")
@@ -224,12 +229,17 @@ public class Person {
 
     public void setUpdatedat(Date updatedat) { this.updatedat = updatedat; }
 
-    public String getGranted_role() {
-        return granted_role;
-    }
+    public ArrayList<GrantedAuthority> getGrantedAuthorities() {
 
-    public void setGranted_role(String granted_role) {
-        this.granted_role = granted_role;
+        ArrayList<GrantedAuthority> authorities = new ArrayList<>();
+        StringTokenizer tokens = new StringTokenizer(granted_role, ",");
+
+        while(tokens.hasMoreTokens())
+        {
+            authorities.add(new SimpleGrantedAuthority(tokens.nextToken()));
+        }
+
+        return authorities;
     }
 
     public Set<LocationPerson> getLocationPerson() {

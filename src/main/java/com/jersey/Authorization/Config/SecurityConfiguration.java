@@ -2,7 +2,9 @@ package com.jersey.Authorization.Config;
 
 import com.jersey.Authorization.Config.Facebook.FacebookConnectionSignup;
 import com.jersey.Authorization.Config.Facebook.FacebookSignInAdapter;
+import com.jersey.persistence.PersonDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
@@ -18,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecurityExpressionHandler;
+import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.mem.InMemoryUsersConnectionRepository;
@@ -39,6 +42,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private FacebookConnectionSignup facebookConnectionSignup;
+
+    @Autowired
+    private AuthorizationServerTokenServices authorizationServerTokenServices;
+
+    @Autowired
+    private PersonDao personDao;
+
+    @Value("${authentication.oauth.clientid}")
+    private String localClientID;
 
     @Bean
     public PasswordEncoder passwordEncoder()
@@ -84,7 +96,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         ((InMemoryUsersConnectionRepository) usersConnectionRepository).setConnectionSignUp(facebookConnectionSignup);
 
-        ProviderSignInController signInController = new ProviderSignInController(connectionFactoryLocator, usersConnectionRepository, new FacebookSignInAdapter());
+        ProviderSignInController signInController = new ProviderSignInController(connectionFactoryLocator, usersConnectionRepository, new FacebookSignInAdapter(authorizationServerTokenServices, personDao, localClientID));
         return signInController;
     }
 

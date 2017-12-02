@@ -37,9 +37,7 @@ public class FacebookSignInAdapter implements SignInAdapter{
         Person person = personDao.findByEmail(localUserId);
         OAuth2AccessToken oAuth2AccessToken = authTokenServices.createAccessToken(PersonToAuthentication(person));
 
-        System.out.println("Token: " + oAuth2AccessToken.getValue());
-
-        String redirectUrl = new StringBuilder("http://localhost:3000/authenticate")
+        String redirectUrl = new StringBuilder("https://www.palsplate.com/authenticate")
                                 .append("?").append("access_token").append("=")
                                 .append(oAuth2AccessToken.getValue())
                                 .append("&").append("user_id").append("=")

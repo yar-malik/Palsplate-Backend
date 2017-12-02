@@ -420,9 +420,10 @@ variables in html are added in percentage signs:
 
 Note: for email type = `contact_us`, one has to specify the following parameters
 * recipient.type
-* recipient.from
-* recipient.body
 * recipient.subject
+* recipient.token
+* recipient.body
+* recipient.from
 
 
 ```

@@ -65,7 +65,7 @@ public class PersonResource {
      * @return persons
      */
     @GET
-    @Path("public/persons")
+    @Path("secure/persons")
 //    @PreAuthorize("hasPermission('PersonResource', 'ROLE_ADMIN')")
     public List<Person> getAll(@QueryParam("page") Integer page,
                                @QueryParam("size") Integer size,

@@ -37,9 +37,9 @@ public class EmailResource {
         }
         else{
             EmailResource emailResource = new EmailResource();
-            email.from = "Palsplate UG <info@mg.palsplate.com>";
 
             if(email.type.equalsIgnoreCase("signup_successful")){
+                email.from = "Palsplate UG <info@mg.palsplate.com>";
                 if(email.person_id == null || email.recipientName == null){
                     throw new WebApplicationException((Response.Status.BAD_REQUEST));
                 }
@@ -52,6 +52,7 @@ public class EmailResource {
             }
 
             if(email.type.equalsIgnoreCase("reservation_cook")){
+                email.from = "Palsplate UG <info@mg.palsplate.com>";
                 if(email.person_id == null || email.recipientName == null || email.foodName ==null
                         || email.reservation_id == null){
                     throw new WebApplicationException((Response.Status.BAD_REQUEST));
@@ -65,6 +66,7 @@ public class EmailResource {
             }
 
             if(email.type.equalsIgnoreCase("reservation_customer")){
+                email.from = "Palsplate UG <info@mg.palsplate.com>";
                 if(email.recipientName == null || email.foodName == null || email.foodPrice ==null
                         || email.foodOfferStart == null || email.reservation_id == null){
                     throw new WebApplicationException((Response.Status.BAD_REQUEST));

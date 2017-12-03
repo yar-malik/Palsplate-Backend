@@ -178,8 +178,8 @@ public class FoodResource {
      * @return JSONObject
      */
     @GET
-        @Path("public/customs/foodsWithCooks")
-    public JSONArray getFoodsWithCooks(@QueryParam("page") Integer page,
+    @Path("public/customs/foodsWithCooks")
+    public JSONObject getFoodsWithCooks(@QueryParam("page") Integer page,
                                   @QueryParam("size") Integer size,
                                   @QueryParam("sort") List<String> sort) {
 
@@ -216,6 +216,7 @@ public class FoodResource {
             foods = this.foodDao.findAll(pageable).getContent();
         }
 
+        JSONObject foodCookCompleteObject = new JSONObject();
         JSONArray jsonArray = new JSONArray();
 
         for(Food food: foods){
@@ -233,7 +234,9 @@ public class FoodResource {
 
         }
 
-        return jsonArray;
+        foodCookCompleteObject.put("foodsWithCooks", jsonArray);
+
+        return foodCookCompleteObject;
     }
 
     /**

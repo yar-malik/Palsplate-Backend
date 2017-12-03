@@ -234,7 +234,7 @@ public class FoodResource {
 
         }
 
-        foodCookCompleteObject.put("foodsWithCooks", jsonArray);
+        foodCookCompleteObject.put("foodsWithCooksJson", jsonArray);
 
         return foodCookCompleteObject;
     }

@@ -380,7 +380,9 @@ public class FoodResource {
                     filterByDistanceFoods.add(food);
                 }
             }
-            foods.removeAll(filterByDistanceFoods);
+            if(filterByDistanceFoods.size() > 0) {
+                foods.removeAll(filterByDistanceFoods);
+            }
         }
 
         if(maxPrice != null){
@@ -389,7 +391,13 @@ public class FoodResource {
                     filterByMaxPriceFoods.add(f);
                 }
             }
-            foods.removeAll(filterByMaxPriceFoods);
+
+            System.out.println("size: " + foods);
+            System.out.println("filterByMaxPriceFoods: " + filterByMaxPriceFoods);
+
+            if(filterByMaxPriceFoods.size() > 0){
+                foods.removeAll(filterByMaxPriceFoods);
+            }
         }
 
         if(foodType != null){
@@ -398,7 +406,9 @@ public class FoodResource {
                     filterByFoodTypeFoods.add(f);
                 }
             }
-            foods.removeAll(filterByFoodTypeFoods);
+            if(filterByFoodTypeFoods.size() > 0) {
+                foods.removeAll(filterByFoodTypeFoods);
+            }
         }
 
         if(cuisineType != null){
@@ -407,7 +417,9 @@ public class FoodResource {
                     filterByCuisineTypeFoods.add(f);
                 }
             }
-            foods.removeAll(filterByCuisineTypeFoods);
+            if(filterByCuisineTypeFoods.size() > 0) {
+                foods.removeAll(filterByCuisineTypeFoods);
+            }
         }
 
         log.info("Filtered result size: " + foods.size());

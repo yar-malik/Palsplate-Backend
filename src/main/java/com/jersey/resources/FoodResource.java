@@ -391,10 +391,6 @@ public class FoodResource {
                     filterByMaxPriceFoods.add(f);
                 }
             }
-
-            System.out.println("size: " + foods);
-            System.out.println("filterByMaxPriceFoods: " + filterByMaxPriceFoods);
-
             if(filterByMaxPriceFoods.size() > 0){
                 foods.removeAll(filterByMaxPriceFoods);
             }

@@ -355,7 +355,7 @@ public class FoodResource {
         if(maxDist != null && lon != null && lat != null){
             Double disDiff;
             for(Food food: foods){
-                LocationFood lf = locationFoodDao.findByFoodID(food.getId());
+                LocationFood lf = locationFoodDao.findByFood_id(food.getId());
                 disDiff = distFrom(lon, lat, lf.getLon(), lf.getLat())/1000;
                 if(disDiff > maxDist){
                     filterByDistanceFoods.add(food);

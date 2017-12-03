@@ -134,7 +134,7 @@ public class ReservationResource {
             throw new WebApplicationException((Response.Status.NOT_FOUND));
         }
 
-        Food food = foodDao.findOne(reservation.getFoodId());
+        Food food = foodDao.findOne(reservation.getFood_id());
         Customer customer = customerDao.findOne(reservation.getCustomer_id());
         Cook cook = cookDao.findOne(food.getCook_id());
 

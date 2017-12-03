@@ -9,6 +9,6 @@ import org.springframework.data.repository.query.Param;
 public interface LocationPersonDao extends JpaRepository<LocationPerson, Long> {
 
     @Query("SELECT u FROM LocationPerson u WHERE (u.person_id) = (:person_id)")
-    LocationPerson findByPersonID(@Param("person_id") Long person_id);
+    LocationPerson findByPerson_id(@Param("person_id") Long person_id);
 
 }

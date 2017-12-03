@@ -129,7 +129,7 @@ public class CustomerResource {
 
             for(Reservation reservation: customer.getReservations()){
                 JSONObject jsonReservationAll = new JSONObject();
-                Food food = foodDao.findOne(reservation.getFoodId());
+                Food food = foodDao.findOne(reservation.getFood_id());
                 Cook cook = cookDao.findOne(food.getCook_id());
                 Person person = personDao.findOne(cook.getPerson_id());
                 jsonReservationAll.put("cookFirstName", person.getFirstName());

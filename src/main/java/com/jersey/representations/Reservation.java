@@ -52,11 +52,11 @@ public class Reservation {
         this.id = id;
     }
 
-    public Long getFoodId() {
+    public Long getFood_id() {
         return food_id;
     }
 
-    public void setFoodId(Long food_id) {
+    public void setFood_id(Long food_id) {
         this.food_id = food_id;
     }
 

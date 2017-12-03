@@ -443,27 +443,27 @@ Email from this API would be sent to inbox of `info@palsplate.com`
   * Get reservation with cook and customer information
   ``GET localhost:8080/api/secure/reservations/{reservation_id}/getCustomerAndCook``
 
-  * Get chef info with food object
-    ``GET localhost:8080/api/public/foods/{food_id}/chefinfo``
+  * Get cook info with food object
+    ``GET localhost:8080/api/public/foods/{food_id}/cookinfo``
     
-  * Get all foods with chef info
-   ``GET localhost:8080/api/public/foodsWithChefs?size=3&sort=id``
+  * Get all foods with cook info
+   ``GET localhost:8080/api/public/foodsWithCooks?size=3&sort=id``
      
      and this returns an output like 
      
 ```
 [
  {
-     "chef_description": "I am cool",
-     "chef_photo": "cmn2bezmfza9iz8y6dcn",
-     "chef_name": "HanooMalik",
+     "cook_description": "I am cool",
+     "cook_photo": "cmn2bezmfza9iz8y6dcn",
+     "cook_name": "HanooMalik",
      "food_average_rating": 5,
      "id": 41
  },
  {
-     "chef_description": "Cooking enthusiast",
-     "chef_photo": "dysyuzbdxf5vdxikkwiu",
-     "chef_name": "SaadSaeed",
+     "cook_description": "Cooking enthusiast",
+     "cook_photo": "dysyuzbdxf5vdxikkwiu",
+     "cook_name": "SaadSaeed",
      "food_average_rating": null,
      "id": 50
  }

@@ -41,7 +41,7 @@ public class FacebookConnectionSignup implements ConnectionSignUp{
             person.setRoles("ROLE_USER_FACEBOOK");
             person.setPassword(randomAlphabetic(8));
 
-            LocationPerson locationPerson = locationPersonDao.findByPersonID(person.getId());
+            LocationPerson locationPerson = locationPersonDao.findByPerson_id(person.getId());
 
             if(userProfile.getLocation() != null){
                 locationPerson.setAddress(userProfile.getLocation().getName());

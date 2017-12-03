@@ -38,19 +38,15 @@ public class Person {
     private String firstName;
 
     @Column(name = "last_name")
-    @NotNull
     private String lastName;
 
     @Column(name = "phone_number")
-    @NotNull
     private String phoneNumber;
 
     @Column(name = "description")
-    @NotNull
     private String description;
 
     @Column(name = "is_photo_public")
-    @NotNull
     private boolean isPhotoPublic;
 
     @Column(name = "photo_name")

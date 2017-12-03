@@ -56,9 +56,6 @@ public class FoodResource {
     @Autowired
     private CookDao cookDao;
 
-    @Autowired
-    private ReviewDao reviewDao;
-
     @Inject
     public FoodResource(FoodDao foodDao){
         this.foodDao = foodDao;

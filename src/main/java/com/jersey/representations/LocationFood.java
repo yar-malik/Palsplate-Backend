@@ -42,12 +42,13 @@ public class LocationFood {
     public LocationFood() {
     }
 
-    public LocationFood(Long id, String address, Double lat, Double lon, String street, String city, String country, String postal_code) {
+    public LocationFood(Long id, String address, Double lat, Double lon, String street, String sublocality, String city, String country, String postal_code) {
         this.id = id;
         this.address = address;
         this.lat = lat;
         this.lon = lon;
         this.street = street;
+        this.sublocality = sublocality;
         this.city = city;
         this.country = country;
         this.postal_code = postal_code;
@@ -121,9 +122,7 @@ public class LocationFood {
         this.postal_code = postal_code;
     }
 
-    public Long getFood_id() {
-        return food_id;
-    }
+    public Long getFood_id() { return food_id; }
 
     public void setFood_id(Long food_id) {
         this.food_id= food_id;
@@ -131,15 +130,17 @@ public class LocationFood {
 
     @Override
     public String toString() {
-        return "LocationPerson{" +
+        return "LocationFood{" +
                 "id=" + id +
                 ", address='" + address + '\'' +
                 ", lat=" + lat +
                 ", lon=" + lon +
                 ", street='" + street + '\'' +
+                ", sublocality='" + sublocality + '\'' +
                 ", city='" + city + '\'' +
                 ", country='" + country + '\'' +
                 ", postal_code='" + postal_code + '\'' +
+                ", food_id=" + food_id +
                 '}';
     }
 }

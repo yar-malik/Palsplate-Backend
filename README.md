@@ -334,6 +334,7 @@ where curlJsonReservation.json contains:
     "lat": 5.5,
     "lon": 4.56,
     "street": "st 16",
+    "sublocality": "chaklala",
     "city": "rawalpindi",
     "country": "pakistan",
     "postal_code": "46000",

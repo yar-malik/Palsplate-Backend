@@ -23,6 +23,9 @@ public class LocationFood {
     @Column(name = "street")
     private String street;
 
+    @Column(name = "sublocality")
+    private String sublocality;
+
     @Column(name = "city")
     private String city;
 
@@ -89,6 +92,10 @@ public class LocationFood {
     public void setStreet(String street) {
         this.street = street;
     }
+
+    public String getSublocality() { return sublocality; }
+
+    public void setSublocality(String sublocality) { this.sublocality = sublocality; }
 
     public String getCity() {
         return city;

@@ -263,8 +263,9 @@ public class PersonResource {
         newPerson.setCustomer(person.getCustomer());
         newPerson.setPhotoName(person.getPhotoName());
         newPerson.setPhotoPublicId(person.getPhotoPublicId());
+        newPerson.setRoles(person.getRoles());
         newPerson.setLocationPerson(person.getLocationPerson());
-
+      
         return  newPerson;
     }
 

@@ -319,13 +319,13 @@ where curlJsonReservation.json contains:
 ### Location
 
  * Get location of a food
- ``GET localhost:8080/api/secure/foods/{id}/location_food``
+ ``GET localhost:8080/api/secure/foods/{id}/location_foods``
 
  * Get location of a person
- ``GET localhost:8080/api/secure/persons/{id}/location_person``
+ ``GET localhost:8080/api/secure/persons/{id}/location_persons``
 
  * Post location of a person
-  ``POST localhost:8080/api/secure/location_person`` 
+  ``POST localhost:8080/api/secure/location_persons`` 
   with following body: 
 ```
 {

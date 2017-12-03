@@ -141,7 +141,7 @@ public class PersonResource {
     }
 
     @GET
-    @Path("secure/persons/{id}/location_person")
+    @Path("secure/persons/{id}/location_persons")
     public Person getLocationForPerson(@PathParam("id")long id) {
         Person person = personDao.findOne(id);
         if (person == null) {
@@ -247,8 +247,8 @@ public class PersonResource {
      * Copies the person object without password and other security impacting information
      * @return Copied person object
      */
-    private Person CopyPersonSafe(Person person)
-    {
+    private Person CopyPersonSafe(Person person){
+
         Person newPerson = new Person();
 
         newPerson.setId(person.getId());
@@ -264,7 +264,8 @@ public class PersonResource {
         newPerson.setPhotoName(person.getPhotoName());
         newPerson.setPhotoPublicId(person.getPhotoPublicId());
         newPerson.setRoles(person.getRoles());
-
+        newPerson.setLocationPerson(person.getLocationPerson());
+      
         return  newPerson;
     }
 

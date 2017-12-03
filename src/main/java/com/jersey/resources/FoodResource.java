@@ -117,7 +117,7 @@ public class FoodResource {
      * @return food
      */
     @GET
-    @Path("secure/foods/{id}/location_food")
+    @Path("secure/foods/{id}/location_foods")
     public Food getLocationForFood(@PathParam("id")long id) {
         Food food = foodDao.findOne(id);
         if (food  == null) {
@@ -259,11 +259,9 @@ public class FoodResource {
             if(page == null){
                 page = new Integer(0);
             }
-
             if(size == null){
                 size = new Integer(3);
             }
-
             List<Sort.Order> orders = new ArrayList<>();
 
             for (String propOrder: sort) {
@@ -292,15 +290,12 @@ public class FoodResource {
 
         if(maxDist != null && lon != null && lat != null){
             Double disDiff;
-            for(Food f: foods){
-//                LocationFood locationFood = locationFoodDao.findOne(f.getLocationFood().);
-//
-//                Cook cook = cookDao.findOne(food.getCook_id());
-//
-//                disDiff = distFrom(lon, lat, f.getLon(), f.getLat())/1000;
-//                if(disDiff > maxDist){
-//                    filterByDistanceFoods.add(f);
-//                }
+            for(Food food: foods){
+                LocationFood lf = locationFoodDao.findByFoodID(food.getId());
+                disDiff = distFrom(lon, lat, lf.getLon(), lf.getLat())/1000;
+                if(disDiff > maxDist){
+                    filterByDistanceFoods.add(food);
+                }
             }
             foods.removeAll(filterByDistanceFoods);
         }
@@ -313,7 +308,6 @@ public class FoodResource {
             }
             foods.removeAll(filterByMaxPriceFoods);
         }
-
 
         if(foodType != null){
             for(Food f: foods){
@@ -338,7 +332,7 @@ public class FoodResource {
         return foods;
     }
 
-    public double distFrom(double lat1, double lng1,    double lat2, double lng2) {
+    public double distFrom(double lat1, double lng1, double lat2, double lng2) {
         double earthRadius = 6371000; //meters
         double dLat = Math.toRadians(lat2-lat1);
         double dLng = Math.toRadians(lng2-lng1);

@@ -83,8 +83,7 @@ public class Person {
     @JoinColumn(name="person_id")
     private Set<LocationPerson> locationPerson;
 
-    public Person() {
-    }
+    public Person() {}
 
     public Person(Long id, String email, String firstName, String lastName,
                 String phoneNumber, String address, String description,

@@ -129,14 +129,14 @@ GET: http://localhost:8080/api/secure/customers/1
 ### Person
 
  * Get one specific record
- ``GET http://localhost:8080/api/public/persons/{id}``
+ ``GET http://localhost:8080/api/secure/persons/{id}``
  * Update a specific record
  ``PUT http://localhost:8080/api/secure/persons/{id}``
  * Delete a specific record
  ``DELETE http://localhost:8080/api/secure/persons/{id}``
  * Create a new record with following payload
 
-`curl -X POST -d @curlJson.txt -H "Authorization: Bearer <access-token>" http://localhost:8080/api/public/persons --header "Content-Type:application/json"`
+`curl -X POST -d @curlJson.txt -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/persons --header "Content-Type:application/json"`
 
 
 where curlJson.txt contains:
@@ -321,10 +321,10 @@ where curlJsonReservation.json contains:
  ``GET localhost:8080/api/secure/foods/{id}/location_foods``
 
  * Get location of a person
- ``GET localhost:8080/api/secure/persons/{id}/location_persons``
+ ``GET localhost:8080/api/public/persons/{id}/location_persons``
 
  * Post location of a person
-  ``POST localhost:8080/api/secure/location_persons`` 
+  ``POST localhost:8080/api/public/location_persons`` 
   with following body: 
 ```
 {

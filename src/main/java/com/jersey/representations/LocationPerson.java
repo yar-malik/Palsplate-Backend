@@ -42,15 +42,17 @@ public class LocationPerson {
     public LocationPerson() {
     }
 
-    public LocationPerson(Long id, String address, Double lat, Double lon, String street, String city, String country, String postal_code) {
+    public LocationPerson(Long id, String address, Double lat, Double lon, String street, String sublocality, String city, String country, String postal_code) {
         this.id = id;
         this.address = address;
         this.lat = lat;
         this.lon = lon;
         this.street = street;
+        this.sublocality = sublocality;
         this.city = city;
         this.country = country;
         this.postal_code = postal_code;
+
     }
 
     public Long getId() {
@@ -137,9 +139,11 @@ public class LocationPerson {
                 ", lat=" + lat +
                 ", lon=" + lon +
                 ", street='" + street + '\'' +
+                ", sublocality='" + sublocality + '\'' +
                 ", city='" + city + '\'' +
                 ", country='" + country + '\'' +
                 ", postal_code='" + postal_code + '\'' +
+                ", person_id=" + person_id +
                 '}';
     }
 }

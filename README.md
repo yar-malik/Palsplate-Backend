@@ -438,7 +438,7 @@ Note: for email type = `contact_us`, one has to specify the following parameters
 ```
 Email from this API would be sent to inbox of `info@palsplate.com`
  - - -
- ## Auxillary API
+ ## Customs API
  
   * Get reservation with cook and customer information
   ``GET localhost:8080/api/secure/customs/reservations/{reservation_id}/getCustomerAndCook``

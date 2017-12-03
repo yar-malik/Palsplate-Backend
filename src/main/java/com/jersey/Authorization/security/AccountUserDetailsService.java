@@ -23,7 +23,7 @@ public class AccountUserDetailsService implements UserDetailsService {
         Person person = personDaoRepository.findByEmail(email);
 
         if (person == null){
-            throw new UsernameNotFoundException("User with email address " + email + " was not found. Did you forget your registered email?");
+            throw new UsernameNotFoundException("User with emailaddress " + email + " was not found. Did you forget your registered email?");
         }
 
         return new User(person.getEmail(), person.getPassword(), person.getGrantedAuthorities());

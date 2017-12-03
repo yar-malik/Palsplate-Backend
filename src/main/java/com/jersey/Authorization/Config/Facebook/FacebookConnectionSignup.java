@@ -1,6 +1,8 @@
 package com.jersey.Authorization.Config.Facebook;
 
+import com.jersey.persistence.LocationPersonDao;
 import com.jersey.persistence.PersonDao;
+import com.jersey.representations.LocationPerson;
 import com.jersey.representations.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.Connection;
@@ -16,6 +18,9 @@ public class FacebookConnectionSignup implements ConnectionSignUp{
 
     @Autowired
     private PersonDao personRepository;
+
+    @Autowired
+    private LocationPersonDao locationPersonDao;
 
     @Override
     public String execute(Connection<?> connection) {
@@ -36,12 +41,14 @@ public class FacebookConnectionSignup implements ConnectionSignUp{
             person.setRoles("ROLE_USER_FACEBOOK");
             person.setPassword(randomAlphabetic(8));
 
+            LocationPerson locationPerson = locationPersonDao.findByPersonID(person.getId());
+
             if(userProfile.getLocation() != null){
-                person.setAddress(userProfile.getLocation().getName());
+                locationPerson.setAddress(userProfile.getLocation().getName());
             }
             else{
                 //temp since we have not null constraint
-                person.setAddress("This is a placeholder for address");
+                locationPerson.setAddress("This is a placeholder for address");
             }
 
             if(userProfile.getAbout() != null){

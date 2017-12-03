@@ -127,7 +127,7 @@ public class ReservationResource {
     }
 
     @GET
-    @Path("secure/reservations/{id}/getCustomerAndCook")
+    @Path("secure/customs/reservations/{id}/getCustomerAndCook")
     public JSONObject getCustomerAndCook(@PathParam("id")long id) {
         Reservation reservation = reservationDao.findOne(id);
         if (reservation  == null) {

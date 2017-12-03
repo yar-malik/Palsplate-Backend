@@ -53,7 +53,7 @@ public class LocationPersonResource {
      * @return new locationPerson
      */
     @POST
-    @Path("secure/location_persons")
+    @Path("public/location_persons")
     public LocationPerson save(@Valid LocationPerson locationPerson) {
             return locationPersonDao.save(locationPerson);
     }

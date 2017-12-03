@@ -1,14 +1,17 @@
 package com.jersey.resources;
 
+import com.jersey.persistence.CustomerDao;
+import com.jersey.persistence.PersonDao;
 import com.jersey.persistence.ReviewDao;
-import com.jersey.representations.Customer;
-import com.jersey.representations.Review;
+import com.jersey.representations.*;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +33,12 @@ public class ReviewResource {
     private static final Logger log = LogManager.getLogger(ReviewResource.class);
 
     private final ReviewDao reviewDao;
+
+    @Autowired
+    private CustomerDao customerDao;
+
+    @Autowired
+    private PersonDao personDao;
 
     @Inject
     public ReviewResource(ReviewDao reviewDao) {
@@ -135,4 +144,74 @@ public class ReviewResource {
             reviewDao.delete(review);
         }
     }
+
+
+    /**
+     * Get food object with cooks information
+     * @param
+     * @return JSONObject
+     */
+    @GET
+    @Path("public/customs/reviewsWithCustomers")
+    public JSONObject getFoodsWithCooks(@QueryParam("page") Integer page,
+                                        @QueryParam("size") Integer size,
+                                        @QueryParam("sort") List<String> sort) {
+
+        List<Review> reviews = null;
+
+        if(page == null && size == null){
+            reviews =  this.reviewDao.findAll();
+        }
+        else {
+            if (page == null) {
+                page = new Integer(0);
+            }
+            if (size == null) {
+                size = new Integer(3);
+            }
+            List<Sort.Order> orders = new ArrayList<>();
+
+            for (String propOrder : sort) {
+
+                String[] propOrderSplit = propOrder.split(",");
+                String property = propOrderSplit[0];
+
+                if (propOrderSplit.length == 1) {
+                    orders.add(new Sort.Order(property));
+                } else {
+                    Sort.Direction direction
+                            = Sort.Direction.fromStringOrNull(propOrderSplit[1]);
+                    orders.add(new Sort.Order(direction, property));
+                }
+            }
+
+            Pageable pageable = new PageRequest(page, size, orders.isEmpty() ? null : new Sort(orders));
+
+            reviews = this.reviewDao.findAll(pageable).getContent();
+        }
+
+        JSONObject foodCookCompleteObject = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+
+        for(Review review: reviews){
+
+            Customer customer= customerDao.findOne(review.getCustomer_id());
+            Person person = personDao.findOne(customer.getPerson_id());
+
+            JSONObject reviewCustomerinfo = new JSONObject();
+            reviewCustomerinfo.put("id", review.getId());
+            reviewCustomerinfo.put("customer_id", customer.getId());
+            reviewCustomerinfo.put("customer_name", person.getFirstName() + person.getLastName());
+            reviewCustomerinfo.put("customer_photo_id", person.getPhotoPublicId());
+            jsonArray.add(reviewCustomerinfo);
+
+        }
+
+        foodCookCompleteObject.put("company", "Palsplate");
+        foodCookCompleteObject.put("reviewsWithCustomers", jsonArray);
+
+        return foodCookCompleteObject;
+    }
+
+
 }

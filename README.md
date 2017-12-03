@@ -441,6 +441,7 @@ Email from this API would be sent to inbox of `info@palsplate.com`
  ## Customs API
  
   * Get reservation with cook and customer information
+  
   ``GET localhost:8080/api/secure/reservations/{reservation_id}/getCustomerAndCook``
 
   * Get cook info with food object
@@ -448,27 +449,56 @@ Email from this API would be sent to inbox of `info@palsplate.com`
     
   * Get all foods with cook info
    ``GET localhost:8080/api/public/customs/foodsWithCooks?size=3&sort=id``
-     
-     and this returns an output like 
-     
+ 
 ```
-[
- {
-     "cook_description": "I am cool",
-     "cook_photo": "cmn2bezmfza9iz8y6dcn",
-     "cook_name": "HanooMalik",
-     "food_average_rating": 5,
-     "id": 41
- },
- {
-     "cook_description": "Cooking enthusiast",
-     "cook_photo": "dysyuzbdxf5vdxikkwiu",
-     "cook_name": "SaadSaeed",
-     "food_average_rating": null,
-     "id": 50
- }
+{
+    "company": "Palsplate",
+    "foodsWithCooksJson": [
+        {
+            "cook_name": "HanooMalik",
+            "food_average_rating": 4,
+            "id": 41,
+            "cook_photo": "cmn2bezmfza9iz8y6dcn",
+            "cook_description": "I am cool"
+        },
+        {
+            "cook_name": "SaadSaeed",
+            "food_average_rating": null,
+            "id": 50,
+            "cook_photo": "dysyuzbdxf5vdxikkwiu",
+            "cook_description": "Cooking enthusiast"
+        }
+    ]
+}
+```
+  
+  * Get all reviews with customer info
+   ``GET localhost:8080/api/public/customs/reviewsWithCustomers``
+   
+   and this returns an output like 
+
+     
+```     
+{
+"company": "Palsplate",
+"reviewsWithCustomers": [
+   {
+       "customer_photo_id": "dysyuzbdxf5vdxikkwiu",
+       "id": 13,
+       "customer_name": "SaadSaeed",
+       "customer_id": 17
+   },
+   {
+       "customer_photo_id": null,
+       "id": 14,
+       "customer_name": "s",
+       "customer_id": 26
+   }
 ]
-```
+}
+   
+```        
+
  
  - - - 
 ## Database Schema

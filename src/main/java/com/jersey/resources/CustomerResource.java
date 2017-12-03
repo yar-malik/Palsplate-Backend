@@ -132,6 +132,7 @@ public class CustomerResource {
                 Food food = foodDao.findOne(reservation.getFood_id());
                 Cook cook = cookDao.findOne(food.getCook_id());
                 Person person = personDao.findOne(cook.getPerson_id());
+                jsonReservationAll.put("reservation_id", reservation.getId());
                 jsonReservationAll.put("cookFirstName", person.getFirstName());
                 jsonReservationAll.put("cookLastName", person.getLastName());
                 jsonReservationAll.put("cookPhoto", person.getPhotoPublicId());

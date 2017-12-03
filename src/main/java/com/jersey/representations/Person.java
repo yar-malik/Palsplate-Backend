@@ -45,10 +45,6 @@ public class Person {
     @NotNull
     private String phoneNumber;
 
-    @Column(name = "address")
-    @NotNull
-    private String address;
-
     @Column(name = "description")
     @NotNull
     private String description;
@@ -86,14 +82,13 @@ public class Person {
     public Person() {}
 
     public Person(Long id, String email, String firstName, String lastName,
-                String phoneNumber, String address, String description,
+                String phoneNumber, String description,
                 boolean isPhotoPublic, String photoName, String photoPublicId) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
-        this.address = address;
         this.description = description;
         this.isPhotoPublic = isPhotoPublic;
         this.photoName = photoName;
@@ -138,14 +133,6 @@ public class Person {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getDescription() {
@@ -259,7 +246,6 @@ public class Person {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", address='" + address + '\'' +
                 ", description='" + description + '\'' +
                 ", isPhotoPublic=" + isPhotoPublic +
                 ", photoName='" + photoName + '\'' +

@@ -148,7 +148,6 @@ where curlJson.txt contains:
 "password": "mypass",
 "granted_role": "ROLE_USER,ROLE_ADMIN",
 "phoneNumber": "+157511743434",
-"address": "uk",
 "description": "foodie",
 "isPhotoPublic": "true"
 }

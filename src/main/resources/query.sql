@@ -5,7 +5,6 @@ CREATE TABLE person
   first_name character varying NOT NULL,
   last_name character varying NOT NULL,
   phone_number character varying NOT NULL,
-  address character varying NOT NULL,
   description character varying NOT NULL,
   is_photo_public boolean NOT NULL,
   login_id bigint NOT NULL,

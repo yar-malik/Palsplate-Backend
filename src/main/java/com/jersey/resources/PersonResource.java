@@ -256,7 +256,6 @@ public class PersonResource {
         newPerson.setFirstName(person.getFirstName());
         newPerson.setLastName(person.getLastName());
         newPerson.setPhoneNumber(person.getPhoneNumber());
-        newPerson.setAddress(person.getAddress());
         newPerson.setDescription(person.getDescription());
         newPerson.setIsPhotoPublic(person.getIsPhotoPublic());
         newPerson.setCook(person.getCook());

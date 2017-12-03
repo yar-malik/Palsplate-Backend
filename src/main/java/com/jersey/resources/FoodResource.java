@@ -9,6 +9,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -128,9 +129,9 @@ public class FoodResource {
     }
 
     /**
-     * Get food object with person information
+     * Get food object with chefs information
      * @param id
-     * @return food
+     * @return JSONObject
      */
     @GET
     @Path("public/foods/{id}/chefinfo")
@@ -143,7 +144,6 @@ public class FoodResource {
         Cook cook = cookDao.findOne(food.getCook_id());
         Person person = personDao.findOne(cook.getPerson_id());
 
-
         JSONObject foodcookinfo = new JSONObject();
         foodcookinfo.put("food", food);
         foodcookinfo.put("firstname", person.getFirstName());
@@ -152,6 +152,69 @@ public class FoodResource {
         foodcookinfo.put("photo_id", person.getPhotoPublicId());
 
         return foodcookinfo;
+    }
+
+    /**
+     * Get food object with chefs information
+     * @param
+     * @return JSONObject
+     */
+    @GET
+    @Path("public/foodsWithChefs")
+    public JSONArray getFoodsWithChefs(@QueryParam("page") Integer page,
+                                  @QueryParam("size") Integer size,
+                                  @QueryParam("sort") List<String> sort) {
+
+        List<Food> foods = null;
+
+        if(page == null && size == null){
+            foods =  this.foodDao.findAll();
+        }
+        else {
+            if (page == null) {
+                page = new Integer(0);
+            }
+            if (size == null) {
+                size = new Integer(3);
+            }
+            List<Sort.Order> orders = new ArrayList<>();
+
+            for (String propOrder : sort) {
+
+                String[] propOrderSplit = propOrder.split(",");
+                String property = propOrderSplit[0];
+
+                if (propOrderSplit.length == 1) {
+                    orders.add(new Sort.Order(property));
+                } else {
+                    Sort.Direction direction
+                            = Sort.Direction.fromStringOrNull(propOrderSplit[1]);
+                    orders.add(new Sort.Order(direction, property));
+                }
+            }
+
+            Pageable pageable = new PageRequest(page, size, orders.isEmpty() ? null : new Sort(orders));
+
+            foods = this.foodDao.findAll(pageable).getContent();
+        }
+
+        JSONArray jsonArray = new JSONArray();
+
+        for(Food food: foods){
+
+            Cook cook = cookDao.findOne(food.getCook_id());
+            Person person = personDao.findOne(cook.getPerson_id());
+
+            JSONObject foodcookinfo = new JSONObject();
+            foodcookinfo.put("id", food.getId());
+            foodcookinfo.put("chef_name", person.getFirstName() + person.getLastName());
+            foodcookinfo.put("chef_photo", person.getPhotoPublicId());
+            foodcookinfo.put("chef_description", person.getDescription());
+            jsonArray.add(foodcookinfo);
+
+        }
+
+        return jsonArray;
     }
 
     /**
@@ -280,7 +343,8 @@ public class FoodResource {
 
             Pageable pageable = new PageRequest(page, size, orders.isEmpty() ? null : new Sort(orders));
 
-            foods =   this.foodDao.findAll(pageable).getContent();
+            foods = this.foodDao.findAll(pageable).getContent();
+
         }
 
         ArrayList<Food> filterByDistanceFoods = new ArrayList<>();

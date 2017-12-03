@@ -451,22 +451,21 @@ Email from this API would be sent to inbox of `info@palsplate.com`
      
      and this returns an output like 
      
-     ```
-     [
-         {
-             "chef_description": "I am cool",
-             "chef_photo": "cmn2bezmfza9iz8y6dcn",
-             "chef_name": "HanooMalik",
-             "id": 41
-         },
-         {
-             "chef_description": "Cooking enthusiast",
-             "chef_photo": "dysyuzbdxf5vdxikkwiu",
-             "chef_name": "SaadSaeed",
-             "id": 50
-         }
-     ]
-
+```
+[
+ {
+     "chef_description": "I am cool",
+     "chef_photo": "cmn2bezmfza9iz8y6dcn",
+     "chef_name": "HanooMalik",
+     "id": 41
+ },
+ {
+     "chef_description": "Cooking enthusiast",
+     "chef_photo": "dysyuzbdxf5vdxikkwiu",
+     "chef_name": "SaadSaeed",
+     "id": 50
+ }
+]
 ```
  
  - - - 

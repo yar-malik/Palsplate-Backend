@@ -474,11 +474,8 @@ Email from this API would be sent to inbox of `info@palsplate.com`
   
   * Get all reviews with customer info
    ``GET localhost:8080/api/public/customs/reviewsWithCustomers``
-   
-   and this returns an output like 
-
      
-```     
+``   
 {
 "company": "Palsplate",
 "reviewsWithCustomers": [
@@ -497,7 +494,7 @@ Email from this API would be sent to inbox of `info@palsplate.com`
 ]
 }
    
-```        
+``    
 
  
  - - - 

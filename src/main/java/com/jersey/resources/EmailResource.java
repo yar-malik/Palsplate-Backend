@@ -53,7 +53,7 @@ public class EmailResource {
 
             if(email.type.equalsIgnoreCase("reservation_cook")){
                 email.from = "Palsplate UG <info@mg.palsplate.com>";
-                if(email.person_id == null || email.recipientName == null || email.foodName ==null
+                if(email.recipientName == null || email.foodName ==null
                         || email.reservation_id == null){
                     throw new WebApplicationException((Response.Status.BAD_REQUEST));
                 }

@@ -398,10 +398,10 @@ Send an Email to certain recipient with following post body
 ```
 
 type can be following: 
-  * signup_successful
-  * reservation_cook
-  * reservation_customer
-  * contact_us
+  * signup_successful (mandatory fields: person_id, recipientName)
+  * reservation_cook (mandatory fields: recipientName, foodName, reservation_id)
+  * reservation_customer (mandatory fields: foodName, foodPrice, recipientName, foodOfferStart, reservation_id)
+  * contact_us (mandatory fields: body, from, subject)
 
 variables which can be used in html to make dynamic content are as follows: 
 

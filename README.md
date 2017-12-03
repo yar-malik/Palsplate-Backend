@@ -305,8 +305,8 @@ where curlJsonReservation.json contains:
 ```
 {
   "is_active": true,
-  "customerId": 1,
-  "foodId": 2
+  "customer_id": 1,
+  "food_id": 2
 }
 ```
 

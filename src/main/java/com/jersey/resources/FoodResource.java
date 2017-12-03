@@ -130,13 +130,13 @@ public class FoodResource {
     }
 
     /**
-     * Get food object with chefs information
+     * Get food object with cooks information
      * @param id
      * @return JSONObject
      */
     @GET
-    @Path("public/foods/{id}/chefinfo")
-    public JSONObject getChefInfoForFood(@PathParam("id")long id) {
+    @Path("public/foods/{id}/cookinfo")
+    public JSONObject getCookInfoForFood(@PathParam("id")long id) {
         Food food = foodDao.findOne(id);
         if (food  == null) {
             throw new WebApplicationException((Response.Status.NOT_FOUND));
@@ -173,13 +173,13 @@ public class FoodResource {
     }
 
     /**
-     * Get food object with chefs information
+     * Get food object with cooks information
      * @param
      * @return JSONObject
      */
     @GET
-    @Path("public/foodsWithChefs")
-    public JSONArray getFoodsWithChefs(@QueryParam("page") Integer page,
+    @Path("public/foodsWithCooks")
+    public JSONArray getFoodsWithCooks(@QueryParam("page") Integer page,
                                   @QueryParam("size") Integer size,
                                   @QueryParam("sort") List<String> sort) {
 
@@ -225,9 +225,9 @@ public class FoodResource {
 
             JSONObject foodcookinfo = new JSONObject();
             foodcookinfo.put("id", food.getId());
-            foodcookinfo.put("chef_name", person.getFirstName() + person.getLastName());
-            foodcookinfo.put("chef_photo", person.getPhotoPublicId());
-            foodcookinfo.put("chef_description", person.getDescription());
+            foodcookinfo.put("cook_name", person.getFirstName() + person.getLastName());
+            foodcookinfo.put("cook_photo", person.getPhotoPublicId());
+            foodcookinfo.put("cook_description", person.getDescription());
             foodcookinfo.put("food_average_rating", calculateAverageRating(food.getReviews()));
             jsonArray.add(foodcookinfo);
 

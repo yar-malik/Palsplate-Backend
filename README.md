@@ -441,13 +441,13 @@ Email from this API would be sent to inbox of `info@palsplate.com`
  ## Auxillary API
  
   * Get reservation with cook and customer information
-  ``GET localhost:8080/api/secure/reservations/{reservation_id}/getCustomerAndCook``
+  ``GET localhost:8080/api/secure/customs/reservations/{reservation_id}/getCustomerAndCook``
 
   * Get cook info with food object
-    ``GET localhost:8080/api/public/foods/{food_id}/cookinfo``
+    ``GET localhost:8080/api/public/customs/foods/{food_id}/cookinfo``
     
   * Get all foods with cook info
-   ``GET localhost:8080/api/public/foodsWithCooks?size=3&sort=id``
+   ``GET localhost:8080/api/public/customs/foodsWithCooks?size=3&sort=id``
      
      and this returns an output like 
      

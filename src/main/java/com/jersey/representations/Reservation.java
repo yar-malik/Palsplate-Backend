@@ -56,8 +56,8 @@ public class Reservation {
         return food_id;
     }
 
-    public void setFoodId(Long foodId) {
-        this.food_id = foodId;
+    public void setFoodId(Long food_id) {
+        this.food_id = food_id;
     }
 
     public Long getCustomer_id() {

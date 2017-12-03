@@ -156,9 +156,9 @@ public class FoodResource {
         return foodcookinfo;
     }
 
-    public Double calculateAverageRating(Set<Review> reviewSet){
+    public double calculateAverageRating(Set<Review> reviewSet){
 
-        Double averageRating = null;
+        double averageRating = 0;
 
         if(reviewSet.size() > 0){
             double totalRatingPoints = 0;

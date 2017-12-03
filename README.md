@@ -472,31 +472,19 @@ Email from this API would be sent to inbox of `info@palsplate.com`
 }
 ```
   
-  * Get all reviews with customer info
-   ``GET localhost:8080/api/public/customs/reviewsWithCustomers``
+  * Get a reviews with customer info
+   ``GET localhost:8080/api/public/reviews/{review_id}/customerinfo``
      
 ```
 {
-    "company": "Palsplate",
-    "reviewsWithCustomers": [
-       {
-           "customer_photo_id": "dysyuzbdxf5vdxikkwiu",
-           "id": 13,
-           "customer_name": "SaadSaeed",
-           "customer_id": 17
-       },
-       {
-           "customer_photo_id": null,
-           "id": 14,
-           "customer_name": "s",
-           "customer_id": 26
-       }
-    ]
+   "customer_photo_id": "dysyuzbdxf5vdxikkwiu",
+   "id": 13,
+   "customer_name": "SaadSaeed",
+   "customer_id": 17
 }
    
 ```    
 
- 
  - - - 
 ## Database Schema
    

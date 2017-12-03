@@ -152,66 +152,22 @@ public class ReviewResource {
      * @return JSONObject
      */
     @GET
-    @Path("public/customs/reviewsWithCustomers")
-    public JSONObject getFoodsWithCooks(@QueryParam("page") Integer page,
-                                        @QueryParam("size") Integer size,
-                                        @QueryParam("sort") List<String> sort) {
+    @Path("public/reviews/{id}/customerinfo")
+    public JSONObject getFoodsWithCooks(@PathParam("id")long id) {
 
-        List<Review> reviews = null;
-
-        if(page == null && size == null){
-            reviews =  this.reviewDao.findAll();
+        Review review = reviewDao.findOne(id);
+        if (review == null) {
+            throw new WebApplicationException((Response.Status.NOT_FOUND));
         }
-        else {
-            if (page == null) {
-                page = new Integer(0);
-            }
-            if (size == null) {
-                size = new Integer(3);
-            }
-            List<Sort.Order> orders = new ArrayList<>();
+        Customer customer= customerDao.findOne(review.getCustomer_id());
+        Person person = personDao.findOne(customer.getPerson_id());
 
-            for (String propOrder : sort) {
+        JSONObject reviewCustomerinfo = new JSONObject();
+        reviewCustomerinfo.put("id", review.getId());
+        reviewCustomerinfo.put("customer_id", customer.getId());
+        reviewCustomerinfo.put("customer_name", person.getFirstName() + person.getLastName());
+        reviewCustomerinfo.put("customer_photo_id", person.getPhotoPublicId());
 
-                String[] propOrderSplit = propOrder.split(",");
-                String property = propOrderSplit[0];
-
-                if (propOrderSplit.length == 1) {
-                    orders.add(new Sort.Order(property));
-                } else {
-                    Sort.Direction direction
-                            = Sort.Direction.fromStringOrNull(propOrderSplit[1]);
-                    orders.add(new Sort.Order(direction, property));
-                }
-            }
-
-            Pageable pageable = new PageRequest(page, size, orders.isEmpty() ? null : new Sort(orders));
-
-            reviews = this.reviewDao.findAll(pageable).getContent();
-        }
-
-        JSONObject foodCookCompleteObject = new JSONObject();
-        JSONArray jsonArray = new JSONArray();
-
-        for(Review review: reviews){
-
-            Customer customer= customerDao.findOne(review.getCustomer_id());
-            Person person = personDao.findOne(customer.getPerson_id());
-
-            JSONObject reviewCustomerinfo = new JSONObject();
-            reviewCustomerinfo.put("id", review.getId());
-            reviewCustomerinfo.put("customer_id", customer.getId());
-            reviewCustomerinfo.put("customer_name", person.getFirstName() + person.getLastName());
-            reviewCustomerinfo.put("customer_photo_id", person.getPhotoPublicId());
-            jsonArray.add(reviewCustomerinfo);
-
-        }
-
-        foodCookCompleteObject.put("company", "Palsplate");
-        foodCookCompleteObject.put("reviewsWithCustomers", jsonArray);
-
-        return foodCookCompleteObject;
+        return reviewCustomerinfo;
     }
-
-
 }

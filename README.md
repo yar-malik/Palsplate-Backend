@@ -445,7 +445,29 @@ Email from this API would be sent to inbox of `info@palsplate.com`
 
   * Get chef info with food object
     ``GET localhost:8080/api/public/foods/{food_id}/chefinfo``
+    
+  * Get all foods with chef info
+   ``GET localhost:8080/api/public/foodsWithChefs?size=3&sort=id``
+     
+     and this returns an output like 
+     
+     ```
+     [
+         {
+             "chef_description": "I am cool",
+             "chef_photo": "cmn2bezmfza9iz8y6dcn",
+             "chef_name": "HanooMalik",
+             "id": 41
+         },
+         {
+             "chef_description": "Cooking enthusiast",
+             "chef_photo": "dysyuzbdxf5vdxikkwiu",
+             "chef_name": "SaadSaeed",
+             "id": 50
+         }
+     ]
 
+```
  
  - - - 
 ## Database Schema

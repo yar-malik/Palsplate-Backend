@@ -43,20 +43,15 @@ public class CookResource {
                              @QueryParam("size") Integer size,
                              @QueryParam("sort") List<String> sort) {
 
-        if(page == null && size == null)
-        {
+        if(page == null && size == null){
             return this.cookDao.findAll();
         }
 
-        //set default value for page
-        if(page == null)
-        {
+        if(page == null){
             page = new Integer(0);
         }
 
-        //set defaullt value for size
-        if(size == null)
-        {
+        if(size == null){
             size = new Integer(3);
         }
 

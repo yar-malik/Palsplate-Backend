@@ -457,12 +457,14 @@ Email from this API would be sent to inbox of `info@palsplate.com`
      "chef_description": "I am cool",
      "chef_photo": "cmn2bezmfza9iz8y6dcn",
      "chef_name": "HanooMalik",
+     "food_average_rating": 5,
      "id": 41
  },
  {
      "chef_description": "Cooking enthusiast",
      "chef_photo": "dysyuzbdxf5vdxikkwiu",
      "chef_name": "SaadSaeed",
+     "food_average_rating": null,
      "id": 50
  }
 ]

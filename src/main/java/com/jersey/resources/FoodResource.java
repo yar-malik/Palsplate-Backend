@@ -31,6 +31,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Path("")
 @Produces(MediaType.APPLICATION_JSON)
@@ -150,8 +151,25 @@ public class FoodResource {
         foodcookinfo.put("lastname", person.getLastName());
         foodcookinfo.put("description", person.getDescription());
         foodcookinfo.put("photo_id", person.getPhotoPublicId());
+        foodcookinfo.put("food_average_rating", calculateAverageRating(food.getReviews()));
 
         return foodcookinfo;
+    }
+
+    public Double calculateAverageRating(Set<Review> reviewSet){
+
+        Double averageRating = null;
+
+        if(reviewSet.size() > 0){
+            double totalRatingPoints = 0;
+
+            for(Review review: reviewSet){
+                totalRatingPoints += review.getRating();
+            }
+            averageRating = totalRatingPoints/reviewSet.size();
+        }
+
+        return averageRating;
     }
 
     /**
@@ -210,6 +228,7 @@ public class FoodResource {
             foodcookinfo.put("chef_name", person.getFirstName() + person.getLastName());
             foodcookinfo.put("chef_photo", person.getPhotoPublicId());
             foodcookinfo.put("chef_description", person.getDescription());
+            foodcookinfo.put("food_average_rating", calculateAverageRating(food.getReviews()));
             jsonArray.add(foodcookinfo);
 
         }

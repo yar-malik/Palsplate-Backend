@@ -217,12 +217,14 @@ public class PersonResource {
     @PUT
     @Path("secure/persons/{id}")
 //    @PreAuthorize("hasPermission(#id, 'PersonResource', 'ROLE_USER,ROLE_ADMIN')")
-    public Person update(@PathParam("id") long id, @Valid Person person) {
-        if (personDao.findOne(id) == null) {
+    public Person update(@PathParam("id") long id, Person newPerson) {
+
+        Person person = personDao.findOne(id);
+
+        if (person == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {
-            person.setId(id);
-            return personDao.save(person);
+            return person.updatePerson(newPerson);
         }
     }
 
@@ -264,7 +266,7 @@ public class PersonResource {
         newPerson.setPhotoPublicId(person.getPhotoPublicId());
         newPerson.setRoles(person.getRoles());
         newPerson.setLocationPerson(person.getLocationPerson());
-      
+
         return  newPerson;
     }
 

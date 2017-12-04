@@ -78,8 +78,8 @@ public class Person {
     public Person() {}
 
     public Person(Long id, String email, String firstName, String lastName,
-                String phoneNumber, String description,
-                boolean isPhotoPublic, String photoName, String photoPublicId) {
+                  String phoneNumber, String description,
+                  boolean isPhotoPublic, String photoName, String photoPublicId) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
@@ -230,6 +230,37 @@ public class Person {
 
     public void setLocationPerson(Set<LocationPerson> locationPerson) {
         this.locationPerson = locationPerson;
+    }
+
+    public Person updatePerson(Person newPerson){
+
+        if(newPerson.getFirstName() != null){
+            this.firstName = newPerson.getFirstName();
+        }
+
+        if(newPerson.getLastName() != null){
+            this.lastName = newPerson.getLastName();
+
+        }
+
+        if(newPerson.getEmail() != null){
+            this.email = newPerson.getEmail();
+
+        }
+
+        if(newPerson.getRoles() != null){
+            this.granted_role = newPerson.getRoles();
+        }
+
+        if(newPerson.getDescription() != null){
+            this.description = newPerson.getDescription();
+        }
+
+        if(newPerson.getPhoneNumber() != null){
+            this.phoneNumber = newPerson.getPhoneNumber();
+        }
+
+        return this;
     }
 
     @Override

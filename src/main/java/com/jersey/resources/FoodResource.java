@@ -226,7 +226,7 @@ public class FoodResource {
 
             JSONObject foodcookinfo = new JSONObject();
             foodcookinfo.put("id", food.getId());
-            foodcookinfo.put("cook_name", person.getFirstName() + person.getLastName());
+            foodcookinfo.put("cook_name", person.getFirstName() + " " + person.getLastName());
             foodcookinfo.put("cook_photo", person.getPhotoPublicId());
             foodcookinfo.put("cook_description", person.getDescription());
             foodcookinfo.put("food_average_rating", calculateAverageRating(food.getReviews()));

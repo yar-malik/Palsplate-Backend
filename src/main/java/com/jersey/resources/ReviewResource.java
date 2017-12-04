@@ -165,7 +165,7 @@ public class ReviewResource {
         JSONObject reviewCustomerinfo = new JSONObject();
         reviewCustomerinfo.put("id", review.getId());
         reviewCustomerinfo.put("customer_id", customer.getId());
-        reviewCustomerinfo.put("customer_name", person.getFirstName() + person.getLastName());
+        reviewCustomerinfo.put("customer_name", person.getFirstName() + " " + person.getLastName());
         reviewCustomerinfo.put("customer_photo_id", person.getPhotoPublicId());
 
         return reviewCustomerinfo;

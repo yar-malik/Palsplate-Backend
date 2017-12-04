@@ -54,8 +54,14 @@ limit 10;
 - - - -
 ## ENVIRONMENT VARIABLES
 
-The code only uses the following environment variables.
-PALSPLATE_DB_URL
+The code uses the following environment variables: 
+
+* PALSPLATE_DB_URL
+* MAILGUN_APIKEY
+* CLOUDINARY_APIKEY
+* CLOUDINARY_APISECRET
+* PALSPLATE_DB_URL	
+* PALSPLATE_EMAIL_TOKEN	
 
 This value is equal to the db url from Heroku. 
 (Remember that Heroku url is different from posgres url)

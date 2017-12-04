@@ -211,7 +211,7 @@ public class PersonResource {
      * Update existing Person
      *
      * @param id
-     * @param person
+     * @param
      * @return updated person
      */
     @PUT

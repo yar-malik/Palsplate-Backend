@@ -87,9 +87,12 @@ public class EmailResource {
                 }
                 else if (email.locale.equalsIgnoreCase("en")){
                     email.body = emailResource.htmlIntoString("en_reservation_cancel.html");
+//                email.body = "Hi digga";
                 }
                 else if (email.locale.equalsIgnoreCase("de")){
                     email.body = emailResource.htmlIntoString("de_reservation_cancel.html");
+//                    email.body = "Hi digga";
+
                 }
             }
 

@@ -151,6 +151,7 @@ where curlJson.txt contains:
 "email": "wishere@gmail.com",
 "firstName": "Jack",
 "lastName": "wishere",
+"gender": "MALE",
 "password": "mypass",
 "granted_role": "ROLE_USER,ROLE_ADMIN",
 "phoneNumber": "+157511743434",

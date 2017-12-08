@@ -40,6 +40,9 @@ public class Person {
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "gender")
+    public String gender;
+
     @Column(name = "phone_number")
     private String phoneNumber;
 
@@ -122,6 +125,10 @@ public class Person {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public String getGender() { return gender; }
+
+    public void setGender(String gender) { this.gender = gender; }
 
     public String getPhoneNumber() {
         return phoneNumber;

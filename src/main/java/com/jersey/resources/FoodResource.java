@@ -286,6 +286,45 @@ public class FoodResource {
     }
 
     /**
+     * Activate Food
+     *
+     * @param id
+     * @param
+     * @return updated food
+     */
+    @GET
+    @Path("secure/foods/{food_id}/activate")
+//    @PreAuthorize("hasPermission(#id, 'PersonResource', 'ROLE_USER,ROLE_ADMIN')")
+    public Food activateFood(@PathParam("food_id") long id) {
+        Food food = foodDao.findOne(id);
+        if (food == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        } else {
+            food.setIs_active(true);
+            return foodDao.save(food);
+        }
+    }
+
+    /**
+     * Deactivate Food
+     * @param id
+     * @param
+     * @return updated food
+     */
+    @GET
+    @Path("secure/foods/{food_id}/deactivate")
+//    @PreAuthorize("hasPermission(#id, 'PersonResource', 'ROLE_USER,ROLE_ADMIN')")
+    public Food deactivateFood(@PathParam("food_id") long id) {
+        Food food = foodDao.findOne(id);
+        if (food == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        } else {
+            food.setIs_active(false);
+            return foodDao.save(food);
+        }
+    }
+
+    /**
      * Create new Image
      * @param uploadedInputStream
      * @param fileDetail

@@ -220,6 +220,10 @@ where curlJsonCustomer.txt contains:
  ``PUT http://localhost:8080/api/public/foods/{id}``
  * Delete a specific record
  ``DELETE http://localhost:8080/api/public/foods/{id}``
+  * Activate food
+  ``GET http://localhost:8080/api/secure/foods/{food_id}/activate``
+  * Deactivate food 
+  ``GET http://localhost:8080/api/secure/foods/{food_id}/deactivate``
  * Create a new record with a curl example
 
  `curl -X POST -d @curlJsonFood.txt -H "Authorization: Bearer <access-token>" http://localhost:8080/api/public/foods --header "Content-Type:application/json"`
@@ -302,6 +306,11 @@ Curl GET example to get reviews for a specific food
  ``PUT http://localhost:8080/api/secure/reservations/{id}``
  * Delete a specific record
  ``DELETE http://localhost:8080/api/secure/reservations/{id}``
+ * Activate reservation
+ ``GET http://localhost:8080/api/secure/reservations/{reservation_id}/activate``
+ * Deactivate food 
+ ``GET http://localhost:8080/api/secure/reservations/{reservation_id}/deactivate``
+
  * Create a new record with a curl example
 
 

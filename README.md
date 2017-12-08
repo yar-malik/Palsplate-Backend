@@ -408,6 +408,7 @@ type can be following:
   * reservation_cook `(mandatory fields: recipientName, foodName, reservation_id)`
   * reservation_customer `(mandatory fields: foodName, foodPrice, recipientName, foodOfferStart, reservation_id)`
   * contact_us `(mandatory fields: body, from, subject)`
+  * reservation_cancel`(mandatory fields: foodName, foodPrice, recipientName, foodOfferStart)`
 
 variables which can be used in html to make dynamic content are as follows: 
 

@@ -151,6 +151,7 @@ where curlJson.txt contains:
 "email": "wishere@gmail.com",
 "firstName": "Jack",
 "lastName": "wishere",
+"gender": "MALE",
 "password": "mypass",
 "granted_role": "ROLE_USER,ROLE_ADMIN",
 "phoneNumber": "+157511743434",
@@ -220,6 +221,10 @@ where curlJsonCustomer.txt contains:
  ``PUT http://localhost:8080/api/public/foods/{id}``
  * Delete a specific record
  ``DELETE http://localhost:8080/api/public/foods/{id}``
+  * Activate food
+  ``GET http://localhost:8080/api/secure/foods/{food_id}/activate``
+  * Deactivate food 
+  ``GET http://localhost:8080/api/secure/foods/{food_id}/deactivate``
  * Create a new record with a curl example
 
  `curl -X POST -d @curlJsonFood.txt -H "Authorization: Bearer <access-token>" http://localhost:8080/api/public/foods --header "Content-Type:application/json"`
@@ -302,6 +307,11 @@ Curl GET example to get reviews for a specific food
  ``PUT http://localhost:8080/api/secure/reservations/{id}``
  * Delete a specific record
  ``DELETE http://localhost:8080/api/secure/reservations/{id}``
+ * Activate reservation
+ ``GET http://localhost:8080/api/secure/reservations/{reservation_id}/activate``
+ * Deactivate food 
+ ``GET http://localhost:8080/api/secure/reservations/{reservation_id}/deactivate``
+
  * Create a new record with a curl example
 
 
@@ -408,6 +418,7 @@ type can be following:
   * reservation_cook `(mandatory fields: recipientName, foodName, reservation_id)`
   * reservation_customer `(mandatory fields: foodName, foodPrice, recipientName, foodOfferStart, reservation_id)`
   * contact_us `(mandatory fields: body, from, subject)`
+  * reservation_cancel`(mandatory fields: foodName, foodPrice, recipientName, foodOfferStart)`
 
 variables which can be used in html to make dynamic content are as follows: 
 

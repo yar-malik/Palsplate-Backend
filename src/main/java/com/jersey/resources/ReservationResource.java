@@ -126,6 +126,48 @@ public class ReservationResource {
         }
     }
 
+    /**
+     * Activate Reservation
+     *
+     * @param id
+     * @param
+     * @return updated reservation with is_active = true
+     */
+    @GET
+    @Path("secure/reservations/{reservation_id}/activate")
+//    @PreAuthorize("hasPermission(#id, 'PersonResource', 'ROLE_USER,ROLE_ADMIN')")
+    public Reservation activateReservation(@PathParam("reservation_id") long id) {
+        Reservation reservation = reservationDao.findOne(id);
+        if (reservation == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        } else {
+            reservation.setIs_active(true);
+            return reservationDao.save(reservation);
+        }
+    }
+
+    /**
+     * Deactivate Reservation
+     *
+     * @param id
+     * @param
+     * @return updated reservation with is_active = true
+     */
+    @GET
+    @Path("secure/reservations/{reservation_id}/deactivate")
+//    @PreAuthorize("hasPermission(#id, 'PersonResource', 'ROLE_USER,ROLE_ADMIN')")
+    public Reservation deactivateReservation(@PathParam("reservation_id") long id) {
+        Reservation reservation = reservationDao.findOne(id);
+        if (reservation == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        } else {
+            reservation.setIs_active(false);
+            return reservationDao.save(reservation);
+        }
+    }
+
+
+
     @GET
     @Path("secure/reservations/{id}/getCustomerAndCook")
     public JSONObject getCustomerAndCook(@PathParam("id")long id) {

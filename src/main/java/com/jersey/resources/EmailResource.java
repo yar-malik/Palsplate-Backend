@@ -79,6 +79,23 @@ public class EmailResource {
                 }
             }
 
+            if(email.type.equalsIgnoreCase("reservation_cancel")){
+                email.from = "Palsplate UG <info@mg.palsplate.com>";
+                if(email.recipientName == null || email.foodName == null || email.foodPrice ==null
+                        || email.foodOfferStart == null){
+                    throw new WebApplicationException((Response.Status.BAD_REQUEST));
+                }
+                else if (email.locale.equalsIgnoreCase("en")){
+                    email.body = emailResource.htmlIntoString("en_reservation_cancel.html");
+//                email.body = "Hi digga";
+                }
+                else if (email.locale.equalsIgnoreCase("de")){
+                    email.body = emailResource.htmlIntoString("de_reservation_cancel.html");
+//                    email.body = "Hi digga";
+
+                }
+            }
+
             if(email.type.equalsIgnoreCase("contact_us")) {
                 if (email.body == null || email.from == null || email.subject == null) {
                     throw new WebApplicationException((Response.Status.BAD_REQUEST));

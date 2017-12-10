@@ -29,7 +29,7 @@ public class SqlInitialization{
     public DataSource dataSource() {
 
         URI dbUri = null;
-        String PALSPLATE_DB_URL = System.getenv().get("PALSPLATE_DB_URL");
+        String PALSPLATE_DB_URL = "postgres://vrwuksarnhwksl:94a6d7413fcd44094beab4b6b2d4ef0ee2dfe4b5caecf9a3d35e17b6bf6eab5b@ec2-79-125-2-69.eu-west-1.compute.amazonaws.com:5432/dbnane6c19acb5";
         try {
             dbUri = new URI(PALSPLATE_DB_URL);
         } catch (URISyntaxException e) {

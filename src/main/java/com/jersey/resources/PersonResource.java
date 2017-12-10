@@ -2,38 +2,36 @@ package com.jersey.resources;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.jersey.Authorization.security.PasswordResetToken;
+import com.jersey.Authorization.security.PasswordResetTokenStore;
 import com.jersey.persistence.PersonDao;
-import com.jersey.representations.Cook;
-import com.jersey.representations.LocationPerson;
 import com.jersey.representations.Person;
+import com.sun.jersey.api.client.ClientResponse;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 
 
 @Path("")
@@ -243,6 +241,72 @@ public class PersonResource {
         } else {
             personDao.delete(person);
         }
+    }
+
+    @POST
+    @Path("public/persons/resetpassword")
+    public JSONObject resetPassword(@RequestBody Map<String, Object> payload) throws FileNotFoundException{
+
+        String Email = (String)payload.get("email");
+        Person person = personDao.findByEmail(Email);
+
+        if(person == null){
+            throw new UsernameNotFoundException("No registered account exists with this email address!");
+        }
+
+        String resetToken = UUID.randomUUID().toString();
+        PasswordResetToken token = PasswordResetTokenStore.getInstance().getTokenFromEmail(Email);
+
+        if( token != null){
+            PasswordResetTokenStore.getInstance().updateResetToken(Email, resetToken);
+        }
+        else{
+            PasswordResetTokenStore.getInstance().addToken(person.getEmail(), resetToken);
+        }
+
+        String redirectURL = new StringBuilder("localhost:8080/api/public/persons/changepassword")
+                            .append("?")
+                            .append("password_reset_token=").append(token).append("&")
+                            .append("user_email=").append(person.getEmail())
+                            .toString();
+
+        ClientResponse response = EmailResource.sendComplexMessage("Reset your password",
+                                                                   person.getEmail(),
+                                                        person.getFirstName()+ " " + person.getLastName(),
+                                                              "Palsplate UG <info@mg.palsplate.com>",
+                                                                   EmailResource.htmlIntoString("en_reset_password.html"),
+                                                                   redirectURL);
+        JSONObject emailResponse = new JSONObject();
+        emailResponse.put("response date", response.getResponseDate());
+        emailResponse.put("response status", response.getStatus());
+
+        return emailResponse;
+    }
+
+    @GET
+    @Path("public/persons/changepassword")
+    public String showChangePasswordPage(@QueryParam("email") String email, @QueryParam("reset_token") String token){
+
+        Person person = personDao.findByEmail(email);
+
+        if(person == null){
+            throw new UsernameNotFoundException("No account associated with this email exists!");
+        }
+
+        if(!PasswordResetTokenStore.getInstance().isValid(person, token)){
+            return "The token is invalid!";
+        }
+
+//        SecurityContextHolder.getContext().setAuthentication();
+
+        return "redirect:www.palsplate.com/user/resetpassword";
+    }
+
+    @POST
+    @Path("secure/persons/savePassword")
+    public String savePassword(@QueryParam("email") String Email, @QueryParam("new_password") String newPassword){
+
+    return "success";
     }
 
     /**

@@ -40,6 +40,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.*;
+import java.security.InvalidKeyException;
 import java.security.InvalidParameterException;
 import java.util.*;
 
@@ -62,11 +63,17 @@ public class PersonResource {
     @Resource(name = "defaultAuthorizationServerTokenServices")
     private AuthorizationServerTokenServices authorizationServerTokenServices;
 
-    @Resource(name="tokenServices")
+    @Resource(name="consumerTokenServices")
     private ConsumerTokenServices consumerTokenServices;
 
     @Value("${authentication.oauth.clientid}")
     private String localClientID;
+
+    @Value("${backend.url}")
+    private String backendURL;
+
+    @Value("${frontend.url}")
+    private String frontendURL;
 
     private PersonDao personDao;
 
@@ -285,7 +292,7 @@ public class PersonResource {
             throw new UsernameNotFoundException("No registered account exists with this email address!");
         }
 
-        //create a new reset token
+        //create a new one time use only reset token
         OAuth2Request request = new OAuth2Request(null, localClientID, Arrays.asList(new SimpleGrantedAuthority("CHANGE_PASSWORD_PRIVILEGE")), true, null, null, null, null, null);
         OAuth2Authentication oAuth2Authentication =  new OAuth2Authentication(request, new UsernamePasswordAuthenticationToken(Email, "N/A", Arrays.asList(new SimpleGrantedAuthority("CHANGE_PASSWORD_PRIVILEGE"))));
         OAuth2AccessToken oAuth2AccessToken = authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
@@ -311,11 +318,14 @@ public class PersonResource {
             emailTemplate = "de_reset_password.html";
         }
 
-        String redirectURL = new StringBuilder("localhost:8080/api/public/persons/changepassword")
+        String redirectURL = new StringBuilder(backendURL)
+                            .append("/api/public/persons/changepassword")
                             .append("?")
-                            .append("password_reset_token=").append(token).append("&")
+                            .append("password_reset_token=").append(resetToken).append("&")
                             .append("user_email=").append(person.getEmail())
                             .toString();
+
+        System.out.println("Redirect url: " + redirectURL);
 
         //send the email to the user
         /*ClientResponse response = EmailResource.sendComplexMessage("Reset your password",
@@ -350,15 +360,16 @@ public class PersonResource {
         }
 
         if(!PasswordResetTokenStore.getInstance().isValid(person, resetToken)){
-            return "The token is either invalid or expired!";
+            throw new InvalidParameterException("The reset token is either invalid or expired!");
         }
 
         PasswordResetToken token = PasswordResetTokenStore.getInstance().getTokenFromEmail(email);
 
-        return new StringBuilder("redirect:").append("www.palsplate.com")
+        return new StringBuilder("redirect:")
+                   .append(frontendURL)
                    .append("/").append("resetpassword").append("?")
                    .append("reset_token=").append(resetToken).append("&")
-                   .append("expire_at=").append(token.getExpiryDate()).append("&")
+                   .append("expire_at=").append(token.getExpiryDate().getTime()).append("&")
                    .append("user_id=").append(person.getId()).toString();
     }
 

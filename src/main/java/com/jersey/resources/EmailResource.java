@@ -184,7 +184,7 @@ public class EmailResource {
         JSONObject recipientVariableJson = new JSONObject();
         JSONObject nameObject = new JSONObject();
         nameObject.put("name", recipientName);
-        nameObject.put("reservationURrl",passwordResetLink);
+        nameObject.put("reservationUrl",passwordResetLink);
 
 
         recipientVariableJson.put(recipientEmail, nameObject);

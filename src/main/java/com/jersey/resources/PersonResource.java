@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -32,6 +34,8 @@ import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -277,7 +281,7 @@ public class PersonResource {
      */
     @POST
     @Path("public/persons/resetpassword")
-    public JSONObject resetPassword(@RequestBody Map<String, Object> payload) throws FileNotFoundException{
+    public ResponseEntity<?> resetPassword(@RequestBody Map<String, Object> payload) throws FileNotFoundException{
 
         String Email = (String)payload.get("email");
         String locale = (String)payload.get("locale");
@@ -300,14 +304,14 @@ public class PersonResource {
         String resetToken = oAuth2AccessToken.getValue();
         PasswordResetToken token = PasswordResetTokenStore.getInstance().getTokenFromEmail(Email);
 
+        System.out.println(resetToken);
+
         if( token != null){
             PasswordResetTokenStore.getInstance().updateResetToken(Email, resetToken);
         }
         else{
             PasswordResetTokenStore.getInstance().addToken(Email, resetToken);
         }
-
-        System.out.println("Reset token: " + resetToken);
 
         String emailTemplate = null;
 
@@ -328,7 +332,7 @@ public class PersonResource {
         System.out.println("Redirect url: " + redirectURL);
 
         //send the email to the user
-        /*ClientResponse response = EmailResource.sendComplexMessage("Reset your password",
+/*        ClientResponse response = EmailResource.sendComplexMessage("Reset your password",
                                                                    person.getEmail(),
                                                         person.getFirstName()+ " " + person.getLastName(),
                                                               "Palsplate UG <info@mg.palsplate.com>",
@@ -337,10 +341,9 @@ public class PersonResource {
 
         JSONObject emailResponse = new JSONObject();
         emailResponse.put("email sent date", response.getResponseDate());
-        emailResponse.put("email response status", response.getStatus());
+        emailResponse.put("email response status", response.getStatus());*/
 
-        return emailResponse;*/
-        return new JSONObject();
+        return new ResponseEntity<>(new JSONObject(), HttpStatus.OK);
     }
 
     /**
@@ -351,7 +354,7 @@ public class PersonResource {
      */
     @GET
     @Path("public/persons/changepassword")
-    public String showChangePasswordPage(@QueryParam("email") String email, @QueryParam("reset_token") String resetToken){
+    public View showChangePasswordPage(@QueryParam("user_email") String email, @QueryParam("password_reset_token") String resetToken){
 
         Person person = personDao.findByEmail(email);
 
@@ -365,12 +368,15 @@ public class PersonResource {
 
         PasswordResetToken token = PasswordResetTokenStore.getInstance().getTokenFromEmail(email);
 
-        return new StringBuilder("redirect:")
-                   .append(frontendURL)
-                   .append("/").append("resetpassword").append("?")
-                   .append("reset_token=").append(resetToken).append("&")
-                   .append("expire_at=").append(token.getExpiryDate().getTime()).append("&")
-                   .append("user_id=").append(person.getId()).toString();
+        String redirectURL = new StringBuilder()
+                            .append(frontendURL)
+                            .append("/").append("reset_password").append("?")
+                            .append("reset_token=").append(resetToken)
+                            .toString();
+
+        System.out.println(redirectURL);
+
+        return new RedirectView(redirectURL,true);
     }
 
     /**
@@ -380,9 +386,11 @@ public class PersonResource {
      */
     @POST
     @Path("savepassword")
-    public String savePassword(@RequestBody Map<String, Object> payload){
+    public ResponseEntity<?> savePassword(@RequestBody Map<String, Object> payload){
 
         String newPassword = (String)payload.get("new_password");
+
+        System.out.println(newPassword);
 
         if(newPassword == null){
             throw new InvalidParameterException("The value of the new password is null!");
@@ -392,14 +400,14 @@ public class PersonResource {
         Person person = personDao.findByEmail(email);
         newPassword = passwordEncoder.encode(newPassword);
         person.setPassword(newPassword);
-
+        System.out.println(email);
         //remove the access token from the PasswordResetTokenStore and from the current security context
         //because the token is for one time use only
         PasswordResetToken token = PasswordResetTokenStore.getInstance().getTokenFromEmail(email);
         consumerTokenServices.revokeToken(token.getResetToken());
         PasswordResetTokenStore.getInstance().removeToken(token.getResetToken());
 
-        return "success";
+        return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
     /**

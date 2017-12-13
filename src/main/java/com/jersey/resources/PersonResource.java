@@ -298,7 +298,7 @@ public class PersonResource {
             throw new UsernameNotFoundException("No registered account exists with this email address!");
         }
 
-        if(person.getRoles().contains("ROLE_USER_FACEBOOK")){
+        if(person.getRoles().contains(Authorities.ROLE_USER_FACEBOOK.name())){
             return new ResponseEntity<Object>("The account associated with this email was signed up via facebook!",HttpStatus.BAD_REQUEST);
         }
 

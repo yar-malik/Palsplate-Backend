@@ -178,17 +178,14 @@ public class EmailResource {
                                                     String recipientEmail,
                                                     String recipientName,
                                                     String from,
-                                                    String body,
-                                                    String passwordResetLink) {
+                                                    String body) {
 
         JSONObject recipientVariableJson = new JSONObject();
         JSONObject nameObject = new JSONObject();
         nameObject.put("name", recipientName);
-        nameObject.put("reservationUrl",passwordResetLink);
 
 
         recipientVariableJson.put(recipientEmail, nameObject);
-
         Client client = Client.create();
         client.addFilter(new HTTPBasicAuthFilter("api", "key-b9cc5ba51663ca8b37377818c6f8f81f"));
         WebResource webResource = client.resource("https://api.mailgun.net/v3/mg.palsplate.com/messages");

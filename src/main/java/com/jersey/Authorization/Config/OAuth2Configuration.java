@@ -67,13 +67,13 @@ public class OAuth2Configuration {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/public/**").permitAll()
-                .antMatchers("/api/secure/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
+                .antMatchers("/api/secure/**").hasAnyAuthority(Authorities.ROLE_ADMIN.name(), Authorities.ROLE_USER.name(),Authorities.ROLE_USER_FACEBOOK.name())
                 .and()
                 .authorizeRequests()
                 .antMatchers("/login*","/signin/**","/signup/**").permitAll()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/savepassword*").hasAuthority("CHANGE_PASSWORD_PRIVILEGE");
+                .antMatchers("/api/savepassword*").hasAuthority(Authorities.CHANGE_PASSWORD_PRIVILEGE.name());
         }
     }
 

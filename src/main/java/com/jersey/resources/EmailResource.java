@@ -36,7 +36,6 @@ public class EmailResource {
             throw new WebApplicationException((Response.Status.UNAUTHORIZED));
         }
         else{
-            EmailResource emailResource = new EmailResource();
 
             if(email.type.equalsIgnoreCase("signup_successful")){
                 email.from = "Palsplate UG <info@mg.palsplate.com>";
@@ -44,10 +43,10 @@ public class EmailResource {
                     throw new WebApplicationException((Response.Status.BAD_REQUEST));
                 }
                 else if (email.locale.equalsIgnoreCase("en")){
-                    email.body = emailResource.htmlIntoString("en_signup_successful.html");
+                    email.body = EmailResource.htmlIntoString("en_signup_successful.html");
                 }
                 else if (email.locale.equalsIgnoreCase("de")){
-                    email.body = emailResource.htmlIntoString("de_signup_successful.html");
+                    email.body = EmailResource.htmlIntoString("de_signup_successful.html");
                 }
             }
 
@@ -58,10 +57,10 @@ public class EmailResource {
                     throw new WebApplicationException((Response.Status.BAD_REQUEST));
                 }
                 else if (email.locale.equalsIgnoreCase("en")){
-                    email.body = emailResource.htmlIntoString("en_reservation_cook.html");
+                    email.body = EmailResource.htmlIntoString("en_reservation_cook.html");
                 }
                 else if (email.locale.equalsIgnoreCase("de")){
-                    email.body = emailResource.htmlIntoString("de_reservation_cook.html");
+                    email.body = EmailResource.htmlIntoString("de_reservation_cook.html");
                 }
             }
 
@@ -72,10 +71,10 @@ public class EmailResource {
                     throw new WebApplicationException((Response.Status.BAD_REQUEST));
                 }
                 else if (email.locale.equalsIgnoreCase("en")){
-                    email.body = emailResource.htmlIntoString("en_reservation_customer.html");
+                    email.body = EmailResource.htmlIntoString("en_reservation_customer.html");
                 }
                 else if (email.locale.equalsIgnoreCase("de")){
-                    email.body = emailResource.htmlIntoString("de_reservation_customer.html");
+                    email.body = EmailResource.htmlIntoString("de_reservation_customer.html");
                 }
             }
 
@@ -86,11 +85,11 @@ public class EmailResource {
                     throw new WebApplicationException((Response.Status.BAD_REQUEST));
                 }
                 else if (email.locale.equalsIgnoreCase("en")){
-                    email.body = emailResource.htmlIntoString("en_reservation_cancel.html");
+                    email.body = EmailResource.htmlIntoString("en_reservation_cancel.html");
 //                email.body = "Hi digga";
                 }
                 else if (email.locale.equalsIgnoreCase("de")){
-                    email.body = emailResource.htmlIntoString("de_reservation_cancel.html");
+                    email.body = EmailResource.htmlIntoString("de_reservation_cancel.html");
 //                    email.body = "Hi digga";
 
                 }
@@ -110,7 +109,7 @@ public class EmailResource {
                 email.foodOfferStop = null;
             }
 
-            ClientResponse response = emailResource.sendComplexMessage(
+            ClientResponse response = EmailResource.sendComplexMessage(
                     email.subject,
                     email.recipientEmail,
                     email.recipientName,
@@ -131,7 +130,7 @@ public class EmailResource {
         }
     }
 
-    public ClientResponse sendComplexMessage(String subject,
+    public static ClientResponse sendComplexMessage(String subject,
                                              String recipientEmail,
                                              String recipientName,
                                              String from,
@@ -174,11 +173,40 @@ public class EmailResource {
         return clientResponse;
     }
 
-    public String htmlIntoString(String file) throws FileNotFoundException {
+    public static ClientResponse sendComplexMessage(String subject,
+                                                    String recipientEmail,
+                                                    String recipientName,
+                                                    String from,
+                                                    String body) {
+
+        JSONObject recipientVariableJson = new JSONObject();
+        JSONObject nameObject = new JSONObject();
+        nameObject.put("name", recipientName);
+
+
+        recipientVariableJson.put(recipientEmail, nameObject);
+        Client client = Client.create();
+        client.addFilter(new HTTPBasicAuthFilter("api", System.getenv().get("MAILGUN_APIKEY")));
+        WebResource webResource = client.resource("https://api.mailgun.net/v3/mg.palsplate.com/messages");
+
+        FormDataMultiPart formData = new FormDataMultiPart();
+        formData.field("from", from);
+        formData.field("to", recipientEmail);
+        formData.field("subject", subject.toString());
+        formData.field("html", body);
+        formData.field("recipient-variables", recipientVariableJson.toString());
+
+        ClientResponse clientResponse = webResource.type(MediaType.MULTIPART_FORM_DATA_TYPE).post(ClientResponse.class, formData);
+        log.info(clientResponse.toString());
+
+        return clientResponse;
+    }
+
+    public static String htmlIntoString(String file) throws FileNotFoundException {
 
         String content = "";
         try {
-            ClassLoader classLoader = getClass().getClassLoader();
+            ClassLoader classLoader = EmailResource.class.getClassLoader();
             BufferedReader in = new BufferedReader(new FileReader(new File(classLoader.getResource(file).getFile())));
             String str;
             while ((str = in.readLine()) != null) {

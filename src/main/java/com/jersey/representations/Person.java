@@ -25,7 +25,7 @@ public class Person {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "password", updatable = false)
+    @Column(name = "password")
     @NotNull
     private String password;
 

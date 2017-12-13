@@ -2,38 +2,53 @@ package com.jersey.resources;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.jersey.Authorization.security.Authorities;
+import com.jersey.Authorization.security.PasswordResetToken;
+import com.jersey.Authorization.security.PasswordResetTokenStore;
 import com.jersey.persistence.PersonDao;
-import com.jersey.representations.Cook;
-import com.jersey.representations.LocationPerson;
 import com.jersey.representations.Person;
+import com.sun.jersey.api.client.ClientResponse;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.OAuth2Request;
+import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
+import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.io.*;
+import java.security.InvalidParameterException;
+import java.util.*;
 
 
 @Path("")
@@ -50,6 +65,21 @@ public class PersonResource {
 
     @Autowired
     private Cloudinary cloudinary;
+
+    @Resource(name = "defaultAuthorizationServerTokenServices")
+    private AuthorizationServerTokenServices authorizationServerTokenServices;
+
+    @Resource(name="consumerTokenServices")
+    private ConsumerTokenServices consumerTokenServices;
+
+    @Value("${authentication.oauth.clientid}")
+    private String localClientID;
+
+    @Value("${backend.url}")
+    private String backendURL;
+
+    @Value("${frontend.url}")
+    private String frontendURL;
 
     private PersonDao personDao;
 
@@ -243,6 +273,150 @@ public class PersonResource {
         } else {
             personDao.delete(person);
         }
+    }
+
+    /**
+     * Creates a reset token and sends email to the user with the reset password link
+     * @param payload
+     * @return
+     * @throws FileNotFoundException
+     */
+    @POST
+    @Path("public/persons/resetpassword")
+    public ResponseEntity<?> resetPassword(@RequestBody Map<String, Object> payload) throws FileNotFoundException{
+
+        String Email = (String)payload.get("email");
+        String locale = (String)payload.get("locale");
+
+        if(Email == null || locale == null){
+            throw new InvalidParameterException("The parameters email and/or locale are malformed!");
+        }
+
+        Person person = personDao.findByEmail(Email);
+
+        if(person == null){
+            throw new UsernameNotFoundException("No registered account exists with this email address!");
+        }
+
+        if(person.getRoles().contains(Authorities.ROLE_USER_FACEBOOK.name())){
+            return new ResponseEntity<Object>("The account associated with this email was signed up via facebook!",HttpStatus.BAD_REQUEST);
+        }
+
+        //create a new one time use only reset token
+        OAuth2Request request = new OAuth2Request(null, localClientID, Arrays.asList(new SimpleGrantedAuthority(Authorities.CHANGE_PASSWORD_PRIVILEGE.name())), true, null, null, null, null, null);
+        OAuth2Authentication oAuth2Authentication =  new OAuth2Authentication(request, new UsernamePasswordAuthenticationToken(Email, "N/A", Arrays.asList(new SimpleGrantedAuthority(Authorities.CHANGE_PASSWORD_PRIVILEGE.name()))));
+        OAuth2AccessToken oAuth2AccessToken = authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
+
+        String resetToken = oAuth2AccessToken.getValue();
+        PasswordResetToken token = PasswordResetTokenStore.getInstance().getTokenFromEmail(Email);
+
+        if( token != null){
+            //update the token if already exists, this will revoke the previous token associated
+            PasswordResetTokenStore.getInstance().updateResetToken(Email, resetToken);
+        }
+        else{
+            PasswordResetTokenStore.getInstance().addToken(Email, resetToken);
+        }
+
+        String emailTemplate = null;
+
+        if(locale.equalsIgnoreCase("en")){
+            emailTemplate = "en_reset_password.html";
+        }
+        else if(locale.equalsIgnoreCase("de")){
+            emailTemplate = "de_reset_password.html";
+        }
+
+        String redirectURL = new StringBuilder(backendURL)
+                            .append("/api/public/persons/changepassword")
+                            .append("?")
+                            .append("password_reset_token=").append(resetToken).append("&")
+                            .append("user_email=").append(person.getEmail())
+                            .toString();
+
+        String html = EmailResource.htmlIntoString(emailTemplate);
+        html = html.replace("%password.resetlink%",redirectURL);
+
+        //send the email to the user
+        ClientResponse response = EmailResource.sendComplexMessage("Reset your password",
+                                                                   person.getEmail(),
+                                                        person.getFirstName()+ " " + person.getLastName(),
+                                                              "Palsplate UG <info@mg.palsplate.com>",
+                                                                   html);
+
+        JSONObject emailResponse = new JSONObject();
+        emailResponse.put("email sent date", response.getResponseDate());
+        emailResponse.put("email response status", response.getStatus());
+
+        return new ResponseEntity<>(emailResponse.toJSONString(), HttpStatus.OK);
+    }
+
+    /**
+     * Checks the validity of the reset token and redirects to the new password form on validation success
+     * @param email
+     * @param resetToken
+     * @return
+     */
+    @GET
+    @Path("public/persons/changepassword")
+    public void showChangePasswordPage(@QueryParam("user_email") String email, @QueryParam("password_reset_token") String resetToken){
+
+        Person person = personDao.findByEmail(email);
+
+        if(person == null){
+            throw new UsernameNotFoundException("No account associated with this email exists!");
+        }
+
+        if(!PasswordResetTokenStore.getInstance().isValid(person, resetToken)){
+            throw new InvalidParameterException("The reset token is either invalid or expired!");
+        }
+
+        PasswordResetToken token = PasswordResetTokenStore.getInstance().getTokenFromEmail(email);
+
+        String redirectURL = new StringBuilder(frontendURL)
+                            .append("/").append("reset_password").append("?")
+                            .append("reset_token=").append(resetToken)
+                            .toString();
+
+        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+        HttpServletResponse response = ((ServletRequestAttributes)requestAttributes).getResponse();
+
+        try {
+            response.sendRedirect(redirectURL);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * Updates the password for the user, can only be accessed by a user with CHANGE_PASSWORD_PRIVELIGE
+     * @param payload
+     * @return
+     */
+    @POST
+    @Path("savepassword")
+    public ResponseEntity<?> savePassword(@RequestBody Map<String, Object> payload){
+
+        String newPassword = (String)payload.get("new_password");
+
+        if(newPassword == null){
+            throw new InvalidParameterException("The value of the new password is null!");
+        }
+
+        String email =  (String)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Person person = personDao.findByEmail(email);
+        newPassword = passwordEncoder.encode(newPassword);
+        person.setPassword(newPassword);
+
+        //remove the access token from the PasswordResetTokenStore and from the current security context
+        //because the token is for one time use only
+        PasswordResetToken token = PasswordResetTokenStore.getInstance().getTokenFromEmail(email);
+        consumerTokenServices.revokeToken(token.getResetToken());
+        PasswordResetTokenStore.getInstance().removeToken(token.getResetToken());
+
+        return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
     /**

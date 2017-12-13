@@ -2,6 +2,7 @@ package com.jersey.resources;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.jersey.Authorization.security.Authorities;
 import com.jersey.Authorization.security.PasswordResetToken;
 import com.jersey.Authorization.security.PasswordResetTokenStore;
 import com.jersey.persistence.PersonDao;
@@ -301,7 +302,7 @@ public class PersonResource {
         }
 
         //create a new one time use only reset token
-        OAuth2Request request = new OAuth2Request(null, localClientID, Arrays.asList(new SimpleGrantedAuthority("CHANGE_PASSWORD_PRIVILEGE")), true, null, null, null, null, null);
+        OAuth2Request request = new OAuth2Request(null, localClientID, Arrays.asList(new SimpleGrantedAuthority(Authorities.CHANGE_PASSWORD_PRIVILEGE.name())), true, null, null, null, null, null);
         OAuth2Authentication oAuth2Authentication =  new OAuth2Authentication(request, new UsernamePasswordAuthenticationToken(Email, "N/A", Arrays.asList(new SimpleGrantedAuthority("CHANGE_PASSWORD_PRIVILEGE"))));
         OAuth2AccessToken oAuth2AccessToken = authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
 

@@ -2,6 +2,7 @@ package com.jersey.Authorization.Config.Facebook;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.jersey.Authorization.security.Authorities;
 import com.jersey.persistence.PersonDao;
 import com.jersey.representations.Person;
 import com.jersey.resources.PersonResource;
@@ -44,7 +45,7 @@ public class FacebookConnectionSignup implements ConnectionSignUp{
 
         //Get the user properties from facebook apis
         Facebook facebook = (Facebook) connection.getApi();
-        String [] fields = { "id", "email",  "first_name", "last_name" , "location", "about"};
+        String [] fields = { "id", "email",  "first_name", "last_name" , "location", "about", "gender"};
         User userProfile =  facebook.fetchObject("me",User.class, fields);
 
         Person person = personRepository.findByEmail(userProfile.getEmail());
@@ -57,8 +58,9 @@ public class FacebookConnectionSignup implements ConnectionSignUp{
             person.setFirstName(userProfile.getFirstName());
             person.setLastName(userProfile.getLastName());
             person.setEmail(userProfile.getEmail());
-            person.setRoles("ROLE_USER_FACEBOOK");
+            person.setRoles(Authorities.ROLE_USER_FACEBOOK.name());
             person.setPassword(randomAlphabetic(8));
+            person.setGender(userProfile.getGender());
             UploadFacebookProfilePicToCloudinary(connection, person);
 
             if(userProfile.getAbout() != null){

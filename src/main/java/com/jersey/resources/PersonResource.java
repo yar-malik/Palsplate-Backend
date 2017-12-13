@@ -298,9 +298,13 @@ public class PersonResource {
             throw new UsernameNotFoundException("No registered account exists with this email address!");
         }
 
+        if(person.getRoles().contains("ROLE_USER_FACEBOOK")){
+            return new ResponseEntity<Object>("The account associated with this email was signed up via facebook!",HttpStatus.BAD_REQUEST);
+        }
+
         //create a new one time use only reset token
         OAuth2Request request = new OAuth2Request(null, localClientID, Arrays.asList(new SimpleGrantedAuthority(Authorities.CHANGE_PASSWORD_PRIVILEGE.name())), true, null, null, null, null, null);
-        OAuth2Authentication oAuth2Authentication =  new OAuth2Authentication(request, new UsernamePasswordAuthenticationToken(Email, "N/A", Arrays.asList(new SimpleGrantedAuthority("CHANGE_PASSWORD_PRIVILEGE"))));
+        OAuth2Authentication oAuth2Authentication =  new OAuth2Authentication(request, new UsernamePasswordAuthenticationToken(Email, "N/A", Arrays.asList(new SimpleGrantedAuthority(Authorities.CHANGE_PASSWORD_PRIVILEGE.name()))));
         OAuth2AccessToken oAuth2AccessToken = authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
 
         String resetToken = oAuth2AccessToken.getValue();

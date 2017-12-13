@@ -17,7 +17,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.*;
-import java.util.HashMap;
 
 @Path("")
 @Produces(MediaType.APPLICATION_JSON)

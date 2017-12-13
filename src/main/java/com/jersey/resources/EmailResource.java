@@ -187,7 +187,7 @@ public class EmailResource {
 
         recipientVariableJson.put(recipientEmail, nameObject);
         Client client = Client.create();
-        client.addFilter(new HTTPBasicAuthFilter("api", "key-b9cc5ba51663ca8b37377818c6f8f81f"));
+        client.addFilter(new HTTPBasicAuthFilter("api", System.getenv().get("MAILGUN_APIKEY")));
         WebResource webResource = client.resource("https://api.mailgun.net/v3/mg.palsplate.com/messages");
 
         FormDataMultiPart formData = new FormDataMultiPart();

@@ -1,4 +1,9 @@
+
 # PalsPlate Backend 
+
+
+![PalsPlate](https://www.palsplate.com/assets/images/logo_typography_s.png)
+
 
 ## Technology Stack:
 

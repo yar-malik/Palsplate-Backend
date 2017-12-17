@@ -1,7 +1,5 @@
 ![PalsPlate](https://www.palsplate.com/assets/images/logo_typography_s.png)
 
-## PalsPlate Backend 
-
 ### Technology Stack:
 
 * Java 8: primary language
@@ -122,7 +120,7 @@ where <refresh-token> is received in the previous command
 
 
 - - - -
-## REST REQUEST
+### REST REQUEST
 
 Following is a list of some examples of rest requests one can use:
 
@@ -134,7 +132,7 @@ GET: http://localhost:8080/api/public/cooks/1/foods
 GET: http://localhost:8080/api/secure/customers/1
 ```
 
-### Person
+#### Person
 
  * Get one specific record
  ``GET http://localhost:8080/api/secure/persons/{id}``
@@ -168,7 +166,7 @@ where curlJson.txt contains:
 
 
 
-### Cook
+#### Cook
 
  * Get one specific record
  ``GET http://localhost:8080/api/public/cooks/{id}``
@@ -190,7 +188,7 @@ where curlJsonCook.txt contains:
 }
 ```
 
-### Customers
+#### Customers
 
  * Get one specific record
  ``GET http://localhost:8080/api/secure/customers/{id}``
@@ -213,7 +211,7 @@ where curlJsonCustomer.txt contains:
 }
 ```
 
-### Foods
+#### Foods
 
  * Get one specific record
  ``GET http://localhost:8080/api/public/foods/{id}``
@@ -253,7 +251,7 @@ where curlJsonCustomer.txt contains:
 `` GET http://localhost:8080/api/secure/cooks/1/foods
 
 
-### Images
+#### Images
 
  * Get one specific record
  ``GET http://localhost:8080/api/secure/images/{id}``
@@ -272,7 +270,7 @@ Curl POST example of creating an image
 Curl GET example to get images for a specific food
 `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/public/foods/2/images`
 
-### Reviews
+#### Reviews
 
  * Get one specific record
  ``GET http://localhost:8080/api/public/reviews/{id}``
@@ -301,7 +299,7 @@ Curl GET example to get reviews for a specific food
 `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/reviews`
 
 
-### Reservation
+#### Reservation
 
  * Get one specific record
  ``GET http://localhost:8080/api/public/reservations/{id}``
@@ -333,7 +331,7 @@ where curlJsonReservation.json contains:
  where `id` is reservation id and `active` is boolean true or false
 
 - - - -
-### Location
+#### Location
 
  * Get location of a food
  ``GET localhost:8080/api/secure/foods/{id}/location_foods``
@@ -360,7 +358,7 @@ where curlJsonReservation.json contains:
 ```
 
 - - - -
-## Food Filtering API
+#### Food Filtering API
 
  * Get all foods below provided price
  ``GET http://localhost:8080/api/public/foods?maxPrice={max}``
@@ -457,7 +455,7 @@ Note: for email type = `contact_us`, one has to specify the following parameters
 ```
 Email from this API would be sent to inbox of `info@palsplate.com`
  - - -
- ## Customs API
+#### Customs API
  
   * Get reservation with cook and customer information
   
@@ -505,7 +503,7 @@ Email from this API would be sent to inbox of `info@palsplate.com`
 ```    
 
  - - - 
-## Database Schema
+### Database Schema
    
    
    ![palsplateDB_v1.2](src/main/resources/palsplateDB_v1.2.png)

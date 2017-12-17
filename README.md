@@ -1,11 +1,8 @@
-
-# PalsPlate Backend 
-
-
 ![PalsPlate](https://www.palsplate.com/assets/images/logo_typography_s.png)
 
+## PalsPlate Backend 
 
-## Technology Stack:
+### Technology Stack:
 
 * Java 8: primary language
 * Maven 3: package manager
@@ -23,7 +20,7 @@ We implemented Jersey with Spring for REST support using JAX-RS API. Although, S
 Hence you will see difference in Annotations like @PATH being used rather than @RequestMapping
 
 - - - -
-## Populate Database:
+### Populate Database:
 
 Populate palsplate-demo database with some dummy data.
 
@@ -43,7 +40,7 @@ INSERT INTO FOOD VALUES(3, 'burger', '2011-05-16 15:36:38', '2011-06-16 15:36:38
 ```
 
 - - - -
-## QUERY DATABASE
+### QUERY DATABASE
 
 Following is a query which finds out all persons/users who are cooks and currently have food offerings
 
@@ -57,7 +54,7 @@ limit 10;
 ```
 
 - - - -
-## ENVIRONMENT VARIABLES
+### ENVIRONMENT VARIABLES
 
 The code uses the following environment variables: 
 
@@ -77,7 +74,7 @@ Java Posgres url: `jdbc:postgresql://<host>:<port>/<dbname>?user=<username>&pass
 
 
 - - - -
-## Run Complete System
+### Run Complete System
 
 ```
 mvn clean package && mvn spring-boot:run

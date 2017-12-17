@@ -1,11 +1,6 @@
-
-# PalsPlate Backend 
-
-
 ![PalsPlate](https://www.palsplate.com/assets/images/logo_typography_s.png)
 
-
-## Technology Stack:
+### Technology Stack:
 
 * Java 8: primary language
 * Maven 3: package manager
@@ -23,7 +18,7 @@ We implemented Jersey with Spring for REST support using JAX-RS API. Although, S
 Hence you will see difference in Annotations like @PATH being used rather than @RequestMapping
 
 - - - -
-## Populate Database:
+### Populate Database:
 
 Populate palsplate-demo database with some dummy data.
 
@@ -43,7 +38,7 @@ INSERT INTO FOOD VALUES(3, 'burger', '2011-05-16 15:36:38', '2011-06-16 15:36:38
 ```
 
 - - - -
-## QUERY DATABASE
+### QUERY DATABASE
 
 Following is a query which finds out all persons/users who are cooks and currently have food offerings
 
@@ -57,7 +52,7 @@ limit 10;
 ```
 
 - - - -
-## ENVIRONMENT VARIABLES
+### ENVIRONMENT VARIABLES
 
 The code uses the following environment variables: 
 
@@ -77,7 +72,7 @@ Java Posgres url: `jdbc:postgresql://<host>:<port>/<dbname>?user=<username>&pass
 
 
 - - - -
-## Run Complete System
+### Run Complete System
 
 ```
 mvn clean package && mvn spring-boot:run
@@ -125,7 +120,7 @@ where <refresh-token> is received in the previous command
 
 
 - - - -
-## REST REQUEST
+### REST REQUEST
 
 Following is a list of some examples of rest requests one can use:
 
@@ -137,7 +132,7 @@ GET: http://localhost:8080/api/public/cooks/1/foods
 GET: http://localhost:8080/api/secure/customers/1
 ```
 
-### Person
+#### Person
 
  * Get one specific record
  ``GET http://localhost:8080/api/secure/persons/{id}``
@@ -171,7 +166,7 @@ where curlJson.txt contains:
 
 
 
-### Cook
+#### Cook
 
  * Get one specific record
  ``GET http://localhost:8080/api/public/cooks/{id}``
@@ -193,7 +188,7 @@ where curlJsonCook.txt contains:
 }
 ```
 
-### Customers
+#### Customers
 
  * Get one specific record
  ``GET http://localhost:8080/api/secure/customers/{id}``
@@ -216,7 +211,7 @@ where curlJsonCustomer.txt contains:
 }
 ```
 
-### Foods
+#### Foods
 
  * Get one specific record
  ``GET http://localhost:8080/api/public/foods/{id}``
@@ -256,7 +251,7 @@ where curlJsonCustomer.txt contains:
 `` GET http://localhost:8080/api/secure/cooks/1/foods
 
 
-### Images
+#### Images
 
  * Get one specific record
  ``GET http://localhost:8080/api/secure/images/{id}``
@@ -275,7 +270,7 @@ Curl POST example of creating an image
 Curl GET example to get images for a specific food
 `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/public/foods/2/images`
 
-### Reviews
+#### Reviews
 
  * Get one specific record
  ``GET http://localhost:8080/api/public/reviews/{id}``
@@ -304,7 +299,7 @@ Curl GET example to get reviews for a specific food
 `curl -i -H "Authorization: Bearer <access-token>" http://localhost:8080/api/secure/reviews`
 
 
-### Reservation
+#### Reservation
 
  * Get one specific record
  ``GET http://localhost:8080/api/public/reservations/{id}``
@@ -336,7 +331,7 @@ where curlJsonReservation.json contains:
  where `id` is reservation id and `active` is boolean true or false
 
 - - - -
-### Location
+#### Location
 
  * Get location of a food
  ``GET localhost:8080/api/secure/foods/{id}/location_foods``
@@ -363,7 +358,7 @@ where curlJsonReservation.json contains:
 ```
 
 - - - -
-## Food Filtering API
+#### Food Filtering API
 
  * Get all foods below provided price
  ``GET http://localhost:8080/api/public/foods?maxPrice={max}``
@@ -460,7 +455,7 @@ Note: for email type = `contact_us`, one has to specify the following parameters
 ```
 Email from this API would be sent to inbox of `info@palsplate.com`
  - - -
- ## Customs API
+#### Customs API
  
   * Get reservation with cook and customer information
   
@@ -508,7 +503,7 @@ Email from this API would be sent to inbox of `info@palsplate.com`
 ```    
 
  - - - 
-## Database Schema
+### Database Schema
    
    
    ![palsplateDB_v1.2](src/main/resources/palsplateDB_v1.2.png)
